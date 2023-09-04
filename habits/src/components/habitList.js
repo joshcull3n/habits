@@ -5,9 +5,9 @@ import HabitDates from './habitDates.js'
 const HabitList = ({ habits }) => {
   return (
     <div className="habitList">
-    <table>
-      {habits.map(habit => <tr><td><Habit key={habit.id} habit={habit}/></td><td><HabitDates habit={habit} /></td></tr>)}
-    </table>
+    <table><tbody>
+      {habits.map(habit => <tr key={habit.id}><td><Habit habit={habit}/></td><td><HabitDates habit={habit} /></td></tr>)}
+    </tbody></table>
     </div>
   );
 }
