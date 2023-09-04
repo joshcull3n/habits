@@ -1,0 +1,30 @@
+body {
+  --font-size--huge: 2.375rem;
+  --spacing--60: 2.25rem;
+
+  background-color: black;
+  color: #e3bcaf;
+  font-family: "Work Sans";
+  font-size: 0.85em;
+  line-height: 1.5;
+  padding: 0;
+}
+
+body .is-layout-flex {
+  gap: 24px;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@font-face{
+  font-family:"Work Sans";
+  font-style:normal;
+  font-weight:400;
+  font-display:block;
+  src:local("Work Sans"), url('https://s2.wp.com/wp-content/themes/pub/stewart/assets/fonts/WorkSans-VariableFont_wght.ttf') format('truetype');
+  font-stretch:normal;
+}
