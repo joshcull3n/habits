@@ -8,9 +8,6 @@ const HabitDates = ({ habit }) => {
       <input type="checkbox"/>
       <input type="checkbox"/>
       <input type="checkbox"/>
-      <input type="checkbox"/>
-      <input type="checkbox"/>
-      <input type="checkbox"/>
     </div>
   )}
 
