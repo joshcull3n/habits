@@ -11,7 +11,6 @@ reqs
  - [ ] cute checkbox symbols - x and os
  - [ ] long term grid overview
  - [ ] specific habit stats drilldown
- ff
  - [ ] habit goals (x per week/month)
  - [ ] habit colour picker
  - [ ] date pagination
