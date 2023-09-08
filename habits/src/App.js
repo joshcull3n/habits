@@ -6,9 +6,10 @@ import { generateHabit } from './utils/habitUtils.js';
 const App = () => {
 
   const testHabits = [
-    { id: 0, body: 'floss', doneDates: [new Date('1 September 2023'), new Date('3 September 2023')] },
-    { id: 1, body: 'do 50 pushups', doneDates: [new Date('28 August 2023'), new Date('30 August 2023'), new Date('1 September 2023')] },
-    { id: 2, body: 'learn how to do the worm', doneDates: [] }
+    { id: 0, body: 'floss', doneDates: [new Date('2023/9/1'), new Date('2023/9/3')] },
+    { id: 1, body: 'do 50 pushups', doneDates: [new Date('2023/8/28'), new Date('2023/9/1'), new Date('2023/9/6')] },
+    { id: 2, body: 'learn how to do the worm', doneDates: [new Date('2023/9/8')] },
+    { id: 3, body: 'swim', doneDates: [new Date('2023/9/4'), new Date('2023/9/6')] }
   ];
 
   const [habits, setHabits] = useState(testHabits);
