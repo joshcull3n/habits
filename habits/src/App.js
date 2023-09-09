@@ -15,6 +15,13 @@ const App = () => {
   const [habits, setHabits] = useState(testHabits);
   const [newHabitBody, setNewHabitBody] = useState('');
 
+  // date range
+  const [endDate, setEndDate] = useState(new Date());
+  var start = new Date();
+  start.setDate(endDate.getDate() - 6);
+  const [startDate, setStartDate] = useState(start);
+
+
   const handleHabitInputChange = (e) => {
     setNewHabitBody(e.target.value);
   }
@@ -38,7 +45,9 @@ const App = () => {
         setNewHabitBody={setNewHabitBody}
         handleHabitInputEnter={handleHabitInputEnter}
         handleHabitInputChange={handleHabitInputChange}
-        newHabitBody={newHabitBody}/>
+        newHabitBody={newHabitBody}
+        startDate={startDate}
+        endDate={endDate}/>
     </div>
   );
 }

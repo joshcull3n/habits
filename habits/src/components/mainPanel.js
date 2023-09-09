@@ -16,14 +16,30 @@ const HabitInput = ({handleHabitInputChange, newHabitBody, handleHabitInputEnter
   );
 };
 
-const MainPanel = ({habits, handleHabitInputChange, handleHabitInputEnter, newHabitBody}) => {
+const MainPanel = ({habits, handleHabitInputChange, handleHabitInputEnter, newHabitBody, startDate, endDate}) => {
+  function generateDateLabels() {
+    var tempDate = new Date(startDate);
+    var labels = [];
+
+    while (tempDate <= endDate) {
+      var tempLabel = tempDate.getDate();
+      if (tempLabel < 10) {
+        tempLabel = '0' + tempLabel.toString();
+      labels.push(tempLabel.toString());
+      tempDate.setDate(tempDate.getDate() + 1);
+      }
+    }
+
+    return labels
+  }
+
   return (
     <div className="top-block" style={{paddingRight:'0px'}}>
       <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', marginLeft: '40px', marginRight: '55px'}}>
         <TopBar />
       </div>
       <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', marginLeft: '40px', marginRight: '55px'}}>
-        <HabitList habits={habits}/>
+        <HabitList habits={habits} dateLabels={generateDateLabels()}/>
       </div>
       <HabitInput 
         handleHabitInputEnter={handleHabitInputEnter} 

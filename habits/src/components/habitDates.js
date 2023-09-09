@@ -42,7 +42,7 @@ const CheckboxList = (props) => {
   var dates = genDates(props.startDate, props.endDate);
   return (
     <div>
-      { dates.map((date, index) => <Checkbox date={date} doneDates={props.doneDates} key={index} />) }
+      { dates.map((date, index) => <span style={{padding:'2px'}}><Checkbox date={date} doneDates={props.doneDates} key={index} /></span>) }
     </div>
   )
 }
