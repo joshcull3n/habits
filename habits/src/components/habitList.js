@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import Habit from './habit.js'
 import HabitDates from './habitDates.js'
 import { Context } from '../Context.js'
+import deletePng from '../images/delete.png'
 
 const HabitList = ({ dateLabels }) => {
   const { habits, setHabits } = useContext(Context);
@@ -25,7 +26,7 @@ const HabitList = ({ dateLabels }) => {
   }
 
   const DeleteButton = (habit) => {
-    return <button onClick={() => deleteHabit(habit.id)}>delete!!!</button>
+    return <img src={deletePng} style={{verticalAlign: 'baseline', width: '9px'}} onClick={() => deleteHabit(habit.id)}/>
   }
 
   return (
