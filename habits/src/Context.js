@@ -9,13 +9,15 @@ export const ContextProvider = ({ children }) => {
     { id: 3, body: 'swim', doneDates: [new Date('2023/9/4'), new Date('2023/9/6')] }
   ];
 
+  // habits
   const [habits, setHabits] = useState(testHabits);
   const [newHabitText, setNewHabitText] = useState('');
 
-
+  // dates
   const [endDate, setEndDate] = useState(new Date());
+  var tempEnd = new Date(endDate);
   var start = new Date();
-  start.setDate(endDate.getDate() - 6);
+  start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
 
 
