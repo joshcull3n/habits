@@ -1,4 +1,6 @@
 import HabitList from './habitList.js';
+import { Context } from '../Context.js';
+import { useContext } from 'react';
 
 const TopBar = () => {
   return (
@@ -8,26 +10,28 @@ const TopBar = () => {
   );
 };
 
-const HabitInput = ({handleHabitInputChange, newHabitBody, handleHabitInputEnter}) => {
+const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
+  const { newHabitText } = useContext(Context);
   return (
     <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', marginLeft: '40px', marginRight: '55px'}}>
-      <p>add a new habit... <input value={newHabitBody} onKeyDown={handleHabitInputEnter} onChange={handleHabitInputChange}/></p>
+      <p>add a new habit... <input value={newHabitText} onKeyDown={handleHabitInputEnter} onChange={handleHabitInputChange}/></p>
     </div>
   );
 };
 
-const MainPanel = ({habits, handleHabitInputChange, handleHabitInputEnter, newHabitBody, startDate, endDate}) => {
+const MainPanel = ({ handleHabitInputChange, handleHabitInputEnter }) => {
+  const { habits, startDate, endDate } = useContext(Context);
+
   function generateDateLabels() {
     var tempDate = new Date(startDate);
     var labels = [];
 
     while (tempDate <= endDate) {
       var tempLabel = tempDate.getDate();
-      if (tempLabel < 10) {
+      if (tempLabel < 10)
         tempLabel = '0' + tempLabel.toString();
       labels.push(tempLabel.toString());
       tempDate.setDate(tempDate.getDate() + 1);
-      }
     }
 
     return labels
@@ -43,8 +47,7 @@ const MainPanel = ({habits, handleHabitInputChange, handleHabitInputEnter, newHa
       </div>
       <HabitInput 
         handleHabitInputEnter={handleHabitInputEnter} 
-        handleHabitInputChange={handleHabitInputChange} 
-        newHabitBody={newHabitBody}/>
+        handleHabitInputChange={handleHabitInputChange} />
     </div>
   );
 };

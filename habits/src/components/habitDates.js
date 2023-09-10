@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { Context } from "../Context";
+
 // generate list of date strings between two given dates
 function genDates(startDate, endDate) {
   var dates = [];
@@ -13,12 +16,10 @@ function genDates(startDate, endDate) {
 
 // TODO
 function handleCheckboxChange(event) {
+
 }
 
 // checkbox component - determines whether or not to display checked based on given date and completed dates
-// props:
-//  date      String        : the date that this checkbox is associated with
-//  doneDates Array<Date()> : the dates that the associated habit has been completed on
 const Checkbox = (props) => {
   var checked = false;
 
@@ -28,30 +29,24 @@ const Checkbox = (props) => {
   });
 
   if (checked)
-    return ( <input type="checkbox" checked onChange={handleCheckboxChange}/> )
+    return <input type="checkbox" checked onChange={handleCheckboxChange}/>
   else
-    return ( <input type="checkbox" onChange={handleCheckboxChange}/> )
+    return <input type="checkbox" onChange={handleCheckboxChange}/>
 }
 
 // checkbox list - renders checkbox components for given dates
-// props:
-//  startDate Date()
-//  endDate   Date()
-//  doneDates Array<Date()> : the dates that the associated habit has been completed on
 const CheckboxList = (props) => {
   var dates = genDates(props.startDate, props.endDate);
   return (
     <div>
-      { dates.map((date, index) => <span style={{padding:'2px'}}><Checkbox date={date} doneDates={props.doneDates} key={index} /></span>) }
+      { dates.map((date, index) => <span style={{padding:'2px'}} key={index}><Checkbox date={date} doneDates={props.doneDates} /></span>) }
     </div>
   )
 }
 
 const HabitDates = ({ habit }) => {
+  const { startDate, endDate } = useContext(Context);
   var doneDates = habit.doneDates;
-  var endDate = new Date();
-  var startDate = new Date();
-  startDate.setDate(endDate.getDate() - 6);
 
   return (
     <div className="habitDates">
