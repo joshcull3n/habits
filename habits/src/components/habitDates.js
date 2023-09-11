@@ -27,12 +27,9 @@ const Checkbox = (props) => {
   function handleCheck(e) {
     var tempDates = Array.from(props.doneDates);
     var habitIndex = habits.indexOf(props.habit);
-
-    console.log(e.target.checked);
     
     if (!e.target.checked) {
       // remove date from habit.doneDates
-      console.log('removing date');
       tempDates.forEach(date => {
         if (date.toDateString() == props.date) {
           var index = props.habit.doneDates.indexOf(date);
