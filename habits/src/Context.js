@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export const Context = React.createContext();
 export const ContextProvider = ({ children }) => {
@@ -9,11 +9,16 @@ export const ContextProvider = ({ children }) => {
     { id: 3, body: 'swim', doneDates: [new Date('2023/9/4'), new Date('2023/9/6')] }
   ];
 
-  var localStorage = window.localStorage;
-  var testHabitJsonString = '[{"id": 0,"body": "floss","doneDates": ["2023 / 9 / 1 ", "2023 / 9 / 3 "]},{"id": 1,"body": "do 50 pushups","doneDates": ["2023 / 8 / 28 ", "2023 / 9 / 1 ", "2023 / 9 / 6 "]}]';
+  function convertToYYYYMMDD(date) {
+    var tempYear = date.getFullYear();
+    var tempMonth = date.getMonth()+1;
+    var tempDay = date.getDate();
 
-  localStorage.setItem("habits_jc", testHabitJsonString);
-  var habitStorage = localStorage.getItem('habits_jc');
+    return tempYear + '/' + tempMonth + '/' + tempDay;
+  }
+
+  var localStorage = window.localStorage;
+  var habitStorage = localStorage.getItem('habits_cullen');
 
   // if there are habits in localStorage, parse them
   if (habitStorage) {
@@ -40,6 +45,20 @@ export const ContextProvider = ({ children }) => {
   start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
 
+  // set habits to localStorage on every render
+  useEffect(() => {
+    var tempHabitList = [];
+    habits.forEach(habit => {
+      var tempHabit = Object.create(habit);
+      var tempDoneDates = [];
+      habit['doneDates'].forEach(date => {
+        tempDoneDates.push(convertToYYYYMMDD(date));
+      })
+      tempHabit = {...habit, 'doneDates': tempDoneDates};
+      tempHabitList.push(tempHabit);
+    });
+    localStorage.setItem('habits_cullen', JSON.stringify(tempHabitList))
+  }, [habits])
 
   return (
     <Context.Provider value={{ 
