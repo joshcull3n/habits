@@ -50,7 +50,11 @@ const HabitList = ({ dateLabels }) => {
   }
 
   const DeleteButton = (habit) => {
-    return <img src={deletePng} style={{verticalAlign: 'baseline', width: '9px'}} onClick={() => deleteHabit(habit.id)}/>
+    return (
+      <td className='deleteButton' onClick={() => deleteHabit(habit.id)}>
+        <img src={deletePng} className='deleteButton' style={{verticalAlign: 'baseline'}}/>
+      </td>
+    )
   }
 
   const DatePageButtonLeft = () => {
@@ -75,16 +79,41 @@ const HabitList = ({ dateLabels }) => {
     )
   }
 
-  return (
-    <div className="habitList">
+  const EmptyHabitList = () => {
+    return (
+      <div className="habitList">
       <table>
         <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
         <tbody>
-          {habits.map(habit => <tr key={habit.id}><td><Habit habit={habit}/></td><td><HabitDates habit={habit} /></td><td><DeleteButton id={habit.id}/></td></tr>)}
+          <tr><td style={{minWidth:'300px'}}>add some habits first... </td></tr>
         </tbody>
       </table>
     </div>
-  );
+    )
+  }
+
+  const HabitList = () => {
+    return (
+      <div className="habitList">
+        <table style={{tableLayout:'fixed', overflow:'hidden', minWidth:'410px', maxWidth:'410px'}}>
+          <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+          <tbody>
+            {habits.map(habit => <tr className='habitRow' key={habit.id}>
+                <td style={{textAlign:'left', maxWidth:'215px', minWidth:'215px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}><Habit habit={habit}/></td>
+                <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
+                <DeleteButton className='deleteButton' id={habit.id}/>
+              </tr>)}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  if (habits.length < 1)
+    return <EmptyHabitList />;
+  else
+    return <HabitList />;
+
 }
 
 export default HabitList;

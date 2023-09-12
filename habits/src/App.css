@@ -1,10 +1,10 @@
-body {
-  --font-size--huge: 2.375rem;
-  --spacing--60: 2.25rem;
-
-  background-color: black;
-  color: #e3bcaf;
+* {
   font-family: "Work Sans";
+  color: #e3bcaf;
+}
+
+body {
+  background-color: black;
   font-size: 0.85em;
   line-height: 1.5;
   padding: 0;
@@ -12,6 +12,40 @@ body {
 
 body .is-layout-flex {
   gap: 24px;
+}
+
+input {
+  color: #e3bcafaa;
+  border-color: #e3bcaf4a;
+  border-width: thin;
+  background: #000000FF;
+  caret-color: #e3bcaf4a;
+}
+
+input::placeholder {
+  color : #e3bcaf4a
+}
+
+input:focus {
+  outline:none;
+  place-content: none;
+}
+
+input:focus::placeholder {
+  color:transparent;
+}
+
+table {
+  border: none;
+}
+
+td:hover .deleteButton {
+  opacity: 1;
+}
+
+.deleteButton img {
+  width: 9px;
+  opacity: 0.3;
 }
 
 .centered {
