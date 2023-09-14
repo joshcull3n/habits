@@ -52,9 +52,9 @@ const Checkbox = (props) => {
   }
 
   if (checked)
-    return <input type="checkbox" checked={checked} onChange={handleCheck}/>
+    return <span className="checkedInput"><input type="checkbox" checked={checked} onChange={handleCheck} id="checkedInput"/><label htmlFor="checkedInput"></label></span>
   else
-    return <input type="checkbox" checked={!!checked} onChange={handleCheck}/>
+    return <span className="uncheckedInput"><input type="checkbox" checked={!!checked} onChange={handleCheck} id="uncheckedInput"/><label htmlFor="uncheckedInput"></label></span>
 }
 
 // checkbox list - renders checkbox components for given dates

@@ -43,9 +43,46 @@ td:hover .deleteButton {
   opacity: 1;
 }
 
+input[type="checkbox"]:not(:checked) {
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  width: 13px;
+  height: 14px;
+  cursor:pointer;
+  position: relative;
+  top: 1px;
+  background: url("./images/circle.png") 3px 3px no-repeat; 
+  background-size: 10.5px;
+  opacity: 0.2;
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -moz-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
+}
+
+input[type="checkbox"]:not(:checked):hover {
+  opacity: 1;
+}
+
+input[type="checkbox"]:checked {
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  width: 13px;
+  height: 14px;
+  cursor:pointer;
+  position: relative;
+  top: 0px;
+  background: url("./images/circle_filled.png") 2px 3px no-repeat; 
+  background-size: 12.5px;
+}
+
 .deleteButton img {
   width: 9px;
   opacity: 0.3;
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -moz-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
 }
 
 .centered {
