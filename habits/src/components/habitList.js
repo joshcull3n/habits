@@ -100,7 +100,7 @@ const HabitList = ({ dateLabels }) => {
           <tbody>
             {habits.map((habit, index) => <tr className='habitRow' key={index}>
                 <td style={{textAlign:'left', maxWidth:'215px', minWidth:'215px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', paddingBottom:'5px'}}><Habit habit={habit}/></td>
-                <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
+                <td style={{minWidth:'168px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
                 <DeleteButton className='deleteButton' id={habit.id}/>
               </tr>)}
           </tbody>
