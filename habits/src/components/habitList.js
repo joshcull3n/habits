@@ -99,7 +99,7 @@ const HabitList = ({ dateLabels }) => {
           <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
           <tbody>
             {habits.map((habit, index) => <tr className='habitRow' key={index}>
-                <td style={{textAlign:'left', maxWidth:'215px', minWidth:'215px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}><Habit habit={habit}/></td>
+                <td style={{textAlign:'left', maxWidth:'215px', minWidth:'215px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', paddingBottom:'5px'}}><Habit habit={habit}/></td>
                 <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
                 <DeleteButton className='deleteButton' id={habit.id}/>
               </tr>)}

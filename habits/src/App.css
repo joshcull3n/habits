@@ -39,10 +39,6 @@ table {
   border: none;
 }
 
-td:hover .deleteButton {
-  opacity: 1;
-}
-
 input[type="checkbox"]:not(:checked) {
   appearance:none;
   -webkit-appearance:none;
@@ -84,7 +80,13 @@ input[type="checkbox"]:checked:hover {
   opacity: 0.6;
 }
 
+.deleteButton img:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 .deleteButton img {
+  padding-bottom: 2px;
   width: 9px;
   opacity: 0.3;
   -webkit-transition: opacity 0.1s ease-in-out;
@@ -97,6 +99,7 @@ input[type="checkbox"]:checked:hover {
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
+  cursor: pointer;
 }
 
 .datePaginator:hover {

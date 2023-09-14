@@ -52,9 +52,9 @@ const Checkbox = (props) => {
   }
 
   if (checked)
-    return <span className="checkedInput"><input type="checkbox" checked={checked} onChange={handleCheck} id="checkedInput"/><label htmlFor="checkedInput"></label></span>
+    return <span className="checkedInput"><input type="checkbox" checked={checked} onChange={handleCheck} id="checkedInput" style={{height:'17px', width:'17px'}}/><label htmlFor="checkedInput"></label></span>
   else
-    return <span className="uncheckedInput"><input type="checkbox" checked={!!checked} onChange={handleCheck} id="uncheckedInput"/><label htmlFor="uncheckedInput"></label></span>
+    return <span className="uncheckedInput"><input type="checkbox" checked={!!checked} onChange={handleCheck} id="uncheckedInput" style={{height:'17px', width:'17px'}}/><label htmlFor="uncheckedInput"></label></span>
 }
 
 // checkbox list - renders checkbox components for given dates
@@ -62,7 +62,7 @@ const CheckboxList = (props) => {
   var dates = genDates(props.startDate, props.endDate);
   return (
     <div>
-      { dates.map((date, index) => <span style={{padding:'2px'}} key={index}><Checkbox habit={props.habit} date={date} doneDates={props.doneDates} /></span>) }
+      { dates.map((date, index) => <span style={{padding:'0px'}} key={index}><Checkbox habit={props.habit} date={date} doneDates={props.doneDates} /></span>) }
     </div>
   )
 }
