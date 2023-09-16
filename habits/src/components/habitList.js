@@ -81,11 +81,11 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const EmptyHabitList = () => {
     return (
-      <div className="habitList">
+      <div>
       <table>
         <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
         <tbody>
-          <tr><td style={{minWidth:'300px'}}>add some habits first... </td></tr>
+          <tr><td>add some habits first... </td></tr>
         </tbody>
       </table>
     </div>
@@ -94,12 +94,12 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const HabitList = () => {
     return (
-      <div className="habitList">
-        <table style={{tableLayout:'fixed', overflow:'hidden', minWidth:'410px', maxWidth:'410px'}}>
+      <div className="is-layout-flex centered" style={{width:'420px',paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+        <table>
           <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
           <tbody>
-            {habits.map((habit, index) => <tr className='habitRow' key={index}>
-                <td style={{textAlign:'left', maxWidth:'215px', minWidth:'215px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', paddingBottom:'5px'}}><Habit habit={habit}/></td>
+            {habits.map((habit, index) => <tr key={index}>
+                <td style={{maxWidth:'215px', minWidth:'100px'}}><Habit habit={habit}/></td>
                 <td style={{minWidth:'168px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
                 <DeleteButton className='deleteButton' id={habit.id}/>
               </tr>)}

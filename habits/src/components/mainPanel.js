@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 const TopBar = () => {
   return (
-    <div className="is-layout-flex centered">
+    <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem'}}>
       <h2>habits</h2>
     </div>
   );
@@ -13,8 +13,14 @@ const TopBar = () => {
 const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
   const { newHabitText } = useContext(Context);
   return (
-    <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop:'1rem'}}>
-      <p><input style={{textAlign:'center', placeholderColor:'#EB575726' }} placeholder='add a new habit' value={newHabitText} onKeyDown={handleHabitInputEnter} onChange={handleHabitInputChange}/></p>
+    <div className="is-layout-flex centered" style={{ paddingTop:'1rem'}}>
+      <p>
+        <input style={{textAlign:'center', placeholderColor:'#EB575726'}} 
+          placeholder='add a new habit' 
+          value={newHabitText} 
+          onKeyDown={handleHabitInputEnter} 
+          onChange={handleHabitInputChange}/>
+      </p>
     </div>
   );
 };
@@ -38,13 +44,9 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) =>
   }
 
   return (
-    <div style={{paddingRight:'0px'}}>
-      <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem'}}>
-        <TopBar />
-      </div>
-      <div className="is-layout-flex centered" style={{ display: 'flex', padding: '1.5rem', paddingBottom: '0rem', paddingTop:'0rem'}}>
-        <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
-      </div>
+    <div>
+      <TopBar />
+      <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
       <HabitInput 
         handleHabitInputEnter={handleHabitInputEnter} 
         handleHabitInputChange={handleHabitInputChange} />

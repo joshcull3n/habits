@@ -8,7 +8,7 @@
 
 const Habit = ({ habit }) => {
   return (
-    <div className="habit" style={{textAlign:'left', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}>{habit.body}</div>
+    <div className="habitItem">{habit.body}</div>
   )}
 
 export default Habit;

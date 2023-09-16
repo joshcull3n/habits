@@ -41,10 +41,6 @@ input:focus::placeholder {
   color:transparent;
 }
 
-table {
-  border: none;
-}
-
 input[type="checkbox"]:not(:checked) {
   appearance:none;
   -webkit-appearance:none;
@@ -116,6 +112,14 @@ input[type="checkbox"]:checked:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.habitItem {
+  text-align: left; 
+  overflow:hidden;
+  text-overflow:ellipsis; 
+  white-space:nowrap;
+  padding-bottom: 5px;
 }
 
 @font-face{
