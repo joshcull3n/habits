@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 const TopBar = () => {
   return (
-    <div className="top-block is-layout-flex centered">
+    <div className="is-layout-flex centered">
       <h2>habits</h2>
     </div>
   );
@@ -19,7 +19,7 @@ const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
   );
 };
 
-const MainPanel = ({ handleHabitInputChange, handleHabitInputEnter }) => {
+const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) => {
   const { habits, startDate, endDate } = useContext(Context);
 
   function generateDateLabels() {
@@ -38,7 +38,7 @@ const MainPanel = ({ handleHabitInputChange, handleHabitInputEnter }) => {
   }
 
   return (
-    <div className="top-block" style={{paddingRight:'0px'}}>
+    <div style={{paddingRight:'0px'}}>
       <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem', marginLeft: '40px', marginRight: '55px'}}>
         <TopBar />
       </div>

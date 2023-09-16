@@ -24,9 +24,21 @@ const App = () => {
     setNewHabitText('');
   }
 
+  function detectDevice() {
+    var agent = window.navigator.userAgent.toLowerCase()
+    var isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+    var mobile = false;
+
+    if (agent.includes('ipad') || agent.includes('iphone') || agent.includes('android') || agent.includes('blackberry') || agent.includes('webOS') || isIpad)
+      mobile = true;
+
+    return mobile
+  }
+
   return (
     <div className="App">
       <MainPanel 
+        mobile={detectDevice()}
         handleHabitInputEnter={handleHabitInputEnter}
         handleHabitInputChange={handleHabitInputChange}/>
     </div>
