@@ -94,7 +94,7 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const HabitList = () => {
     return (
-      <div className="is-layout-flex centered" style={{width:'420px',paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+      <div className="centered" style={{width:'420px',paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
         <table>
           <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
           <tbody>

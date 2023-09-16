@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 const TopBar = () => {
   return (
-    <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem'}}>
+    <div className="centered" style={{ display: 'flex', paddingTop: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem'}}>
       <h2>habits</h2>
     </div>
   );
@@ -13,7 +13,7 @@ const TopBar = () => {
 const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
   const { newHabitText } = useContext(Context);
   return (
-    <div className="is-layout-flex centered" style={{ paddingTop:'1rem'}}>
+    <div className="centered" style={{ paddingTop:'1rem'}}>
       <p>
         <input style={{textAlign:'center', placeholderColor:'#EB575726'}} 
           placeholder='add a new habit' 
