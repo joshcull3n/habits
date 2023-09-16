@@ -14,7 +14,7 @@ const HabitList = ({ dateLabels }) => {
     return(
       <div style={{paddingBottom:'2px'}}>
         { dateLabels.map((label, index) => {
-          if (label == dateLabels[0])
+          if (label === dateLabels[0])
             return <span style={{paddingLeft:'6px', paddingRight:'1px', fontFamily:'monospace'}} key={index}>{label}</span> 
           else
             return <span style={{paddingLeft:'10.5px', fontFamily:'monospace'}} key={index}>{label}</span> 
@@ -24,7 +24,7 @@ const HabitList = ({ dateLabels }) => {
   }
 
   function deleteHabit(id) {
-    setHabits(habits.filter(habit => habit.id != id));
+    setHabits(habits.filter(habit => habit.id !== id));
   }
 
   // paginate dates 1 day into the past
@@ -52,7 +52,7 @@ const HabitList = ({ dateLabels }) => {
   const DeleteButton = (habit) => {
     return (
       <td className='deleteButton' onClick={() => deleteHabit(habit.id)}>
-        <img src={deletePng} className='deleteButton' style={{verticalAlign: 'baseline'}}/>
+        <img alt='delete button' src={deletePng} className='deleteButton' style={{verticalAlign: 'baseline'}}/>
       </td>
     )
   }
@@ -60,7 +60,7 @@ const HabitList = ({ dateLabels }) => {
   const DatePageButtonLeft = () => {
     return ( 
       <td style={{padding:'0'}}>
-        <img className="datePaginator" 
+        <img alt='date page left' className="datePaginator" 
           style={{width:'15px', float:'right'}} 
           src={dateLeft} 
           onClick={() => { datePageLeftDay() }}/>
@@ -71,7 +71,7 @@ const HabitList = ({ dateLabels }) => {
   const DatePageButtonRight = () => {
     return (
       <td style={{padding:'0'}}>
-        <img className="datePaginator" 
+        <img alt='date page right' className="datePaginator" 
           style={{width:'15px', float:'left'}} 
           src={dateRight} 
           onClick={() => { datePageRightDay() }}/>

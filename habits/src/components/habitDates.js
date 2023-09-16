@@ -20,7 +20,7 @@ const Checkbox = (props) => {
   var checked = false;
 
   props.doneDates.forEach(date => {
-    if (date.toDateString() == props.date)
+    if (date.toDateString() === props.date)
       checked = true;
   });
 
@@ -31,7 +31,7 @@ const Checkbox = (props) => {
     if (!e.target.checked) {
       // remove date from habit.doneDates
       tempDates.forEach(date => {
-        if (date.toDateString() == props.date) {
+        if (date.toDateString() === props.date) {
           var index = props.habit.doneDates.indexOf(date);
           if (index > -1)
             props.habit.doneDates.splice(index, 1);

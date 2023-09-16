@@ -50,6 +50,7 @@ export const ContextProvider = ({ children }) => {
 
   // set habits to localStorage on every render
   useEffect(() => {
+    console.log('useEffect()');
     var tempHabitList = [];
     habits.forEach(habit => {
       var tempHabit = Object.create(habit);
@@ -61,7 +62,7 @@ export const ContextProvider = ({ children }) => {
       tempHabitList.push(tempHabit);
     });
     localStorage.setItem('habits_cullen', JSON.stringify(tempHabitList))
-  }, [habits])
+  }, [habits, localStorage])
 
   return (
     <Context.Provider value={{ 
