@@ -7,7 +7,7 @@ import deletePng from '../images/delete.png'
 import dateLeft from '../images/arrows/doubleLeft.png'
 import dateRight from '../images/arrows/doubleRight.png'
 
-const HabitList = ({ dateLabels }) => {
+const HabitList = ({ dateLabels, mobile }) => {
   const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
   
   function renderDateLabels() {

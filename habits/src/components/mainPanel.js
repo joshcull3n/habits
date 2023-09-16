@@ -13,7 +13,7 @@ const TopBar = () => {
 const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
   const { newHabitText } = useContext(Context);
   return (
-    <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop:'1rem', marginLeft: '40px', marginRight: '55px'}}>
+    <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop:'1rem'}}>
       <p><input style={{textAlign:'center', placeholderColor:'#EB575726' }} placeholder='add a new habit' value={newHabitText} onKeyDown={handleHabitInputEnter} onChange={handleHabitInputChange}/></p>
     </div>
   );
@@ -39,11 +39,11 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) =>
 
   return (
     <div style={{paddingRight:'0px'}}>
-      <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem', marginLeft: '40px', marginRight: '55px'}}>
+      <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem'}}>
         <TopBar />
       </div>
-      <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', paddingTop:'0rem', marginLeft: '40px', marginRight: '55px'}}>
-        <HabitList habits={habits} dateLabels={generateDateLabels()}/>
+      <div className="is-layout-flex centered" style={{ display: 'flex', padding: '1.5rem', paddingBottom: '0rem', paddingTop:'0rem'}}>
+        <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
       </div>
       <HabitInput 
         handleHabitInputEnter={handleHabitInputEnter} 
