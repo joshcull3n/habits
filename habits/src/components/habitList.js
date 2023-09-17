@@ -95,12 +95,12 @@ const HabitList = ({ dateLabels, mobile }) => {
   const HabitList = () => {
     if (mobile) {
       return (
-        <div className="centered" style={{width:'200px', paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+        <div className="centered">
           <table>
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
-                  <td style={{maxWidth:'175px', minWidth:'120px'}}><Habit habit={habit}/></td>
+                  <td style={{maxWidth:'200px', minWidth:'120px'}}><Habit habit={habit}/></td>
                   <td style={{minWidth:'100px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
