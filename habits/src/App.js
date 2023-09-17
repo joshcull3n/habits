@@ -4,6 +4,17 @@ import MainPanel from './components/mainPanel.js';
 import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
 
+export function detectDevice() {
+  var agent = window.navigator.userAgent.toLowerCase()
+  //var isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+  var mobile = false;
+
+  if (agent.includes('iphone') || agent.includes('android') || agent.includes('blackberry') || agent.includes('webOS'))
+    mobile = true;
+
+  return mobile
+}
+
 const App = () => {
   const { habits, setHabits, newHabitText, setNewHabitText } = useContext(Context);
 
@@ -22,17 +33,6 @@ const App = () => {
     const habit = generateHabit(habits.length + 1, newHabitText, []);
     setHabits(habits.concat(habit));
     setNewHabitText('');
-  }
-
-  function detectDevice() {
-    var agent = window.navigator.userAgent.toLowerCase()
-    var isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
-    var mobile = false;
-
-    if (agent.includes('ipad') || agent.includes('iphone') || agent.includes('android') || agent.includes('blackberry') || agent.includes('webOS') || isIpad)
-      mobile = true;
-
-    return mobile
   }
 
   return (

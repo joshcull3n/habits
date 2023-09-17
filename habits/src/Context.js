@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import { detectDevice } from './App';
+
+const mobile = detectDevice();
 
 export const Context = React.createContext();
 export const ContextProvider = ({ children }) => {
@@ -45,7 +48,10 @@ export const ContextProvider = ({ children }) => {
   const [endDate, setEndDate] = useState(new Date());
   var tempEnd = new Date(endDate);
   var start = new Date();
-  start.setDate(tempEnd.getDate() - 6);
+  if (mobile)
+    start.setDate(tempEnd.getDate() - 3);
+  else
+    start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
 
   // set habits to localStorage on every render

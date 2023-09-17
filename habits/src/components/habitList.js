@@ -93,20 +93,38 @@ const HabitList = ({ dateLabels, mobile }) => {
   }
 
   const HabitList = () => {
-    return (
-      <div className="centered" style={{width:'420px',paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
-        <table>
-          <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
-          <tbody>
-            {habits.map((habit, index) => <tr key={index}>
-                <td style={{maxWidth:'215px', minWidth:'100px'}}><Habit habit={habit}/></td>
-                <td style={{minWidth:'168px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
-                <DeleteButton className='deleteButton' id={habit.id}/>
-              </tr>)}
-          </tbody>
-        </table>
-      </div>
-    )
+    if (mobile) {
+      return (
+        <div className="centered" style={{width:'200px', paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+          <table>
+            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <tbody>
+              {habits.map((habit, index) => <tr key={index}>
+                  <td style={{maxWidth:'175px', minWidth:'120px'}}><Habit habit={habit}/></td>
+                  <td style={{minWidth:'100px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
+                  <DeleteButton className='deleteButton' id={habit.id}/>
+                </tr>)}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="centered" style={{paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+          <table>
+            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <tbody>
+              {habits.map((habit, index) => <tr key={index}>
+                  <td style={{maxWidth:'350px',minWidth:'75px'}}><Habit habit={habit}/></td>
+                  <td style={{minWidth:'168px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
+                  <DeleteButton className='deleteButton' id={habit.id}/>
+                </tr>)}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
   }
 
   if (habits.length < 1)

@@ -15,7 +15,7 @@ const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
   return (
     <div className="centered" style={{ paddingTop:'1rem'}}>
       <p>
-        <input style={{textAlign:'center', placeholderColor:'#EB575726'}} 
+        <input style={{textAlign:'center'}} 
           placeholder='add a new habit' 
           value={newHabitText} 
           onKeyDown={handleHabitInputEnter} 
