@@ -91,10 +91,10 @@ const HabitList = ({ dateLabels, mobile }) => {
     if (mobile) {
       return (
         <div className="centered">
-          <table>
-            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+          <table cellPadding={0} cellSpacing={0}>
+            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels(mobile) }</td><DatePageButtonRight /></tr></thead>
             <tbody>
-              {habits.map((habit, index) => <tr key={index}>
+              {habits.map((habit, index) => <tr key={index} className="habitRow">
                   <td style={{maxWidth:'200px', minWidth:'120px'}}><Habit habit={habit}/></td>
                   <td style={{minWidth:'100px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
@@ -107,10 +107,10 @@ const HabitList = ({ dateLabels, mobile }) => {
     else {
       return (
         <div className="centered" style={{paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
-          <table>
+          <table cellSpacing={0}>
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
-              {habits.map((habit, index) => <tr key={index}>
+              {habits.map((habit, index) => <tr key={index} className="habitRow">
                   <td style={{maxWidth:'350px',minWidth:'75px'}}><Habit habit={habit}/></td>
                   <td style={{minWidth:'168px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
                   <DeleteButton className='deleteButton' id={habit.id}/>

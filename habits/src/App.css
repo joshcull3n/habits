@@ -85,6 +85,10 @@ input[type="checkbox"]:checked:hover {
   opacity: 0.6;
 }
 
+.habitRow:hover {
+  background-color: #e3bcaf22;
+}
+
 .centered {
   display: flex;
   justify-content: center;
