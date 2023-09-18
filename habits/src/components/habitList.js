@@ -81,13 +81,8 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const EmptyHabitList = () => {
     return (
-      <div>
-      <table>
-        <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
-        <tbody>
-          <tr><td>add some habits first... </td></tr>
-        </tbody>
-      </table>
+    <div className='centered'>
+      <div style={{paddingTop: '10px', opacity:0.3, textAlign: 'center', fontFamily:'monospace'}}>add a habit below.<br/>(quit smoking, floss everyday, etc.)</div>
     </div>
     )
   }

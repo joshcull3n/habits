@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 const TopBar = () => {
   return (
-    <div className="centered" style={{ display: 'flex', paddingTop: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem'}}>
+    <div className="centered" style={{ paddingTop:'0.5rem'}}>
       <h2>habits</h2>
     </div>
   );
