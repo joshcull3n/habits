@@ -19,6 +19,8 @@ export function detectDevice() {
 const App = () => {
   const { habits, setHabits, newHabitText, setNewHabitText } = useContext(Context);
 
+  document.body.classList.add('darkMode');
+
   const handleHabitInputChange = (e) => {
     setNewHabitText(e.target.value);
   }
@@ -30,25 +32,40 @@ const App = () => {
     }
   }
 
+  const handleLightMode = (e) => {
+    console.log('handleLightMode');
+    if (e.target.checked) {
+      document.body.classList.remove('darkMode');
+      document.body.classList.add('lightMode');
+    }
+    else {
+      document.body.classList.remove('lightMode');
+      document.body.classList.add('darkMode');
+    }
+  }
+
   function addHabit() {
     const habit = generateHabit(habits.length + 1, newHabitText, []);
     setHabits(habits.concat(habit));
     setNewHabitText('');
   }
 
-  const HomePageButton = () => {
+  const Sidebar = () => {
     return (
-      <div className="homeIcon"  id="homeIcon">
-        <a href="/" ><img decoding="async" src={icon} alt="home" width="45px"/></a>
+      <div className='stickyContainer'>
+        <div className="homeIcon"><a href="/" ><img id="homeImg" decoding="async" src={icon} alt="home" width="45px"/></a>
+          <div className="sidebarOption">
+            <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
+            <label htmlFor="lightModeSwitch"></label>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
     <div className="App">
-      <div className='stickyContainer'>
-        <HomePageButton />
-      </div>
+      <Sidebar />
       <div className='mainPanelContainer'>
         <MainPanel 
           mobile={detectDevice()}
