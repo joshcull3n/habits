@@ -46,11 +46,15 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomePageButton />
-      <MainPanel 
-        mobile={detectDevice()}
-        handleHabitInputEnter={handleHabitInputEnter}
-        handleHabitInputChange={handleHabitInputChange}/>
+      <div className='stickyContainer'>
+        <HomePageButton />
+      </div>
+      <div className='mainPanelContainer'>
+        <MainPanel 
+          mobile={detectDevice()}
+          handleHabitInputEnter={handleHabitInputEnter}
+          handleHabitInputChange={handleHabitInputChange}/>
+      </div>
     </div>
   );
 }
