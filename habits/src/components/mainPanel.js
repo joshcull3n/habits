@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 const TopBar = () => {
   return (
-    <div className="top-block is-layout-flex centered">
+    <div className="centered" style={{ paddingTop:'0.5rem'}}>
       <h2>habits</h2>
     </div>
   );
@@ -13,13 +13,19 @@ const TopBar = () => {
 const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
   const { newHabitText } = useContext(Context);
   return (
-    <div className="is-layout-flex centered" style={{ display: 'flex', paddingTop:'1rem', marginLeft: '40px', marginRight: '55px'}}>
-      <p><input style={{textAlign:'center', placeholderColor:'#EB575726' }} placeholder='add a new habit' value={newHabitText} onKeyDown={handleHabitInputEnter} onChange={handleHabitInputChange}/></p>
+    <div className="centered" style={{ paddingTop:'1rem'}}>
+      <p>
+        <input style={{textAlign:'center'}} 
+          placeholder='add a new habit' 
+          value={newHabitText} 
+          onKeyDown={handleHabitInputEnter} 
+          onChange={handleHabitInputChange}/>
+      </p>
     </div>
   );
 };
 
-const MainPanel = ({ handleHabitInputChange, handleHabitInputEnter }) => {
+const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) => {
   const { habits, startDate, endDate } = useContext(Context);
 
   function generateDateLabels() {
@@ -38,13 +44,9 @@ const MainPanel = ({ handleHabitInputChange, handleHabitInputEnter }) => {
   }
 
   return (
-    <div className="top-block mainPanel" style={{paddingRight:'0px'}}>
-      <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem', marginLeft: '40px', marginRight: '55px'}}>
-        <TopBar />
-      </div>
-      <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', paddingTop:'0rem', marginLeft: '40px', marginRight: '55px'}}>
-        <HabitList habits={habits} dateLabels={generateDateLabels()}/>
-      </div>
+    <div className="mainPanel">
+      <TopBar />
+      <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
       <HabitInput 
         handleHabitInputEnter={handleHabitInputEnter} 
         handleHabitInputChange={handleHabitInputChange} />

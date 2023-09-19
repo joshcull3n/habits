@@ -1,3 +1,10 @@
+:root {
+  --main-font-color: #e3bcaf;
+  --main-font-color-med-alpha: #e3bcafaa;
+  --main-font-color-high-alpha: #e3bcaf4a;
+  --bg-color-dark: black;
+}
+
 html {
   transform: scale(1);
   width: 100%;
@@ -10,30 +17,26 @@ html {
 
 * {
   font-family: "Work Sans";
-  color: #e3bcaf;
+  color: var(--main-font-color);
 }
 
 body {
-  background-color: black;
+  background-color: var(--bg-color-dark);
   font-size: 0.85em;
   line-height: 1.5;
   padding: 0;
 }
 
-body .is-layout-flex {
-  gap: 24px;
-}
-
 input {
-  color: #e3bcafaa;
-  border-color: #e3bcaf4a;
+  color: var(--main-font-color-med-alpha);
+  border-color: var(--main-font-color-high-alpha);
   border-width: thin;
-  background: #000000FF;
-  caret-color: #e3bcaf4a;
+  background: var(--bg-color-dark);
+  caret-color: var(--main-font-color-high-alpha);
 }
 
 input::placeholder {
-  color : #e3bcaf4a
+  color : var(--main-font-color-high-alpha)
 }
 
 input:focus {
@@ -43,10 +46,6 @@ input:focus {
 
 input:focus::placeholder {
   color:transparent;
-}
-
-table {
-  border: none;
 }
 
 input[type="checkbox"]:not(:checked) {
@@ -90,6 +89,12 @@ input[type="checkbox"]:checked:hover {
   opacity: 0.6;
 }
 
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .deleteButton img:hover {
   opacity: 1;
   cursor: pointer;
@@ -116,10 +121,12 @@ input[type="checkbox"]:checked:hover {
   opacity: 0.7;
 }
 
-.centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.habitItem {
+  text-align: left; 
+  overflow:hidden;
+  text-overflow:ellipsis; 
+  white-space:nowrap;
+  padding-bottom: 5px;
 }
 
 .homeIcon {

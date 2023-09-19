@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import { detectDevice } from './App';
+
+const mobile = detectDevice();
 
 export const Context = React.createContext();
 export const ContextProvider = ({ children }) => {
@@ -6,11 +9,12 @@ export const ContextProvider = ({ children }) => {
   var today = new Date();
   var yesterday2 = new Date();
   yesterday2.setDate(yesterday2.getDate()-2)
-  var initHabits = [
+  var testHabits = [
     { id: 0, body: 'floss', doneDates: [today] },
     { id: 1, body: 'do 50 pushups', doneDates: [] },
     { id: 2, body: 'practice doing the worm', doneDates: [today, yesterday2] }
   ];
+  var initHabits = []
 
   function convertToYYYYMMDD(date) {
     var tempYear = date.getFullYear();
@@ -45,11 +49,15 @@ export const ContextProvider = ({ children }) => {
   const [endDate, setEndDate] = useState(new Date());
   var tempEnd = new Date(endDate);
   var start = new Date();
-  start.setDate(tempEnd.getDate() - 6);
+  if (mobile)
+    start.setDate(tempEnd.getDate() - 3);
+  else
+    start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
 
   // set habits to localStorage on every render
   useEffect(() => {
+    console.log('useEffect()');
     var tempHabitList = [];
     habits.forEach(habit => {
       var tempHabit = Object.create(habit);
@@ -61,7 +69,7 @@ export const ContextProvider = ({ children }) => {
       tempHabitList.push(tempHabit);
     });
     localStorage.setItem('habits_cullen', JSON.stringify(tempHabitList))
-  }, [habits])
+  }, [habits, localStorage])
 
   return (
     <Context.Provider value={{ 
