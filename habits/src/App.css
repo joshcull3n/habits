@@ -95,6 +95,10 @@ input[type="checkbox"]:checked:hover {
   align-items: center;
 }
 
+.deleteButton {
+  padding-left: 1.5px;
+}
+
 .deleteButton img:hover {
   opacity: 1;
   cursor: pointer;
@@ -156,6 +160,15 @@ input[type="checkbox"]:checked:hover {
 
 .mainPanelContainer {
   z-index: 1000;
+}
+
+.monospaceText {
+  font-family: monospace;
+}
+
+.spaceEvenly {
+  display: flex;
+  justify-content: space-between;
 }
 
 @font-face{

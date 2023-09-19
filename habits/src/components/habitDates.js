@@ -61,8 +61,8 @@ const Checkbox = (props) => {
 const CheckboxList = (props) => {
   var dates = genDates(props.startDate, props.endDate);
   return (
-    <div>
-      { dates.map((date, index) => <span style={{padding:'0px'}} key={index}><Checkbox habit={props.habit} date={date} doneDates={props.doneDates} /></span>) }
+    <div className="spaceEvenly">
+      { dates.map((date, index) => <span key={index}><Checkbox habit={props.habit} date={date} doneDates={props.doneDates} /></span>) }
     </div>
   )
 }
@@ -70,11 +70,7 @@ const CheckboxList = (props) => {
 const HabitDates = ({ habit }) => {
   const { startDate, endDate } = useContext(Context);
 
-  return (
-    <div className="habitDates">
-      <CheckboxList habit={habit} startDate={startDate} endDate={endDate} doneDates={habit.doneDates} />
-    </div>
-  )
+  return <CheckboxList habit={habit} startDate={startDate} endDate={endDate} doneDates={habit.doneDates} />
 }
 
 export default HabitDates;

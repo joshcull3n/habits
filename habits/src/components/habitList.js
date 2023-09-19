@@ -12,12 +12,12 @@ const HabitList = ({ dateLabels, mobile }) => {
   
   function renderDateLabels() {
     return(
-      <div style={{paddingBottom:'2px'}}>
+      <div className="spaceEvenly" style={{padding:'0px 2px'}}>
         { dateLabels.map((label, index) => {
           if (label === dateLabels[0])
-            return <span style={{paddingLeft:'6px', paddingRight:'1px', fontFamily:'monospace'}} key={index}>{label}</span> 
+            return <span className="monospaceText" key={index}>{label}</span> 
           else
-            return <span style={{paddingLeft:'10.5px', fontFamily:'monospace'}} key={index}>{label}</span> 
+            return <span className="monospaceText" key={index}>{label}</span> 
         })}
       </div>
     )
@@ -112,7 +112,7 @@ const HabitList = ({ dateLabels, mobile }) => {
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
                   <td style={{maxWidth:'350px',minWidth:'75px'}}><Habit habit={habit}/></td>
-                  <td style={{minWidth:'168px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
+                  <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
             </tbody>
