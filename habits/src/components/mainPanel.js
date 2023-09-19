@@ -38,7 +38,7 @@ const MainPanel = ({ handleHabitInputChange, handleHabitInputEnter }) => {
   }
 
   return (
-    <div className="top-block" style={{paddingRight:'0px'}}>
+    <div className="top-block mainPanel" style={{paddingRight:'0px'}}>
       <div className="is-layout-flex centered" style={{ display: 'flex', padding: '2.25rem', paddingBottom: '0rem', paddingTop:'0.5rem', marginLeft: '40px', marginRight: '55px'}}>
         <TopBar />
       </div>

@@ -3,6 +3,7 @@ import './App.css';
 import MainPanel from './components/mainPanel.js';
 import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
+import icon from './images/icon.gif'
 
 const App = () => {
   const { habits, setHabits, newHabitText, setNewHabitText } = useContext(Context);
@@ -24,8 +25,17 @@ const App = () => {
     setNewHabitText('');
   }
 
+  const HomePageButton = () => {
+    return (
+      <div className="homeIcon"  id="homeIcon">
+        <a href="/" ><img decoding="async" src={icon} alt="home" width="45px"/></a>
+      </div>
+    )
+  }
+
   return (
     <div className="App">
+      <HomePageButton />
       <MainPanel 
         handleHabitInputEnter={handleHabitInputEnter}
         handleHabitInputChange={handleHabitInputChange}/>

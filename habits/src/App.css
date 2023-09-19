@@ -1,7 +1,11 @@
 html {
-  transform: scale(1.1);
-  width: fit-content;
+  transform: scale(1);
+  width: 100%;
+}
+
+.mainPanel {
   margin: auto;
+  width: fit-content;
 }
 
 * {
@@ -116,6 +120,20 @@ input[type="checkbox"]:checked:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.homeIcon {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -moz-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.homeIcon:hover {
+  opacity: 1;
 }
 
 @font-face{
