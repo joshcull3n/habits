@@ -1,4 +1,5 @@
 import HabitList from './habitList.js';
+import HabitTable from './habitTable.js'
 import { Context } from '../Context.js';
 import { useContext } from 'react';
 
@@ -46,7 +47,8 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) =>
   return (
     <div className="mainPanel">
       <TopBar />
-      <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
+      <HabitTable dateLabels={generateDateLabels()}/>
+      {/*<HabitList habits={habits} dateLabels={generateDateLabels()}/>*/}
       <HabitInput 
         handleHabitInputEnter={handleHabitInputEnter} 
         handleHabitInputChange={handleHabitInputChange} />

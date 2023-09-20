@@ -1,3 +1,52 @@
+.listContainer {
+  border: 1px red dotted; 
+  width: 30rem; 
+  margin: auto; 
+  display: table; 
+}
+
+.listHeaderRow {
+  border: 1px white dotted;
+  display: flex;
+}
+
+.listBody {
+  border: 1px purple dotted;
+  display: flex;
+}
+
+.leftColumn {
+  border: 1px blue dotted;
+  flex:100%;
+  text-align: center;
+}
+.rightColumn {
+  border: 1px green dotted;
+  flex:100%;
+  text-align: center;
+}
+
+.datePageRight img {
+  width: 15px;
+  float: right;
+  margin: 5px;
+}
+
+.datePageLeft img {
+  width: 15px;
+  float: left;
+  margin: 5px;
+}
+
+.dateLabelsContainer {
+  margin: 3px;
+}
+
+.dateLabel {
+  margin: 5px;
+  font-family: monospace;
+}
+
 :root {
   --main-font-color: #e3bcaf;
   --main-font-color-med-alpha: #e3bcafaa;
@@ -169,6 +218,13 @@ input[type="checkbox"]:checked:hover {
 .spaceEvenly {
   display: flex;
   justify-content: space-between;
+}
+
+.emptyList {
+  padding-top: 10px;
+  opacity: 0.3; 
+  text-align: center;
+  font-family: monospace;
 }
 
 @font-face{

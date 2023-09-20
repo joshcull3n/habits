@@ -51,7 +51,6 @@ const App = () => {
       </div>
       <div className='mainPanelContainer'>
         <MainPanel 
-          mobile={detectDevice()}
           handleHabitInputEnter={handleHabitInputEnter}
           handleHabitInputChange={handleHabitInputChange}/>
       </div>

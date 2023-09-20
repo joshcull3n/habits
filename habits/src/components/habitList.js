@@ -2,12 +2,13 @@
 import { useContext } from 'react'
 import Habit from './habit.js'
 import HabitDates from './habitDates.js'
+import { detectDevice } from '../App.js'
 import { Context } from '../Context.js'
 import deletePng from '../images/delete.png'
 import dateLeft from '../images/arrows/doubleLeft.png'
 import dateRight from '../images/arrows/doubleRight.png'
 
-const HabitList = ({ dateLabels, mobile }) => {
+const HabitList = ({ dateLabels }) => {
   const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
   
   function renderDateLabels() {
@@ -81,14 +82,14 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const EmptyHabitList = () => {
     return (
-    <div className='centered'>
-      <div style={{paddingTop: '10px', opacity:0.3, textAlign: 'center', fontFamily:'monospace'}}>add a habit below.<br/>(quit smoking, floss everyday, etc.)</div>
+    <div className='centered emptyList'>
+      add a habit below.<br/>(quit smoking, floss everyday, etc.)
     </div>
     )
   }
 
   const HabitList = () => {
-    if (mobile) {
+    if (detectDevice()) {
       return (
         <div className="centered">
           <table>
