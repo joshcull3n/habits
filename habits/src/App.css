@@ -4,14 +4,23 @@
   --main-font-color-high-alpha: #e3bcaf4a;
   --bg-color: black;
   --calendar-font: monospace;
+  --textbox-placeholder-color: #e3bcaf77;
 }
 
 .lightMode {
-  --main-font-color: #252525;
+  --main-font-color: rgb(0, 0, 0);
   --main-font-color-med-alpha: #000000aa;
   --main-font-color-high-alpha: #0000007d;
-  --bg-color: #ffffff;
+  --accent-color: #00305f;
+  --bg-color: #fafafa;
   --calendar-font: monospace;
+  --textbox-bg: rgba(151, 151, 151, 0.05);
+  --textbox-text-color: #000000;
+  --textbox-placeholder-color: rgb(0, 0, 0);
+}
+
+.lightMode h3 {
+  font-family: Arial;
 }
 
 html {
@@ -37,15 +46,15 @@ body {
 }
 
 input {
-  color: var(--main-font-color-med-alpha);
+  color: var(--textbox-text-color);
   border-color: var(--main-font-color-high-alpha);
   border-width: thin;
-  background: var(--bg-color-dark);
+  background: var(--textbox-bg);
   caret-color: var(--main-font-color-high-alpha);
 }
 
 input::placeholder {
-  color : var(--main-font-color-high-alpha)
+  color : var(--textbox-placeholder-color)
 }
 
 input:focus {
@@ -138,7 +147,39 @@ input[type="checkbox"]:checked:hover {
 }
 
 .deleteButton {
-  padding-left: 1.5px;
+  padding-left: 3px;
+  padding-top: 2.5px;
+  vertical-align:-webkit-baseline-middle;
+}
+
+.lightMode #deleteButton {
+  content: url("./images/delete_black.png");
+}
+
+.lightMode #calendarLeft {
+  content: url("./images/doubleLeft_black.png")
+}
+
+.lightMode #calendarRight {
+  content: url("./images/doubleRight_black.png")
+}
+
+.darkMode #calendarLeft {
+  content: url("./images/arrows/doubleLeft.png")
+}
+
+.darkMode #calendarRight {
+  content: url("./images/arrows/doubleRight.png")
+}
+
+.lightMode #habitListContainer {
+  background-color:#f0a6a6;
+  border-radius:3px; 
+  
+}
+
+.darkMode #deleteButton {
+  content: url("./images/delete.png");
 }
 
 .deleteButton img:hover {

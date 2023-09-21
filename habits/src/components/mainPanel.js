@@ -44,12 +44,14 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) =>
   }
 
   return (
-    <div className="mainPanel">
-      <TopBar />
-      <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
-      <HabitInput 
-        handleHabitInputEnter={handleHabitInputEnter} 
-        handleHabitInputChange={handleHabitInputChange} />
+    <div className="mainPanel" style={{padding:'10px'}}>
+      <div id="habitListContainer">
+        <TopBar />
+        <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
+        <HabitInput 
+          handleHabitInputEnter={handleHabitInputEnter} 
+          handleHabitInputChange={handleHabitInputChange} />
+      </div>
     </div>
   );
 };
