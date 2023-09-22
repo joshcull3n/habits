@@ -5,6 +5,11 @@
   --bg-color: black;
   --calendar-font: monospace;
   --textbox-placeholder-color: #e3bcaf77;
+  --delete-button: url("./images/delete.png");
+  --calendar-left: url("./images/arrows/doubleLeft.png");
+  --calendar-right: url("./images/arrows/doubleRight.png");
+  --input-bg-not-checked: url("./images/circle.png") 3px 3px no-repeat;
+  --input-bg-checked: url("./images/circle_filled.png") 2px 3px no-repeat;
 }
 
 .lightMode {
@@ -17,20 +22,11 @@
   --textbox-bg: rgba(151, 151, 151, 0.05);
   --textbox-text-color: #000000;
   --textbox-placeholder-color: rgb(0, 0, 0);
-}
-
-.lightMode h3 {
-  font-family: Arial;
-}
-
-html {
-  transform: scale(1);
-  width: 100%;
-}
-
-.mainPanel {
-  margin: auto;
-  width: fit-content;
+  --delete-button: url("./images/delete_black.png");
+  --calendar-left: url("./images/doubleLeft_black.png");
+  --calendar-right: url("./images/doubleRight_black.png");
+  --input-bg-not-checked: url("./images/circle_black.png") 3px 3px no-repeat;
+  --input-bg-checked: url("./images/circle_filled_black.png") 2px 3px no-repeat;
 }
 
 * {
@@ -40,17 +36,21 @@ html {
 
 body {
   background-color: var(--bg-color);
-  font-size: 0.85em;
+  font-size: 0.9em;
   line-height: 1.5;
-  padding: 0;
+}
+
+.mainPanel {
+  margin: auto;
+  width: fit-content;
 }
 
 input {
   color: var(--textbox-text-color);
   border-color: var(--main-font-color-high-alpha);
-  border-width: thin;
   background: var(--textbox-bg);
   caret-color: var(--main-font-color-high-alpha);
+  border-width: thin;
 }
 
 input::placeholder {
@@ -66,7 +66,7 @@ input:focus::placeholder {
   color:transparent;
 }
 
-.darkMode input[type="checkbox"]:not(:checked) {
+input[type="checkbox"]:not(:checked) {
   appearance:none;
   -webkit-appearance:none;
   -moz-appearance:none;
@@ -75,7 +75,7 @@ input:focus::placeholder {
   cursor:pointer;
   position: relative;
   top: 1px;
-  background: url("./images/circle.png") 3px 3px no-repeat; 
+  background: var(--input-bg-not-checked);
   background-size: 10.5px;
   opacity: 0.2;
   -webkit-transition: opacity 0.1s ease-in-out;
@@ -83,7 +83,7 @@ input:focus::placeholder {
   transition: opacity 0.1s ease-in-out;
 }
 
-.darkMode input[type="checkbox"]:checked {
+input[type="checkbox"]:checked {
   appearance:none;
   -webkit-appearance:none;
   -moz-appearance:none;
@@ -92,40 +92,7 @@ input:focus::placeholder {
   cursor:pointer;
   position: relative;
   top: 0px;
-  background: url("./images/circle_filled.png") 2px 3px no-repeat; 
-  background-size: 12.5px;
-  -webkit-transition: opacity 0.1s ease-in-out;
-  -moz-transition: opacity 0.1s ease-in-out;
-  transition: opacity 0.1s ease-in-out;
-}
-
-.lightMode input[type="checkbox"]:not(:checked) {
-  appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  width: 13px;
-  height: 14px;
-  cursor:pointer;
-  position: relative;
-  top: 1px;
-  background: url("./images/circle_black.png") 3px 3px no-repeat; 
-  background-size: 10.5px;
-  opacity: 0.2;
-  -webkit-transition: opacity 0.1s ease-in-out;
-  -moz-transition: opacity 0.1s ease-in-out;
-  transition: opacity 0.1s ease-in-out;
-}
-
-.lightMode input[type="checkbox"]:checked {
-  appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  width: 13px;
-  height: 14px;
-  cursor:pointer;
-  position: relative;
-  top: 0px;
-  background: url("./images/circle_filled_black.png") 2px 3px no-repeat; 
+  background: var(--input-bg-checked);
   background-size: 12.5px;
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
@@ -149,42 +116,15 @@ input[type="checkbox"]:checked:hover {
 .deleteButton {
   padding-left: 3px;
   padding-top: 2.5px;
-  vertical-align:-webkit-baseline-middle;
-}
-
-.lightMode #deleteButton {
-  content: url("./images/delete_black.png");
-}
-
-.lightMode #calendarLeft {
-  content: url("./images/doubleLeft_black.png")
-}
-
-.lightMode #calendarRight {
-  content: url("./images/doubleRight_black.png")
-}
-
-.darkMode #calendarLeft {
-  content: url("./images/arrows/doubleLeft.png")
-}
-
-.darkMode #calendarRight {
-  content: url("./images/arrows/doubleRight.png")
-}
-
-.lightMode #habitListContainer {
-  background-color:#f0a6a6;
-  border-radius:3px; 
-  
-}
-
-.darkMode #deleteButton {
-  content: url("./images/delete.png");
 }
 
 .deleteButton img:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+#deleteButton {
+  content: var(--delete-button);
 }
 
 .deleteButton img {
@@ -194,6 +134,19 @@ input[type="checkbox"]:checked:hover {
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
+}
+
+#calendarLeft {
+  content: var(--calendar-left);
+}
+
+#calendarRight {
+  content: var(--calendar-right);
+}
+
+.lightMode #habitListContainer {
+  background-color:#f0a6a6;
+  border-radius:3px; 
 }
 
 .datePaginator {
