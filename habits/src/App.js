@@ -10,16 +10,25 @@ export function detectDevice() {
   //var isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
   var mobile = false;
 
-  if (agent.includes('iphone') || agent.includes('android') || agent.includes('blackberry') || agent.includes('webOS'))
+  if (agent.includes('iphone') || agent.includes('android') || agent.includes('blackberry') || agent.includes('webOS')) {
+    document.body.classList.add('mobile');
     mobile = true;
+  }
+
 
   return mobile
 }
 
 const App = () => {
-  const { habits, setHabits, newHabitText, setNewHabitText } = useContext(Context);
+  const { habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode } = useContext(Context);
 
-  document.body.classList.add('darkMode');
+  // set body class
+  document.body.classList.remove('lightMode');
+  document.body.classList.remove('darkMode');
+  if (lightMode)
+    document.body.classList.add("lightMode");
+  else
+    document.body.classList.add('darkMode');
 
   const handleHabitInputChange = (e) => {
     setNewHabitText(e.target.value);
@@ -33,15 +42,10 @@ const App = () => {
   }
 
   const handleLightMode = (e) => {
-    console.log('handleLightMode');
-    if (e.target.checked) {
-      document.body.classList.remove('darkMode');
-      document.body.classList.add('lightMode');
-    }
-    else {
-      document.body.classList.remove('lightMode');
-      document.body.classList.add('darkMode');
-    }
+    if (lightMode)
+      setLightMode(false);
+    else
+      setLightMode(true);
   }
 
   function addHabit() {
@@ -53,7 +57,7 @@ const App = () => {
   const Sidebar = () => {
     return (
       <div className='stickyContainer'>
-        <div className="homeIcon"><a href="/" ><img id="homeImg" decoding="async" src={icon} alt="home" width="45px"/></a>
+        <div className="homeIcon"><a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
           <div className="sidebarOption">
             <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
             <label htmlFor="lightModeSwitch"></label>

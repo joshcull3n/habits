@@ -55,6 +55,8 @@ export const ContextProvider = ({ children }) => {
     start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
 
+  const [lightMode, setLightMode] = useState(false);
+
   // set habits to localStorage on every render
   useEffect(() => {
     console.log('useEffect()');
@@ -76,7 +78,8 @@ export const ContextProvider = ({ children }) => {
       habits, setHabits, 
       newHabitText, setNewHabitText, 
       endDate, setEndDate,
-      startDate, setStartDate }}>
+      startDate, setStartDate,
+      lightMode, setLightMode }}>
       { children }
     </Context.Provider>
   );

@@ -10,12 +10,14 @@
   --calendar-right: url("./images/arrows/doubleRight.png");
   --input-bg-not-checked: url("./images/circle.png") 3px 3px no-repeat;
   --input-bg-checked: url("./images/circle_filled.png") 2px 3px no-repeat;
+  --light-mode-switch-pic: url("./images/sun.svg") 2px 3px no-repeat;
+  --home-img-pic: url("./images/icon.gif");
 }
 
 .lightMode {
-  --main-font-color: rgb(0, 0, 0);
-  --main-font-color-med-alpha: #000000aa;
-  --main-font-color-high-alpha: #0000007d;
+  --main-font-color: rgb(70, 70, 70);
+  --main-font-color-med-alpha: #505050aa;
+  --main-font-color-high-alpha: #5050503b;
   --accent-color: #00305f;
   --bg-color: #fafafa;
   --calendar-font: monospace;
@@ -27,6 +29,18 @@
   --calendar-right: url("./images/doubleRight_black.png");
   --input-bg-not-checked: url("./images/circle_black.png") 3px 3px no-repeat;
   --input-bg-checked: url("./images/circle_filled_black.png") 2px 3px no-repeat;
+  --light-mode-switch-pic: url("./images/sun_black.svg") 2px 3px no-repeat;
+  --home-img-pic: url("./images/sunglasses.png");
+}
+
+.mobile {
+  --home-img-width: 35px;
+  --sidebar-padding-left: 10px;
+}
+
+body:not(.mobile) {
+  --home-img-width: 65px;
+  --sidebar-padding-left: 25px;
 }
 
 * {
@@ -36,7 +50,7 @@
 
 body {
   background-color: var(--bg-color);
-  font-size: 0.9em;
+  font-size: 0.85em;
   line-height: 1.5;
 }
 
@@ -128,9 +142,10 @@ input[type="checkbox"]:checked:hover {
 }
 
 .deleteButton img {
-  padding-bottom: 2px;
-  width: 9px;
   opacity: 0.3;
+  display:inline-flex;
+  width: 9px;
+  padding-bottom: 3px; /* should be 2.5px for FF */
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
@@ -173,7 +188,7 @@ input[type="checkbox"]:checked:hover {
 .homeIcon {
   position: sticky;
   top: 25px;
-  padding-left: 25px;
+  padding-left: var(--sidebar-padding-left);
 }
 
 #homeImg {
@@ -181,6 +196,9 @@ input[type="checkbox"]:checked:hover {
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
   opacity: 0.4;
+  content: var(--home-img-pic);
+  width: var(--home-img-width);
+  display: flex;
 }
 
 #homeImg:hover {
@@ -189,10 +207,12 @@ input[type="checkbox"]:checked:hover {
 
 .sidebarOption {
   padding: 10px;
+  opacity: 0.4;
+  display: flex;
+  justify-content: center;
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
-  opacity: 0.4;
 }
 
 .sidebarOption:hover {
@@ -227,7 +247,7 @@ input[type="checkbox"]:checked:hover {
   cursor:pointer;
   position: relative;
   top: 0px;
-  background: url("./images/sun.png") 2px 3px no-repeat;
+  background: var(--light-mode-switch-pic);
   background-size: 20px;
   opacity: 1;
 }
