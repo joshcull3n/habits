@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 const TopBar = () => {
   return (
-    <div className="centered" style={{ paddingTop:'0.5rem'}}>
+    <div className="centered">
       <h2>habits</h2>
     </div>
   );
@@ -44,12 +44,16 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) =>
   }
 
   return (
-    <div className="mainPanel">
-      <TopBar />
-      <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()}/>
-      <HabitInput 
-        handleHabitInputEnter={handleHabitInputEnter} 
-        handleHabitInputChange={handleHabitInputChange} />
+    <div className="mainPanel" style={{padding:'10px'}}>
+      <div>
+        <TopBar />
+        <div id="habitListContainer">
+          <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
+        <HabitInput 
+          handleHabitInputEnter={handleHabitInputEnter} 
+          handleHabitInputChange={handleHabitInputChange} />
+        </div>
+      </div>
     </div>
   );
 };

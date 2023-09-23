@@ -52,7 +52,7 @@ const HabitList = ({ dateLabels, mobile }) => {
   const DeleteButton = (habit) => {
     return (
       <td className='deleteButton' onClick={() => deleteHabit(habit.id)}>
-        <img alt='delete button' src={deletePng} className='deleteButton' style={{verticalAlign: 'baseline'}}/>
+        <img alt='x' id="deleteButton" style={{verticalAlign: 'baseline'}}/>
       </td>
     )
   }
@@ -60,9 +60,8 @@ const HabitList = ({ dateLabels, mobile }) => {
   const DatePageButtonLeft = () => {
     return ( 
       <td style={{padding:'0'}}>
-        <img alt='date page left' className="datePaginator" 
+        <img alt='date page left' id="calendarLeft" className="datePaginator" 
           style={{width:'15px', float:'right'}} 
-          src={dateLeft} 
           onClick={() => { datePageLeftDay() }}/>
       </td>
     )
@@ -71,9 +70,8 @@ const HabitList = ({ dateLabels, mobile }) => {
   const DatePageButtonRight = () => {
     return (
       <td style={{padding:'0'}}>
-        <img alt='date page right' className="datePaginator" 
+        <img alt='date page right' id="calendarRight" className="datePaginator" 
           style={{width:'15px', float:'left'}} 
-          src={dateRight} 
           onClick={() => { datePageRightDay() }}/>
       </td>
     )
