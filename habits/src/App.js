@@ -57,13 +57,16 @@ const App = () => {
   const Sidebar = () => {
     return (
       <div className='stickyContainer'>
-        <div className="homeIcon"><a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
-          <div className="sidebarOption">
-            <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
-            <label htmlFor="lightModeSwitch"></label>
+          <div className="sidebar">
+            <div id="sidebarShadow">
+              <a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
+              <div className="sidebarOption">
+                <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
+                <label htmlFor="lightModeSwitch"></label>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     )
   }
 
