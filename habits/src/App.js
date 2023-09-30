@@ -35,7 +35,7 @@ const App = () => {
   }
 
   const handleHabitInputEnter = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target.value.trim()) {
       setNewHabitText(event.target.value);
       addHabit();
     }
@@ -49,7 +49,7 @@ const App = () => {
   }
 
   function addHabit() {
-    const habit = generateHabit(habits.length + 1, newHabitText, []);
+    const habit = generateHabit(habits.length + 1, newHabitText.trim(), []);
     setHabits(habits.concat(habit));
     setNewHabitText('');
   }
@@ -57,16 +57,16 @@ const App = () => {
   const Sidebar = () => {
     return (
       <div className='stickyContainer'>
-          <div className="sidebar">
-            <div id="sidebarShadow">
-              <a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
-              <div className="sidebarOption">
-                <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
-                <label htmlFor="lightModeSwitch"></label>
-              </div>
+        <div className="sidebar">
+          <div id="sidebarShadow">
+            <a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
+            <div className="sidebarOption">
+              <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
+              <label htmlFor="lightModeSwitch"></label>
             </div>
           </div>
         </div>
+      </div>
     )
   }
 
@@ -84,3 +84,4 @@ const App = () => {
 }
 
 export default App;
+
