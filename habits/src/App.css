@@ -40,6 +40,7 @@
   --sidebar-padding-left: 10px;
 }
 
+
 body:not(.mobile) {
   --home-img-width: 65px;
   --sidebar-padding-left: 25px;
@@ -63,9 +64,10 @@ h2 {
 input {
   color: var(--textbox-text-color);
   border-color: var(--main-font-color-high-alpha);
+  border-radius: 3px;
   background: var(--textbox-bg);
   caret-color: var(--main-font-color-high-alpha);
-  border-width: thin;
+  border-width: 0.5px;
 }
 
 input::placeholder {
@@ -92,7 +94,7 @@ input[type="checkbox"]:not(:checked) {
   top: 1px;
   background: var(--input-bg-not-checked);
   background-size: 10.5px;
-  opacity: 0.2;
+  opacity: 0.3;
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
@@ -272,6 +274,29 @@ input[type="checkbox"]:checked:hover {
   background: var(--light-mode-switch-pic);
   background-size: 20px;
   opacity: 1;
+}
+
+#inputBtn {
+  margin-left: 10px;
+  padding: 2px 7px;
+  border: solid 0.5px var(--main-font-color-high-alpha);
+  border-radius: 3px;
+  font-size: 0.75rem;
+  color: var(--main-font-color-med-alpha);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+#inputBtn:hover {
+  color: var(--main-font-color);
+  box-shadow: 0px 0px 3px;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @font-face{

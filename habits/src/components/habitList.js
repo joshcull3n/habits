@@ -93,7 +93,7 @@ const HabitList = ({ dateLabels, mobile }) => {
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
-                  <td style={{maxWidth:'200px', minWidth:'120px'}}><Habit habit={habit}/></td>
+                  <td style={{maxWidth:'200px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
                   <td style={{minWidth:'100px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
@@ -109,7 +109,7 @@ const HabitList = ({ dateLabels, mobile }) => {
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
-                  <td style={{maxWidth:'350px',minWidth:'75px'}}><Habit habit={habit}/></td>
+                  <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
                   <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}

@@ -41,6 +41,11 @@ const App = () => {
     }
   }
 
+  const handleHabitInputBtnClick = () => {
+    if (newHabitText)
+      addHabit();
+  }
+
   const handleLightMode = (e) => {
     if (lightMode)
       setLightMode(false);
@@ -49,8 +54,10 @@ const App = () => {
   }
 
   function addHabit() {
-    const habit = generateHabit(habits.length + 1, newHabitText.trim(), []);
-    setHabits(habits.concat(habit));
+    if (newHabitText.trim()) {
+      const habit = generateHabit(habits.length + 1, newHabitText.trim(), []);
+      setHabits(habits.concat(habit));
+    }
     setNewHabitText('');
   }
 
@@ -77,7 +84,8 @@ const App = () => {
         <MainPanel 
           mobile={detectDevice()}
           handleHabitInputEnter={handleHabitInputEnter}
-          handleHabitInputChange={handleHabitInputChange}/>
+          handleHabitInputChange={handleHabitInputChange}
+          handleHabitInputBtnClick={handleHabitInputBtnClick}/>
       </div>
     </div>
   );

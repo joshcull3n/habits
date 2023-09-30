@@ -10,22 +10,24 @@ const TopBar = () => {
   );
 };
 
-const HabitInput = ({handleHabitInputChange, handleHabitInputEnter}) => {
+const HabitInput = ({mobile, handleHabitInputChange, handleHabitInputEnter, handleHabitInputBtnClick}) => {
   const { newHabitText } = useContext(Context);
+    
   return (
     <div className="centered" style={{ paddingTop:'1rem'}}>
-      <p>
+      <div style={{display: 'inline-flex'}}>
         <input style={{textAlign:'center'}} 
           placeholder='add a new habit' 
           value={newHabitText} 
           onKeyDown={handleHabitInputEnter} 
           onChange={handleHabitInputChange}/>
-      </p>
+        <div id='inputBtn' onClick={handleHabitInputBtnClick}>↑</div>
+      </div>
     </div>
-  );
+  )
 };
 
-const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) => {
+const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, handleHabitInputBtnClick }) => {
   const { habits, startDate, endDate } = useContext(Context);
 
   function generateDateLabels() {
@@ -49,9 +51,10 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter }) =>
         <TopBar />
         <div id="habitListContainer">
           <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
-        <HabitInput 
+        <HabitInput mobile={mobile}
           handleHabitInputEnter={handleHabitInputEnter} 
-          handleHabitInputChange={handleHabitInputChange} />
+          handleHabitInputChange={handleHabitInputChange} 
+          handleHabitInputBtnClick={handleHabitInputBtnClick}/>
         </div>
       </div>
     </div>
