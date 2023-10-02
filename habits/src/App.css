@@ -1,49 +1,7 @@
-.darkMode {
-  --main-font-color: #e3bcaf;
-  --main-font-color-med-alpha: #e3bcafaa;
-  --main-font-color-high-alpha: #e3bcaf4a;
-  --bg-color: black;
-  --calendar-font: monospace;
-  --textbox-placeholder-color: #e3bcaf77;
-  --delete-button: url("./images/delete.png");
-  --calendar-left: url("./images/arrows/doubleLeft.png");
-  --calendar-right: url("./images/arrows/doubleRight.png");
-  --input-bg-not-checked: url("./images/circle.png") 3px 3px no-repeat;
-  --input-bg-checked: url("./images/circle_filled.png") 2px 3px no-repeat;
-  --light-mode-switch-pic: url("./images/sun.svg") 2px 3px no-repeat;
-  --home-img-pic: url("./images/icon.gif");
-  --sidebar-shadow: #ffffff15;
-}
-
-.lightMode {
-  --main-font-color: rgb(70, 70, 70);
-  --main-font-color-med-alpha: #505050aa;
-  --main-font-color-high-alpha: #5050503b;
-  --accent-color: #00305f;
-  --bg-color: #fafafa;
-  --calendar-font: monospace;
-  --textbox-bg: rgba(151, 151, 151, 0.05);
-  --textbox-text-color: #000000;
-  --textbox-placeholder-color: rgb(0, 0, 0);
-  --delete-button: url("./images/delete_black.png");
-  --calendar-left: url("./images/doubleLeft_black.png");
-  --calendar-right: url("./images/doubleRight_black.png");
-  --input-bg-not-checked: url("./images/circle_black.png") 3px 3px no-repeat;
-  --input-bg-checked: url("./images/circle_filled_black.png") 2px 3px no-repeat;
-  --light-mode-switch-pic: url("./images/sun_black.svg") 2px 3px no-repeat;
-  --home-img-pic: url("./images/sunglasses.png");
-  --sidebar-shadow: #0000001F;
-}
-
+/* overwrites variables when mobile viewing is detected */
 .mobile {
   --home-img-width: 35px;
   --sidebar-padding-left: 10px;
-}
-
-
-body:not(.mobile) {
-  --home-img-width: 65px;
-  --sidebar-padding-left: 25px;
 }
 
 * {
@@ -52,6 +10,8 @@ body:not(.mobile) {
 }
 
 body {
+  --home-img-width: 65px;
+  --sidebar-padding-left: 25px;
   background-color: var(--bg-color);
   font-size: 0.85em;
   line-height: 1.5;

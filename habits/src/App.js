@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import './App.css';
+import './styles/dark.css';
+import './styles/light.css';
 import MainPanel from './components/mainPanel.js';
 import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
@@ -13,8 +15,7 @@ export function detectDevice() {
     document.body.classList.add('mobile');
     mobile = true;
   }
-
-
+  
   return mobile
 }
 
