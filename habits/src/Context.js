@@ -6,14 +6,8 @@ const mobile = detectDevice();
 export const Context = React.createContext();
 export const ContextProvider = ({ children }) => {
 
-  var today = new Date();
   var yesterday2 = new Date();
   yesterday2.setDate(yesterday2.getDate()-2)
-  var testHabits = [
-    { id: 0, body: 'floss', doneDates: [today] },
-    { id: 1, body: 'do 50 pushups', doneDates: [] },
-    { id: 2, body: 'practice doing the worm', doneDates: [today, yesterday2] }
-  ];
   var initHabits = []
 
   function convertToYYYYMMDD(date) {

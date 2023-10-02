@@ -3,7 +3,6 @@ import './App.css';
 import MainPanel from './components/mainPanel.js';
 import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
-import icon from './images/icon.gif'
 
 export function detectDevice() {
   var agent = window.navigator.userAgent.toLowerCase()

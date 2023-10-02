@@ -3,9 +3,6 @@ import { useContext } from 'react'
 import Habit from './habit.js'
 import HabitDates from './habitDates.js'
 import { Context } from '../Context.js'
-import deletePng from '../images/delete.png'
-import dateLeft from '../images/arrows/doubleLeft.png'
-import dateRight from '../images/arrows/doubleRight.png'
 
 const HabitList = ({ dateLabels, mobile }) => {
   const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
