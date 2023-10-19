@@ -48,7 +48,6 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
 
   return (
     <div className="mainPanel" style={{padding:'10px'}}>
-      <div>
         <TopBar />
         <div id="habitListContainer">
           <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
@@ -57,8 +56,7 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
           handleHabitInputChange={handleHabitInputChange} 
           handleHabitInputBtnClick={handleHabitInputBtnClick}/>
         </div>
-      </div>
-      <Graph />
+        <Graph />
     </div>
   );
 };

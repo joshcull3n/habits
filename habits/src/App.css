@@ -5,26 +5,13 @@
 }
 
 #root, .App, .mainPanelContainer, .mainPanel {
-  height: 90%;
+  height: 99%;
 }
 
 .mobile {
   --home-img-width: 35px;
   --sidebar-padding-left: 10px;
   --graph-step-size: 0.5;
-}
-
-.graph {
-  --ticks-color: var(--graph-ticks-color);
-  --line-color: var(--graph-line-color);
-  --bg-color: var(--graph-bg-color);
-  --step-size: var(--graph-step-size);
-  padding-top: 35px;
-  padding-bottom: 20px;
-  width: 90%;
-  min-width: 300px;
-  max-width: 1000px;
-  margin: auto;
 }
 
 * {
@@ -180,6 +167,20 @@ input[type="checkbox"]:checked:hover {
   border-radius:3px;
 }
 
+.graph {
+  --ticks-color: var(--graph-ticks-color);
+  --line-color: var(--graph-line-color);
+  --bg-color: var(--graph-bg-color);
+  --step-size: var(--graph-step-size);
+  padding-top: 35px;
+  padding-bottom: 20px;
+  width: 90%;
+  min-width: 300px;
+  max-width: 1000px;
+  margin: auto;
+  flex: 1;
+}
+
 .sidebar {
   position: sticky;
   top: 25px;
@@ -238,6 +239,8 @@ input[type="checkbox"]:checked:hover {
 .mainPanel {
   margin: auto;
   width: 90%;
+  display: flex;
+  flex-direction: column;
 }
 
 .mainPanelContainer {
