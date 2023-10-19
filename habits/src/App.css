@@ -159,6 +159,9 @@ input[type="checkbox"]:checked:hover {
 
 #habitListContainer {
   padding: 10px 15px;
+  max-width: min-content;
+  min-width: min-content;
+  margin: 0 auto;
 }
 
 .lightMode #habitListContainer {
