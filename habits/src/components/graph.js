@@ -4,73 +4,74 @@ import { Line } from "react-chartjs-2";
 import { useContext, useRef, useEffect, useState } from 'react';
 import { Context } from '../Context';
 
-function generateDateKey(date) {
-  // the dateKeys are parsed like this because toISOString() converts 
-  // the dates to UTC, which often pushes/pulls the date by 1 day
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-}
-
-function generateGraphData(habits, startDate, endDate) {
-  // labels
-  const labels = [];
-  const dates = [];
-
-  const currDate = new Date(startDate);
-  while (currDate <= endDate) {
-    labels.push(currDate.getDate());
-    dates.push(new Date(currDate));
-    currDate.setDate(currDate.getDate() + 1);
-  }
-
-  const dateCounts = {};
-  dates.forEach(date => {
-    const dateKey = generateDateKey(date);
-    dateCounts[dateKey] = 0;
-  })
-
-  habits.forEach(habit => {
-    habit.doneDates.forEach(doneDate => {
-      let dateKey = generateDateKey(doneDate);
-      if (dateCounts[dateKey] !== undefined)
-        dateCounts[dateKey]++;
-    });
-  });
-
-  const datePercs = {}
-  dates.forEach(date => {
-    const dateKey = generateDateKey(date);
-    const perc = (dateCounts[dateKey]/habits.length);
-    datePercs[dateKey] = perc;
-  });
-
-  const dataPoints = Object.keys(datePercs).map(key => datePercs[key]);
-  
-  const data = {
-    labels,
-    datasets: [
-      {
-        data: dataPoints,
-        borderColor: 'rgb(255, 99, 132)',
-        fill: true,
-        backgroundColor: 'rgba(255, 99, 132, 0.1)',
-        tension: 0.3
-      }
-    ]
-  };
-
-  return data;
-}
-
 const Graph = () => {
-  const { habits, startDate, endDate, graphFontColor, setGraphFontColor } = useContext(Context);
+  const { habits, startDate, endDate, graphFontColor, setGraphFontColor, graphLineColor, setGraphLineColor, graphBgColor, setGraphBgColor } = useContext(Context);
   const graphRef = useRef(null);
-
   const graphData = generateGraphData(habits, startDate, endDate);
 
   useEffect(() => {
-    console.log(getComputedStyle(graphRef.current).getPropertyValue('color').trim());
-    setGraphFontColor(getComputedStyle(graphRef.current).getPropertyValue('color').trim()); // should return rgb(227, 188, 175)
+    setGraphFontColor(getComputedStyle(graphRef.current).getPropertyValue('--ticks-color').trim()); // should return rgb(227, 188, 175)
+    setGraphLineColor(getComputedStyle(graphRef.current).getPropertyValue('--line-color').trim());
+    setGraphBgColor(getComputedStyle(graphRef.current).getPropertyValue('--bg-color').trim());
   }, [graphFontColor]);
+
+  function generateDateKey(date) {
+    // the dateKeys are parsed like this because toISOString() converts 
+    // the dates to UTC, which often pushes/pulls the date by 1 day
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+  }
+  
+  function generateGraphData(habits, startDate, endDate) {
+    // labels
+    const labels = [];
+    const dates = [];
+  
+    const currDate = new Date(startDate);
+    while (currDate <= endDate) {
+      labels.push(currDate.getDate());
+      dates.push(new Date(currDate));
+      currDate.setDate(currDate.getDate() + 1);
+    }
+  
+    const dateCounts = {};
+    dates.forEach(date => {
+      const dateKey = generateDateKey(date);
+      dateCounts[dateKey] = 0;
+    })
+  
+    habits.forEach(habit => {
+      habit.doneDates.forEach(doneDate => {
+        let dateKey = generateDateKey(doneDate);
+        if (dateCounts[dateKey] !== undefined)
+          dateCounts[dateKey]++;
+      });
+    });
+  
+    const datePercs = {}
+    dates.forEach(date => {
+      const dateKey = generateDateKey(date);
+      const perc = (dateCounts[dateKey]/habits.length);
+      datePercs[dateKey] = perc;
+    });
+  
+    const dataPoints = Object.keys(datePercs).map(key => datePercs[key]);
+    
+    const data = {
+      labels,
+      datasets: [
+        {
+          data: dataPoints,
+          borderColor: graphLineColor,
+          fill: true,
+          backgroundColor: graphBgColor,
+          tension: 0.3,
+          pointRadius: 0
+        }
+      ]
+    };
+  
+    return data;
+  }
 
   const options = {
     responsive: true,

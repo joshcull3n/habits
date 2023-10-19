@@ -14,7 +14,9 @@
 }
 
 .graph {
-  color: var(--graph-color);
+  --ticks-color: var(--graph-ticks-color);
+  --line-color: var(--graph-line-color);
+  --bg-color: var(--graph-bg-color);
   padding-top: 35px;
   height: 100%;
   width: 90%;

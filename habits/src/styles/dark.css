@@ -2,7 +2,9 @@
   --main-font-color: #e3bcaf;
   --main-font-color-med-alpha: #e3bcafaa;
   --main-font-color-high-alpha: #e3bcaf4a;
-  --graph-color: #e3bcaf4a;
+  --graph-ticks-color: #e3bcaf4a;
+  --graph-line-color: #e3bcaf;
+  --graph-bg-color: #e3bcaf01;
   --bg-color: black;
   --calendar-font: monospace;
   --textbox-placeholder-color: #e3bcaf77;

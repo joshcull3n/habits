@@ -52,6 +52,8 @@ export const ContextProvider = ({ children }) => {
   // appearance
   const [lightMode, setLightMode] = useState(false);
   const [graphFontColor, setGraphFontColor] = useState('rgb(0, 0, 0)');
+  const [graphLineColor, setGraphLineColor] = useState('rgb(0, 0, 0)');
+  const [graphBgColor, setGraphBgColor] = useState('rgb(0, 0, 0)');
 
   // set habits to localStorage on every render
   useEffect(() => {
@@ -75,7 +77,9 @@ export const ContextProvider = ({ children }) => {
       endDate, setEndDate,
       startDate, setStartDate,
       lightMode, setLightMode,
-      graphFontColor, setGraphFontColor }}>
+      graphFontColor, setGraphFontColor,
+      graphLineColor, setGraphLineColor,
+      graphBgColor, setGraphBgColor }}>
       { children }
     </Context.Provider>
   );
