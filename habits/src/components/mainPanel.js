@@ -1,4 +1,5 @@
 import HabitList from './habitList.js';
+import Graph from './graph.js';
 import { Context } from '../Context.js';
 import { useContext } from 'react';
 
@@ -57,6 +58,7 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
           handleHabitInputBtnClick={handleHabitInputBtnClick}/>
         </div>
       </div>
+      <Graph />
     </div>
   );
 };

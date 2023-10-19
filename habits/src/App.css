@@ -1,7 +1,20 @@
 /* overwrites variables when mobile viewing is detected */
+:root {
+  --primary-font: 'Work Sans';
+  height: 99%;
+}
+
+#root, .App, .mainPanelContainer, .mainPanel {
+  height: 90%;
+}
+
 .mobile {
   --home-img-width: 35px;
   --sidebar-padding-left: 10px;
+}
+
+.graph {
+  color: var(--graph-color);
 }
 
 * {
@@ -15,6 +28,7 @@ body {
   background-color: var(--bg-color);
   font-size: 0.85em;
   line-height: 1.5;
+  height: 100%;
 }
 
 h2 {
@@ -209,7 +223,7 @@ input[type="checkbox"]:checked:hover {
 
 .mainPanel {
   margin: auto;
-  width: fit-content;
+  width: 90%;
 }
 
 .mainPanelContainer {

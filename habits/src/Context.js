@@ -48,12 +48,13 @@ export const ContextProvider = ({ children }) => {
   else
     start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
-
+  
+  // appearance
   const [lightMode, setLightMode] = useState(false);
+  const [graphFontColor, setGraphFontColor] = useState('rgb(0, 0, 0)');
 
   // set habits to localStorage on every render
   useEffect(() => {
-    console.log('useEffect()');
     var tempHabitList = [];
     habits.forEach(habit => {
       var tempHabit = Object.create(habit);
@@ -73,7 +74,8 @@ export const ContextProvider = ({ children }) => {
       newHabitText, setNewHabitText, 
       endDate, setEndDate,
       startDate, setStartDate,
-      lightMode, setLightMode }}>
+      lightMode, setLightMode,
+      graphFontColor, setGraphFontColor }}>
       { children }
     </Context.Provider>
   );
