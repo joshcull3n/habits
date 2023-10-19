@@ -5,7 +5,7 @@ import { useContext, useRef, useEffect, useState } from 'react';
 import { Context } from '../Context';
 
 const Graph = () => {
-  const { habits, startDate, endDate, graphFontColor, setGraphFontColor, graphLineColor, setGraphLineColor, graphBgColor, setGraphBgColor } = useContext(Context);
+  const { habits, startDate, endDate, graphFontColor, setGraphFontColor, graphLineColor, setGraphLineColor, graphBgColor, setGraphBgColor, graphStepSize, setGraphStepSize } = useContext(Context);
   const graphRef = useRef(null);
   const graphData = generateGraphData(habits, startDate, endDate);
 
@@ -13,6 +13,7 @@ const Graph = () => {
     setGraphFontColor(getComputedStyle(graphRef.current).getPropertyValue('--ticks-color').trim()); // should return rgb(227, 188, 175)
     setGraphLineColor(getComputedStyle(graphRef.current).getPropertyValue('--line-color').trim());
     setGraphBgColor(getComputedStyle(graphRef.current).getPropertyValue('--bg-color').trim());
+    setGraphStepSize(getComputedStyle(graphRef.current).getPropertyValue('--step-size').trim());
   }, [graphFontColor]);
 
   function generateDateKey(date) {
@@ -89,6 +90,7 @@ const Graph = () => {
           drawBorder: true,
         },
         ticks: {
+          stepSize: graphStepSize,
           color: graphFontColor,
           font: {
             family: 'Work Sans',
