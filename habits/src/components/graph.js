@@ -114,7 +114,7 @@ const Graph = () => {
   };
 
   return ( 
-    <div className='graph' ref={graphRef} style={{ height: '100%', width: '90%', minWidth: '300px', maxWidth: '1000px', margin: 'auto' }}>
+    <div className='graph' ref={graphRef}>
       <Line data={graphData} options={options} />
     </div>
   )

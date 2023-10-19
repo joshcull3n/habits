@@ -15,6 +15,12 @@
 
 .graph {
   color: var(--graph-color);
+  padding-top: 35px;
+  height: 100%;
+  width: 90%;
+  min-width: 300px;
+  max-width: 1000px;
+  margin: auto;
 }
 
 * {
