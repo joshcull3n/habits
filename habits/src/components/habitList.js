@@ -7,6 +7,19 @@ import { Context } from '../Context.js'
 const HabitList = ({ dateLabels, mobile }) => {
   const { habits, setHabits, startDate, setStartDate, endDate, setEndDate, hoveredDate } = useContext(Context);
 
+  // generate list of date strings between two given dates
+  function genDates(startDate, endDate) {
+    var dates = [];
+    const currDate = new Date(startDate);
+
+    while (currDate <= endDate) {
+      dates.push(currDate.toDateString());
+      currDate.setDate(currDate.getDate() + 1);
+    }
+
+    return dates;
+  }
+
   function renderDateLabels() {
     return(
       <div className="spaceEvenly" style={{ padding:'2px 2px 0px', fontSize:'xx-small' }}>
@@ -102,7 +115,9 @@ const HabitList = ({ dateLabels, mobile }) => {
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
                   <td style={{maxWidth:'180px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
-                  <td style={{minWidth:'100px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
+                  <td style={{minWidth:'100px', paddingLeft:'1.3px'}}>
+                    <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
+                  </td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
             </tbody>
@@ -113,12 +128,12 @@ const HabitList = ({ dateLabels, mobile }) => {
     else {
       return (
         <div>
-          <table style={{borderCollapse: 'collapse'}}>
+          <table style={{borderCollapse: 'collapse', borderSpacing: 0}}>
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
                   <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
-                  <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
+                  <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
             </tbody>

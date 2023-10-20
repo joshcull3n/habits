@@ -29,7 +29,7 @@ const HabitInput = ({mobile, handleHabitInputChange, handleHabitInputEnter, hand
 };
 
 const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, handleHabitInputBtnClick }) => {
-  const { habits, startDate, endDate } = useContext(Context);
+  const { habits, startDate, endDate, setHoveredDate } = useContext(Context);
 
   function generateDateLabels() {
     var tempDate = new Date(startDate);
@@ -50,11 +50,11 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
     <div className="mainPanel" style={{padding:'10px'}}>
         <TopBar />
         <div id="habitListContainer">
-          <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
-        <HabitInput mobile={mobile}
-          handleHabitInputEnter={handleHabitInputEnter} 
-          handleHabitInputChange={handleHabitInputChange} 
-          handleHabitInputBtnClick={handleHabitInputBtnClick}/>
+          <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} onMouseLeave={() => setHoveredDate(null)}/>
+          <HabitInput mobile={mobile}
+            handleHabitInputEnter={handleHabitInputEnter} 
+            handleHabitInputChange={handleHabitInputChange} 
+            handleHabitInputBtnClick={handleHabitInputBtnClick}/>
         </div>
         <Graph />
     </div>

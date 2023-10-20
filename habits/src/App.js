@@ -87,6 +87,8 @@ const App = () => {
     )
   }
 
+  console.error = () => {};
+
   return (
     <div className="App">
       <Sidebar />
