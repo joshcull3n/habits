@@ -10,8 +10,15 @@ const HabitList = ({ dateLabels, mobile }) => {
   function renderDateLabels() {
     return(
       <div className="spaceEvenly" style={{ padding:'2px 2px 0px', fontSize:'xx-small' }}>
-        { dateLabels.map((label, index) => { 
-          const isDarkened = hoveredDate && new Date(hoveredDate).getDate().toString() !== label;
+        { dateLabels.map((label, index) => {
+          if (Number(label) < 10) {
+            var hoveredDateString = '0' + new Date(hoveredDate).getDate().toString();
+          }
+          else {
+            var hoveredDateString = new Date(hoveredDate).getDate().toString();
+          }
+
+          const isDarkened = hoveredDate && hoveredDateString !== label;
           return (
             <span className="monospaceText" key={index} style={isDarkened ? { opacity: 0.5 } : {}} >
               {label}
