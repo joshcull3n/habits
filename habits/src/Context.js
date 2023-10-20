@@ -53,7 +53,7 @@ export const ContextProvider = ({ children }) => {
   var tempEnd = new Date(endDate);
   var start = new Date();
   if (mobile)
-    start.setDate(tempEnd.getDate() - 3);
+    start.setDate(tempEnd.getDate() - 6);
   else
     start.setDate(tempEnd.getDate() - 21);
   const [startDate, setStartDate] = useState(start);
