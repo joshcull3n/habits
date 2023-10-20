@@ -5,7 +5,7 @@ import HabitDates from './habitDates.js'
 import { Context } from '../Context.js'
 
 const HabitList = ({ dateLabels, mobile }) => {
-  const { habits, setHabits, startDate, setStartDate, endDate, setEndDate, hoveredDate } = useContext(Context);
+  const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
 
   // generate list of date strings between two given dates
   function genDates(startDate, endDate) {
@@ -24,18 +24,10 @@ const HabitList = ({ dateLabels, mobile }) => {
     return(
       <div className="spaceEvenly" style={{ padding:'2px 2px 0px', fontSize:'xx-small' }}>
         { dateLabels.map((label, index) => {
-          if (Number(label) < 10) {
-            var hoveredDateString = '0' + new Date(hoveredDate).getDate().toString();
-          }
-          else {
-            var hoveredDateString = new Date(hoveredDate).getDate().toString();
-          }
-
-          const isDarkened = hoveredDate && hoveredDateString !== label;
-          return (
-            <span className="monospaceText" key={index} style={isDarkened ? { opacity: 0.5 } : {}} >
-              {label}
-            </span> 
+            return (
+              <span className="monospaceText dateLabel" id={label} key={index}>
+                {label}
+              </span> 
           );
         })}
       </div>
