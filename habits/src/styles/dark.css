@@ -1,8 +1,8 @@
 .darkMode {
   --main-font-color: #e3bcaf;
   --main-font-color-med-alpha: #e3bcafaa;
-  --main-font-color-high-alpha: #e3bcaf4a;
-  --graph-ticks-color: #e3bcaf4a;
+  --main-font-color-high-alpha: #e3bcaf77;
+  --graph-grid-color: #e3bcaf5c;
   --graph-line-color: #e3bcaf;
   --graph-bg-color: #e3bcaf01;
   --bg-color: black;

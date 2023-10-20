@@ -1,16 +1,14 @@
 .lightMode {
-  --main-font-color: rgb(70, 70, 70);
+  --main-font-color: #464646;
   --main-font-color-med-alpha: #505050aa;
   --main-font-color-high-alpha: #5050503b;
-  --graph-ticks-color: #0000006c;
+  --graph-grid-color: #00000041;
   --graph-line-color: #f79b9b;
   --graph-bg-color: #f79b9b;
-  --accent-color: #00305f;
   --bg-color: #fafafa;
   --calendar-font: monospace;
   --textbox-bg: rgba(151, 151, 151, 0.05);
-  --textbox-text-color: #000000;
-  --textbox-placeholder-color: rgb(0, 0, 0);
+  --textbox-placeholder-color: rgba(0, 0, 0, 0.7);
   --delete-button: url("../images/delete_black.png");
   --calendar-left: url("../images/doubleLeft_black.png");
   --calendar-right: url("../images/doubleRight_black.png");

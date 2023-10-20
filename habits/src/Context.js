@@ -51,10 +51,11 @@ export const ContextProvider = ({ children }) => {
   
   // appearance
   const [lightMode, setLightMode] = useState(false);
-  const [graphFontColor, setGraphFontColor] = useState('rgb(0, 0, 0)');
-  const [graphLineColor, setGraphLineColor] = useState('rgb(0, 0, 0)');
-  const [graphBgColor, setGraphBgColor] = useState('rgb(0, 0, 0)');
+  const [graphFontColor, setGraphFontColor] = useState('rgb(0,0,0)');
+  const [graphLineColor, setGraphLineColor] = useState('rgb(0,0,0)');
+  const [graphBgColor, setGraphBgColor] = useState('rgb(0,0,0)');
   const [graphStepSize, setGraphStepSize] = useState('0.2');
+  const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
   // set habits to localStorage on every render
   useEffect(() => {
@@ -81,7 +82,8 @@ export const ContextProvider = ({ children }) => {
       graphFontColor, setGraphFontColor,
       graphLineColor, setGraphLineColor,
       graphBgColor, setGraphBgColor,
-      graphStepSize, setGraphStepSize }}>
+      graphStepSize, setGraphStepSize,
+      graphGridColor, setGraphGridColor }}>
       { children }
     </Context.Provider>
   );

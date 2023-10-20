@@ -5,16 +5,21 @@ import { useContext, useRef, useEffect, useState } from 'react';
 import { Context } from '../Context';
 
 const Graph = () => {
-  const { habits, startDate, endDate, graphFontColor, setGraphFontColor, graphLineColor, setGraphLineColor, graphBgColor, setGraphBgColor, graphStepSize, setGraphStepSize } = useContext(Context);
+  const { 
+    habits, startDate, endDate,
+    graphLineColor, setGraphLineColor, 
+    graphBgColor, setGraphBgColor, 
+    graphStepSize, setGraphStepSize,
+    graphGridColor, setGraphGridColor } = useContext(Context);
   const graphRef = useRef(null);
   const graphData = generateGraphData(habits, startDate, endDate);
 
   useEffect(() => {
-    setGraphFontColor(getComputedStyle(graphRef.current).getPropertyValue('--ticks-color').trim()); // should return rgb(227, 188, 175)
     setGraphLineColor(getComputedStyle(graphRef.current).getPropertyValue('--line-color').trim());
     setGraphBgColor(getComputedStyle(graphRef.current).getPropertyValue('--bg-color').trim());
     setGraphStepSize(getComputedStyle(graphRef.current).getPropertyValue('--step-size').trim());
-  }, [graphFontColor]);
+    setGraphGridColor(getComputedStyle(graphRef.current).getPropertyValue('--grid-color').trim());
+  }, [graphGridColor]);
 
   function generateDateKey(date) {
     // the dateKeys are parsed like this because toISOString() converts 
@@ -86,12 +91,12 @@ const Graph = () => {
         min: 0,
         max:1,
         grid: {
-          color: 'rgba(33, 33, 33, 0.1)',  // Faint grid lines for x-axis
+          color: graphGridColor,
           drawBorder: true,
         },
         ticks: {
           stepSize: graphStepSize,
-          color: graphFontColor,
+          color: graphGridColor,
           font: {
             family: 'Work Sans',
           },
@@ -103,11 +108,11 @@ const Graph = () => {
       },
       x: {
         grid: {
-          color: 'rgba(33, 33, 33, 0.1)',  // Faint grid lines for x-axis
+          color: graphGridColor,
           drawBorder: true,
         },
         ticks: {
-          color: graphFontColor,
+          color: graphGridColor,
           font: {
             family: "Work Sans",
           }
@@ -118,7 +123,7 @@ const Graph = () => {
 
   return ( 
     <div className='graph' ref={graphRef}>
-      <Line data={graphData} options={options} />
+      <Line data={graphData} options={options}/>
     </div>
   )
 }

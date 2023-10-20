@@ -20,7 +20,10 @@ export function detectDevice() {
 }
 
 const App = () => {
-  const { habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode, setGraphFontColor } = useContext(Context);
+  const { 
+    habits, setHabits, newHabitText, setNewHabitText, 
+    lightMode, setLightMode, setGraphGridColor 
+  } = useContext(Context);
 
   // set body class
   document.body.classList.remove('lightMode');
@@ -47,7 +50,7 @@ const App = () => {
   }
 
   const handleLightMode = (e) => {
-    setGraphFontColor(null);
+    setGraphGridColor(null);
     if (lightMode)
       setLightMode(false);
     else
