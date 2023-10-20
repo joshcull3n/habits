@@ -7,9 +7,9 @@ import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
 
 export function detectDevice() {
-  var agent = window.navigator.userAgent.toLowerCase()
+  const agent = window.navigator.userAgent.toLowerCase()
   //var isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
-  var mobile = false;
+  let mobile = false;
 
   if (agent.includes('iphone') || agent.includes('android') || agent.includes('blackberry') || agent.includes('webOS')) {
     document.body.classList.add('mobile');
@@ -20,6 +20,8 @@ export function detectDevice() {
 }
 
 const App = () => {
+  const localStorage = window.localStorage;
+
   const { 
     habits, setHabits, newHabitText, setNewHabitText, 
     lightMode, setLightMode, setGraphGridColor 
@@ -51,10 +53,14 @@ const App = () => {
 
   const handleLightMode = (e) => {
     setGraphGridColor(null);
-    if (lightMode)
+    if (lightMode) {
+      localStorage.setItem('lightMode_cullen', '');
       setLightMode(false);
-    else
+    }
+    else {
+      localStorage.setItem('lightMode_cullen', 'true');
       setLightMode(true);
+    }
   }
 
   function addHabit() {

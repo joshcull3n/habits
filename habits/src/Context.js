@@ -11,15 +11,24 @@ export const ContextProvider = ({ children }) => {
   var initHabits = []
 
   function convertToYYYYMMDD(date) {
-    var tempYear = date.getFullYear();
-    var tempMonth = date.getMonth()+1;
-    var tempDay = date.getDate();
+    const tempYear = date.getFullYear();
+    const tempMonth = date.getMonth()+1;
+    const tempDay = date.getDate();
 
     return tempYear + '/' + tempMonth + '/' + tempDay;
   }
 
-  var localStorage = window.localStorage;
-  var habitStorage = localStorage.getItem('habits_cullen');
+  const localStorage = window.localStorage;
+  const habitStorage = localStorage.getItem('habits_cullen');
+  const lightModeStorage = localStorage.getItem('lightMode_cullen')
+
+  // appearance
+  const [lightMode, setLightMode] = useState(Boolean(lightModeStorage));
+  const [graphFontColor, setGraphFontColor] = useState('rgb(0,0,0)');
+  const [graphLineColor, setGraphLineColor] = useState('rgb(0,0,0)');
+  const [graphBgColor, setGraphBgColor] = useState('rgb(0,0,0)');
+  const [graphStepSize, setGraphStepSize] = useState('0.2');
+  const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
   // if there are habits in localStorage, parse them
   if (habitStorage) {
@@ -48,14 +57,6 @@ export const ContextProvider = ({ children }) => {
   else
     start.setDate(tempEnd.getDate() - 6);
   const [startDate, setStartDate] = useState(start);
-  
-  // appearance
-  const [lightMode, setLightMode] = useState(false);
-  const [graphFontColor, setGraphFontColor] = useState('rgb(0,0,0)');
-  const [graphLineColor, setGraphLineColor] = useState('rgb(0,0,0)');
-  const [graphBgColor, setGraphBgColor] = useState('rgb(0,0,0)');
-  const [graphStepSize, setGraphStepSize] = useState('0.2');
-  const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
   // set habits to localStorage on every render
   useEffect(() => {
