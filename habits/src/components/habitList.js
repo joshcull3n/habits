@@ -106,7 +106,7 @@ const HabitList = ({ dateLabels, mobile }) => {
             <thead><tr><DatePageButtonLeft/><td style={{paddingLeft: '4px', paddingRight: '3px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
-                  <td style={{maxWidth:'180px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
+                  <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
                   <td style={{minWidth:'100px', paddingLeft:'1.3px'}}>
                     <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
                   </td>
