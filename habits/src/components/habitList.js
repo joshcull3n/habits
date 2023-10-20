@@ -6,16 +6,11 @@ import { Context } from '../Context.js'
 
 const HabitList = ({ dateLabels, mobile }) => {
   const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
-  
+
   function renderDateLabels() {
     return(
-      <div className="spaceEvenly" style={{padding:'2px 2px 0px'}}>
-        { dateLabels.map((label, index) => {
-          if (label === dateLabels[0])
-            return <span className="monospaceText" key={index}>{label}</span> 
-          else
-            return <span className="monospaceText" key={index}>{label}</span> 
-        })}
+      <div className="spaceEvenly" style={{ padding:'2px 2px 0px', fontSize:'xx-small' }}>
+        { dateLabels.map((label, index) => { return <span className="monospaceText" key={index}>{label}</span> })}
       </div>
     )
   }
@@ -77,12 +72,14 @@ const HabitList = ({ dateLabels, mobile }) => {
   const EmptyHabitList = () => {
     return (
     <div className='centered'>
-      <div style={{paddingBottom: '10px', opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>add a habit below.<br/>(quit smoking, floss everyday, etc.)</div>
+      <div style={{paddingBottom: '10px', opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>
+        add a habit below.<br/>(quit smoking, floss everyday, etc.)
+      </div>
     </div>
     )
   }
 
-  const HabitList = () => {
+  const FullHabitList = () => {
     if (mobile) {
       return (
         <div>
@@ -120,7 +117,7 @@ const HabitList = ({ dateLabels, mobile }) => {
   if (habits.length < 1)
     return <EmptyHabitList />;
   else
-    return <HabitList />;
+    return <FullHabitList />;
 
 }
 

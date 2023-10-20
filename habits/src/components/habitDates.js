@@ -69,7 +69,6 @@ const CheckboxList = (props) => {
 
 const HabitDates = ({ habit }) => {
   const { startDate, endDate } = useContext(Context);
-
   return <CheckboxList habit={habit} startDate={startDate} endDate={endDate} doneDates={habit.doneDates} />
 }
 
