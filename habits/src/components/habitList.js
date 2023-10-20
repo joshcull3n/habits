@@ -5,12 +5,19 @@ import HabitDates from './habitDates.js'
 import { Context } from '../Context.js'
 
 const HabitList = ({ dateLabels, mobile }) => {
-  const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
+  const { habits, setHabits, startDate, setStartDate, endDate, setEndDate, hoveredDate } = useContext(Context);
 
   function renderDateLabels() {
     return(
       <div className="spaceEvenly" style={{ padding:'2px 2px 0px', fontSize:'xx-small' }}>
-        { dateLabels.map((label, index) => { return <span className="monospaceText" key={index}>{label}</span> })}
+        { dateLabels.map((label, index) => { 
+          const isDarkened = hoveredDate && new Date(hoveredDate).getDate().toString() !== label;
+          return (
+            <span className="monospaceText" key={index} style={isDarkened ? { opacity: 0.5 } : {}} >
+              {label}
+            </span> 
+          );
+        })}
       </div>
     )
   }
@@ -99,7 +106,7 @@ const HabitList = ({ dateLabels, mobile }) => {
     else {
       return (
         <div>
-          <table>
+          <table style={{borderCollapse: 'collapse'}}>
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>

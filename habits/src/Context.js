@@ -30,6 +30,9 @@ export const ContextProvider = ({ children }) => {
   const [graphStepSize, setGraphStepSize] = useState('0.2');
   const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
+  // events
+  const [hoveredDate, setHoveredDate] = useState(null);
+
   // if there are habits in localStorage, parse them
   if (habitStorage) {
     var habitStorageJson = JSON.parse(habitStorage);
@@ -84,7 +87,8 @@ export const ContextProvider = ({ children }) => {
       graphLineColor, setGraphLineColor,
       graphBgColor, setGraphBgColor,
       graphStepSize, setGraphStepSize,
-      graphGridColor, setGraphGridColor }}>
+      graphGridColor, setGraphGridColor,
+      hoveredDate, setHoveredDate }}>
       { children }
     </Context.Provider>
   );

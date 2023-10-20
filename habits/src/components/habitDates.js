@@ -16,7 +16,7 @@ function genDates(startDate, endDate) {
 
 // checkbox component - determines whether or not to display checked based on given date and completed dates
 const Checkbox = (props) => {
-  const { habits, setHabits } = useContext(Context);
+  const { habits, setHabits, setHoveredDate } = useContext(Context);
   var checked = false;
 
   props.doneDates.forEach(date => {
@@ -51,18 +51,29 @@ const Checkbox = (props) => {
     }
   }
 
-  if (checked)
-    return <span className="checkedInput"><input type="checkbox" checked={checked} onChange={handleCheck} style={{height:'17px', width:'17px'}}/></span>
-  else
-    return <span className="uncheckedInput"><input type="checkbox" checked={!!checked} onChange={handleCheck} style={{height:'17px', width:'17px'}}/></span>
+  if (checked) {
+    return (
+      <span className="checkedInput" onMouseEnter={() => setHoveredDate(props.date)} onMouseLeave={() => setHoveredDate(null)}>
+        <input type="checkbox" checked={checked} onChange={handleCheck} style={{height:'17px', width:'17px'}}/>
+      </span>
+    )
+  }
+  else {
+    return (
+      <span className="uncheckedInput" onMouseEnter={() => setHoveredDate(props.date)} onMouseLeave={() => setHoveredDate(null)}>
+        <input type="checkbox" checked={!!checked} onChange={handleCheck} style={{height:'17px', width:'17px'}}/>
+      </span>
+    )
+  }
 }
 
 // checkbox list - renders checkbox components for given dates
 const CheckboxList = (props) => {
+  const { setHoveredDate } = useContext(Context);
   var dates = genDates(props.startDate, props.endDate);
   return (
     <div className="spaceEvenly">
-      { dates.map((date, index) => <span key={index}><Checkbox habit={props.habit} date={date} doneDates={props.doneDates} /></span>) }
+      { dates.map((date, index) => <Checkbox habit={props.habit} date={date} doneDates={props.doneDates} />) }
     </div>
   )
 }
