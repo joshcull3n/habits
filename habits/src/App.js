@@ -20,6 +20,11 @@ export function detectDevice() {
 }
 
 const App = () => {
+  
+  /* - DEBUG OPTIONS - */
+  console.error = () => {}; // disable if you want to see console errors
+  /* -- -- -- -- -- -- */
+
   const localStorage = window.localStorage;
 
   const { 

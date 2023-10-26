@@ -6,15 +6,29 @@ import { Context } from '../Context.js'
 
 const HabitList = ({ dateLabels, mobile }) => {
   const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
-  
+
+  // generate list of date strings between two given dates
+  function genDates(startDate, endDate) {
+    var dates = [];
+    const currDate = new Date(startDate);
+
+    while (currDate <= endDate) {
+      dates.push(currDate.toDateString());
+      currDate.setDate(currDate.getDate() + 1);
+    }
+
+    return dates;
+  }
+
   function renderDateLabels() {
     return(
-      <div className="spaceEvenly" style={{padding:'2px 2px 0px'}}>
+      <div className="spaceEvenly" style={{ padding:'2px 2px 0px', fontSize:'xx-small' }}>
         { dateLabels.map((label, index) => {
-          if (label === dateLabels[0])
-            return <span className="monospaceText" key={index}>{label}</span> 
-          else
-            return <span className="monospaceText" key={index}>{label}</span> 
+            return (
+              <span className="monospaceText dateLabel" id={label} key={index}>
+                {label}
+              </span> 
+          );
         })}
       </div>
     )
@@ -77,21 +91,25 @@ const HabitList = ({ dateLabels, mobile }) => {
   const EmptyHabitList = () => {
     return (
     <div className='centered'>
-      <div style={{paddingBottom: '10px', opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>add a habit below.<br/>(quit smoking, floss everyday, etc.)</div>
+      <div style={{paddingBottom: '10px', opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>
+        add a habit below.<br/>(quit smoking, floss everyday, etc.)
+      </div>
     </div>
     )
   }
 
-  const HabitList = () => {
+  const FullHabitList = () => {
     if (mobile) {
       return (
         <div>
           <table>
-            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft/><td style={{paddingLeft: '4px', paddingRight: '3px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
-                  <td style={{maxWidth:'180px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
-                  <td style={{minWidth:'100px', paddingLeft:'1.3px'}}><HabitDates habit={habit} /></td>
+                  <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
+                  <td style={{minWidth:'100px', paddingLeft:'1.3px'}}>
+                    <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
+                  </td>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
             </tbody>
@@ -102,12 +120,12 @@ const HabitList = ({ dateLabels, mobile }) => {
     else {
       return (
         <div>
-          <table>
+          <table style={{borderCollapse: 'collapse', borderSpacing: 0}}>
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr key={index}>
                   <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
-                  <td style={{minWidth:'168px'}}><HabitDates habit={habit} /></td>
+                  <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
                   <DeleteButton className='deleteButton' id={habit.id}/>
                 </tr>)}
             </tbody>
@@ -120,7 +138,7 @@ const HabitList = ({ dateLabels, mobile }) => {
   if (habits.length < 1)
     return <EmptyHabitList />;
   else
-    return <HabitList />;
+    return <FullHabitList />;
 
 }
 

@@ -51,10 +51,10 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
         <TopBar />
         <div id="habitListContainer">
           <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
-        <HabitInput mobile={mobile}
-          handleHabitInputEnter={handleHabitInputEnter} 
-          handleHabitInputChange={handleHabitInputChange} 
-          handleHabitInputBtnClick={handleHabitInputBtnClick}/>
+          <HabitInput mobile={mobile}
+            handleHabitInputEnter={handleHabitInputEnter} 
+            handleHabitInputChange={handleHabitInputChange} 
+            handleHabitInputBtnClick={handleHabitInputBtnClick} />
         </div>
         <Graph />
     </div>
