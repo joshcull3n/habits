@@ -138,12 +138,6 @@ input[type="checkbox"]:checked:hover {
   content: var(--calendar-right);
 }
 
-.dateLabel {
-  -webkit-transition: opacity 0.2s ease-out;
-  -moz-transition: opacity 0.2s ease-out;
-  transition: opacity 0.2s ease-out;
-}
-
 .datePaginator {
   opacity: 0.4;
   -webkit-transition: opacity 0.1s ease-in-out;

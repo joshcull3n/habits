@@ -4,18 +4,36 @@ import { Context } from "../Context";
 const HabitDates = ({ habit, dates }) => {
   const { habits, setHabits } = useContext(Context);
 
-  function setDateLabelOpacity(date) {
+  function setLabelOpacity(date, habit) {
     const dateLabelElements = document.querySelectorAll(".dateLabel");
+    const habitLabelElements = document.querySelectorAll(".habitItem");
     dateLabelElements.forEach( labelElement => {
-      let opacityValue = 1;
+      let opacityValue = 1.0;
+      let transitionValue = "opacity 0.2s ease-in-out"
       if (date) {
         const day = new Date(date).getDate();
         const labelDistance = Math.abs(Number(labelElement.id) - day);
-        if (labelDistance !== 0)
+        if (labelDistance !== 0) {
           opacityValue = 0.4;
+          transitionValue = "";
+        }
       }
       labelElement.style.opacity = opacityValue;
+      labelElement.style.transition = transitionValue;
     });
+    habitLabelElements.forEach (habitElement => {
+      let opacityValue = 1.0;
+      let transitionValue = "opacity 0.2s ease-in-out"
+      if (habit) {
+        const habitBody = habit.body;
+        if (habitElement.textContent !== habit.body) {
+          opacityValue = 0.4;
+          transitionValue = "";
+        }
+      }
+      habitElement.style.opacity = opacityValue;
+      habitElement.style.transition = transitionValue;
+    })
   }
 
   // checkbox component - determines whether or not to display checked based on given date and completed dates
@@ -56,14 +74,14 @@ const HabitDates = ({ habit, dates }) => {
 
     if (checked) {
       return (
-        <td onMouseEnter={() => setDateLabelOpacity(props.date)}>
+        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
           <input type="checkbox" checked={checked} onChange={handleCheck} style={{height:'17px', width:'17px'}}/>
         </td>
       )
     }
     else {
       return (
-        <td onMouseEnter={() => setDateLabelOpacity(props.date)}>
+        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
           <input type="checkbox" checked={!!checked} onChange={handleCheck} style={{height:'17px', width:'17px'}}/>
         </td>
       )
@@ -71,7 +89,7 @@ const HabitDates = ({ habit, dates }) => {
   }
 
   return (
-    <span style={{minWidth:'168px'}} onMouseLeave={() => setDateLabelOpacity(null)}>
+    <span style={{minWidth:'168px'}} onMouseLeave={() => setLabelOpacity(null)}>
       { dates.map((date, index) => <Checkbox key={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
     </span>
   )
