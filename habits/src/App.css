@@ -69,7 +69,7 @@ input[type="checkbox"]:not(:checked) {
   position: relative;
   top: 1px;
   background: var(--input-bg-not-checked);
-  background-size: 10.5px;
+  background-size: 18px;
   opacity: 0.4;
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
@@ -86,7 +86,7 @@ input[type="checkbox"]:checked {
   position: relative;
   top: 0px;
   background: var(--input-bg-checked);
-  background-size: 12.5px;
+  background-size: 18px;
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
@@ -108,7 +108,7 @@ input[type="checkbox"]:checked:hover {
 
 .deleteButton {
   padding-left: 3px;
-  padding-top: 2.5px;
+  padding-top: 5px;
 }
 
 .deleteButton img:hover {
@@ -155,8 +155,8 @@ input[type="checkbox"]:checked:hover {
   overflow:hidden;
   text-overflow:ellipsis; 
   white-space:nowrap;
-  padding-bottom: 5px;
   padding-right: 14px;
+  margin-top: 3px;
 }
 
 #habitListContainer {

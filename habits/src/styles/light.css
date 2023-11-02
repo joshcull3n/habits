@@ -1,5 +1,5 @@
 .lightMode {
-  --main-font-color: #464646;
+  --main-font-color: #000000;
   --main-font-color-med-alpha: #505050aa;
   --main-font-color-high-alpha: #5050503b;
   --graph-grid-color: #00000041;
@@ -12,8 +12,8 @@
   --delete-button: url("../images/delete_black.png");
   --calendar-left: url("../images/doubleLeft_black.png");
   --calendar-right: url("../images/doubleRight_black.png");
-  --input-bg-not-checked: url("../images/circle_black.png") 3px 3px no-repeat;
-  --input-bg-checked: url("../images/circle_filled_black.png") 2px 3px no-repeat;
+  --input-bg-not-checked: url("../images/black-circle-50.png") 1px 1px no-repeat;
+  --input-bg-checked: url("../images/black-filled-circle-50.png") 1px 2px no-repeat;
   --light-mode-switch-pic: url("../images/sun_black.svg") 2px 3px no-repeat;
   --home-img-pic: url("../images/sunglasses.png");
   --sidebar-shadow: #0000001F;
