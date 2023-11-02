@@ -120,7 +120,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table>
-            <thead><tr><DatePageButtonLeft/><td style={{padding: '2px 2px 0px 4px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft/><td style={{padding: '0px 2px 7px 4px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
