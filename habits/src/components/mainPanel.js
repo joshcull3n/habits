@@ -22,7 +22,7 @@ const HabitInput = ({mobile, handleHabitInputChange, handleHabitInputEnter, hand
           value={newHabitText} 
           onKeyDown={handleHabitInputEnter} 
           onChange={handleHabitInputChange}/>
-        <div id='inputBtn' onClick={handleHabitInputBtnClick}>↑</div>
+        <div id='inputBtn' onClick={handleHabitInputBtnClick}>＋</div>
       </div>
     </div>
   )
