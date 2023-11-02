@@ -22,7 +22,7 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   function renderDateLabels() {
     return(
-      <div className="spaceEvenly" style={{ padding:'2px 0px 0px', fontSize:'xx-small', marginLeft: '7px', marginRight: '8px' }}>
+      <div className="spaceEvenly" style={{ padding:'2px 0px 0px', fontSize:'x-small', marginLeft: '7px', marginRight: '7px' }}>
         { dateLabels.map((label, index) => {
             return (
               <span className="monospaceText dateLabel" id={label} key={index}>
