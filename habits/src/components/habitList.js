@@ -60,9 +60,26 @@ const HabitList = ({ dateLabels, mobile }) => {
     setEndDate(tempEnd);
   }
 
-  const DeleteButton = (habit) => {
+  function setLabelOpacity(habit) {
+    const habitLabelElements = document.querySelectorAll(".habitItem");
+    habitLabelElements.forEach (habitElement => {
+      let opacityValue = 1.0;
+      let transitionValue = "opacity 0.2s ease-in-out"
+      if (habit) {
+        const habitBody = habit.body;
+        if (habitElement.textContent !== habit.body) {
+          opacityValue = 0.5;
+          transitionValue = "";
+        }
+      }
+      habitElement.style.opacity = opacityValue;
+      habitElement.style.transition = transitionValue;
+    })
+  }
+
+  const DeleteButton = (props) => {
     return (
-      <td className='deleteButton' onClick={() => deleteHabit(habit.id)}>
+      <td className='deleteButton' onMouseEnter={() => setLabelOpacity(props.habit)} onMouseLeave={() => setLabelOpacity(null)} onClick={() => deleteHabit(props.id)}>
         <img alt='x' id="deleteButton" style={{verticalAlign: 'baseline'}}/>
       </td>
     )
@@ -110,7 +127,7 @@ const HabitList = ({ dateLabels, mobile }) => {
                   <td style={{minWidth:'100px', paddingLeft:'1.3px'}}>
                     <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
                   </td>
-                  <DeleteButton className='deleteButton' id={habit.id}/>
+                  <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
                 </tr>)}
             </tbody>
           </table>
@@ -126,7 +143,7 @@ const HabitList = ({ dateLabels, mobile }) => {
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
                   <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
-                  <DeleteButton className='deleteButton' id={habit.id}/>
+                  <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
                 </tr>)}
             </tbody>
           </table>

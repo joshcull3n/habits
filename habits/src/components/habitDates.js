@@ -14,7 +14,7 @@ const HabitDates = ({ habit, dates }) => {
         const day = new Date(date).getDate();
         const labelDistance = Math.abs(Number(labelElement.id) - day);
         if (labelDistance !== 0) {
-          opacityValue = 0.4;
+          opacityValue = 0.5;
           transitionValue = "";
         }
       }
@@ -27,7 +27,7 @@ const HabitDates = ({ habit, dates }) => {
       if (habit) {
         const habitBody = habit.body;
         if (habitElement.textContent !== habit.body) {
-          opacityValue = 0.4;
+          opacityValue = 0.5;
           transitionValue = "";
         }
       }
