@@ -27,11 +27,12 @@ body {
   font-size: 0.85em;
   line-height: 1.5;
   height: 100%;
+  margin-bottom: 0px;
 }
 
 td, tr {
   padding: 0;
-  line-height: 1;
+  line-height: normal;
 }
 
 h2 {
@@ -156,7 +157,6 @@ input[type="checkbox"]:checked:hover {
   text-overflow:ellipsis; 
   white-space:nowrap;
   padding-right: 14px;
-  margin-top: 3px;
 }
 
 #habitListContainer {
@@ -176,18 +176,13 @@ input[type="checkbox"]:checked:hover {
   --bg-color: var(--graph-bg-color);
   --step-size: var(--graph-step-size);
   --grid-color: var(--graph-grid-color);
-  padding-top: 35px;
-  padding-bottom: 20px;
-  width: 90%;
+  width:60%;
   min-width: 300px;
-  max-height: 280px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 35px;
   flex: 1;
-}
-
-canvas {
-  margin: auto;
 }
 
 .sidebar {
