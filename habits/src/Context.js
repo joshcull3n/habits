@@ -9,6 +9,10 @@ export const ContextProvider = ({ children }) => {
   var yesterday2 = new Date();
   yesterday2.setDate(yesterday2.getDate()-2)
   var initHabits = []
+  var initLists = [
+    { 'id': 0, 'title': 'groceries', 'createdDate' : new Date(), 'editedDate': new Date() },
+    { 'id': 1, 'title': 'tasks', 'createdDate' : new Date(), 'editedDate': new Date() },
+  ]
 
   function convertToYYYYMMDD(date) {
     const tempYear = date.getFullYear();
@@ -48,6 +52,9 @@ export const ContextProvider = ({ children }) => {
   const [habits, setHabits] = useState(initHabits);
   const [newHabitText, setNewHabitText] = useState('');
 
+  // lists
+  const [lists, setLists] = useState(initLists);
+
   // dates
   const [endDate, setEndDate] = useState(new Date());
   var tempEnd = new Date(endDate);
@@ -77,6 +84,7 @@ export const ContextProvider = ({ children }) => {
     <Context.Provider value={{ 
       habits, setHabits, 
       newHabitText, setNewHabitText, 
+      lists, setLists,
       endDate, setEndDate,
       startDate, setStartDate,
       lightMode, setLightMode,

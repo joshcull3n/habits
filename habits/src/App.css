@@ -294,6 +294,24 @@ input[type="checkbox"]:checked:hover {
   -webkit-user-select: none;
 }
 
+.table {
+  display: table;
+}
+
+.thead, .tbody {
+  display: table-row-group
+}
+
+.tr {
+  display: table-row;
+}
+
+.td {
+  display: table-cell;
+  padding: 8px;
+  border: 0.5px solid black;
+}
+
 @font-face{
   font-family:"Work Sans";
   font-style:normal;

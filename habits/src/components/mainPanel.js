@@ -1,4 +1,5 @@
 import HabitList from './habitList.js';
+import ListPanel from './lists/listPanel.js';
 import Graph from './graph.js';
 import { Context } from '../Context.js';
 import { useContext } from 'react';
@@ -46,17 +47,36 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
     return labels
   }
 
+  const HabitPanel = () => {
+    return (
+      <div>
+      <div id="habitListContainer">
+        <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
+        <HabitInput mobile={mobile}
+          handleHabitInputEnter={handleHabitInputEnter} 
+          handleHabitInputChange={handleHabitInputChange} 
+          handleHabitInputBtnClick={handleHabitInputBtnClick} />
+      </div>
+      <Graph />
+      </div>
+    )
+  }
+
+  var currentPanelState = 'lists';
+
+  const CurrentPanel = () => {
+    if ( currentPanelState === 'habits' )
+      return <HabitPanel />
+    else
+      return <ListPanel />
+  }
+
   return (
     <div className="mainPanel" style={{padding:'10px'}}>
+      <div>
         <TopBar />
-        <div id="habitListContainer">
-          <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
-          <HabitInput mobile={mobile}
-            handleHabitInputEnter={handleHabitInputEnter} 
-            handleHabitInputChange={handleHabitInputChange} 
-            handleHabitInputBtnClick={handleHabitInputBtnClick} />
-        </div>
-        <Graph />
+        <CurrentPanel />
+      </div>
     </div>
   );
 };
