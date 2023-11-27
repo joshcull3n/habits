@@ -10,9 +10,10 @@ export const ContextProvider = ({ children }) => {
   yesterday2.setDate(yesterday2.getDate()-2)
   var initHabits = []
   var initLists = [
-    { 'id': 0, 'title': 'groceries', 'createdDate' : new Date(), 'editedDate': new Date() },
-    { 'id': 1, 'title': 'tasks', 'createdDate' : new Date(), 'editedDate': new Date() },
+    { 'id': 0, 'title': 'groceries', 'items': ['eggs','milk','cocaine'], 'createdDate' : new Date(), 'editedDate': new Date() },
+    { 'id': 1, 'title': 'tasks', 'items':['walk dog', 'grocery shop', 'tidy up'], 'createdDate' : new Date(), 'editedDate': new Date() },
   ]
+  
 
   function convertToYYYYMMDD(date) {
     const tempYear = date.getFullYear();
@@ -54,6 +55,7 @@ export const ContextProvider = ({ children }) => {
 
   // lists
   const [lists, setLists] = useState(initLists);
+  const [currentList, setCurrentList] = useState(null);
 
   // dates
   const [endDate, setEndDate] = useState(new Date());
@@ -85,6 +87,7 @@ export const ContextProvider = ({ children }) => {
       habits, setHabits, 
       newHabitText, setNewHabitText, 
       lists, setLists,
+      currentList, setCurrentList,
       endDate, setEndDate,
       startDate, setStartDate,
       lightMode, setLightMode,

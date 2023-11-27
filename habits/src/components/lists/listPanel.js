@@ -1,14 +1,28 @@
 import { useContext } from 'react'
 import { Context } from '../../Context.js'
-import List from './list.js'
+import ListTitle, { ListContents } from './list.js'
 
 const ListPanel = () => {
-    const { lists, setLists } = useContext(Context);
+    const { lists, setLists, currentList } = useContext(Context);
 
-    const FullListPanel = () => {
+    const RootListPanel = () => {
       return (
         <div>
-          { lists.map((list, index) => <List list={list}/>) }
+          { lists.map((list, index) => <ListTitle list={list}/>) }
+          <div className='tr'><input type='text'></input></div>
+        </div>
+      )
+    }
+
+    const ExpandedListPanel = () => {
+      return (
+        <div>
+          <div className='td'>
+            <RootListPanel />
+          </div>
+          <div className='td'>
+            <ListContents />
+          </div>
         </div>
       )
     }
@@ -24,19 +38,18 @@ const ListPanel = () => {
     }
 
     const ListBuilder = () => {
-      console.log(lists);
-      if ( lists.length > 0 )
-        return <FullListPanel />
-      else
+      if (lists.Length === 0)
         return <EmptyListPanel />
+      if ( currentList !== null )
+        return <ExpandedListPanel selected={currentList} />
+      else
+        return <RootListPanel />
     }
 
     return (
       <div className='centered'>
         <div className='table'>
-          <div className='tbody'>
-            <ListBuilder />
-          </div>
+          <ListBuilder />
         </div>
       </div>
     )
