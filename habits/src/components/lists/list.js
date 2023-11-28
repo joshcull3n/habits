@@ -22,12 +22,36 @@ const ListTitle = ({ list }) => {
 }
 
 const ListContents = () => {
-  const { currentList } = useContext(Context);
-  var items = currentList.items;
+  const { lists, setLists, currentList, setCurrentList } = useContext(Context);
+  var tempItems = Array.from(currentList.items);
+  var tempCurrentList = JSON.parse(JSON.stringify(currentList));
+  var tempLists = lists.map(list => list);
+  var currentListIndex = lists.indexOf(currentList);
+
+  // add item to list on enter
+  const handleNewItemEnter = (e) => {
+    var item = e.target.value.trim();
+    if (e.key === 'Enter' && item) {
+      tempItems = tempItems.concat(item);
+      tempCurrentList.items = tempItems;
+      if (currentListIndex > -1)
+        tempLists[currentListIndex] = tempCurrentList;
+      setCurrentList(tempCurrentList);
+      setLists(tempLists);
+    }
+  }
+
+  function generateItems() {
+    if (tempItems.length !== 0)
+      return tempItems.map((itemBody, index) => <div className="tr"><div className="td">{itemBody}</div></div>)
+    else
+      return <div className="tr"><div className="td"></div></div>
+  }
+
   return (
     <div>
-      { items.map((itemBody, index) => <div className="tr"><div className="td">{itemBody}</div></div>)}
-      <div className='tr'><input type='text'></input></div>
+      { generateItems() }
+      <div className='tr'><input type='text' onKeyDown={handleNewItemEnter}></input></div>
     </div>
   )
 }
