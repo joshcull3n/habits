@@ -12,6 +12,7 @@ export const ContextProvider = ({ children }) => {
   var initLists = [
     { 'id': 0, 'title': 'groceries', 'items': ['eggs','milk','cocaine'], 'createdDate' : new Date(), 'editedDate': new Date() },
     { 'id': 1, 'title': 'tasks', 'items':['walk dog', 'grocery shop', 'tidy up'], 'createdDate' : new Date(), 'editedDate': new Date() },
+    { 'id': 2, 'title': 'new list', 'items':[], 'createdDate' : new Date(), 'editedDate': new Date() }
   ]
   
 

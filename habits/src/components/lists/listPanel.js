@@ -33,7 +33,9 @@ const ListPanel = () => {
       return (
         <div>
           { lists.map((list, index) => <ListTitle list={list}/>) }
-          <div className='tr'><input type='text' onKeyDown={handleNewListEnter}></input></div>
+          <div className='centered'>
+            <div className='tr'><input type='text' onKeyDown={handleNewListEnter}></input></div>
+          </div>
         </div>
       )
     }
@@ -54,20 +56,21 @@ const ListPanel = () => {
     const EmptyListPanel = () => {
       return (
         <div className='tr'>
-          <div className='td'>
-            you don't have any lists m8
+          <div className='td' style={{textAlign: 'center'}}>
+            create a list below
+            <RootListPanel />
           </div>
         </div>
       )
     }
 
     const ListBuilder = () => {
-      if (lists.Length === 0)
+      if (lists.length === 0)
         return <EmptyListPanel />
       if ( currentList !== null )
-        return <ExpandedListPanel selected={currentList} />
+        return <ExpandedListPanel />
       else
-        return <RootListPanel />
+        return <ExpandedListPanel />
     }
 
     return (

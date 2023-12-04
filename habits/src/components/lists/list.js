@@ -14,19 +14,51 @@ const ListTitle = ({ list }) => {
       setCurrentList(list);
   }
 
-  return (
-    <div className="tr" onClick={() => handleListClick(list)}>
-      <div className="td">{ list.title }</div>
-    </div>
-  )
+  if (currentList === list) {
+    return (
+      <div className='centered'>
+        <div className="tr" onClick={() => handleListClick(list)}>
+          <div className="td listTitle selected">{ list.title }</div>
+        </div>
+      </div>
+    )
+  }
+  else {
+    return (
+      <div className='centered'>
+        <div className="tr" onClick={() => handleListClick(list)}>
+          <div className="td listTitle">{ list.title }</div>
+        </div>
+      </div>
+    )
+  }
 }
 
 const ListContents = () => {
   const { lists, setLists, currentList, setCurrentList } = useContext(Context);
-  var tempItems = Array.from(currentList.items);
-  var tempCurrentList = JSON.parse(JSON.stringify(currentList));
-  var tempLists = lists.map(list => list);
-  var currentListIndex = lists.indexOf(currentList);
+
+  if (currentList !== null) {
+    var tempItems = Array.from(currentList.items);
+    var tempCurrentList = JSON.parse(JSON.stringify(currentList));
+    var tempLists = lists.map(list => list);
+    var currentListIndex = lists.indexOf(currentList);
+  }
+
+  function generateItems() {
+    if (tempItems && tempItems.length !== 0)
+      return (
+        tempItems.map((itemBody, index) => 
+          <div className='tr'>
+            <div className='td listContents' style={{display: 'flex'}}>
+              <input type='checkbox' style={{ height:'20px', width:'20px', margin: '0px 10px' }}/>
+              {itemBody}
+            </div>
+          </div>
+        )
+      )
+    else
+      return <div className='centered'><div className="tr"><div className='td listContents'>add your first list item below</div></div></div>
+  }
 
   // add item to list on enter
   const handleNewItemEnter = (e) => {
@@ -41,19 +73,27 @@ const ListContents = () => {
     }
   }
 
-  function generateItems() {
-    if (tempItems.length !== 0)
-      return tempItems.map((itemBody, index) => <div className="tr"><div className="td">{itemBody}</div></div>)
-    else
-      return <div className="tr"><div className="td"></div></div>
+  const SelectedList = () => {
+    if (currentList === null) {
+      return (
+        <div>
+          <div className='tr'><div className='td listContents'>please select a list</div></div>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>
+          { generateItems() }
+          <div className='centered'>
+            <div className='tr'><input type='text' onKeyDown={handleNewItemEnter}></input></div>
+          </div>
+        </div>
+      )
+    }
   }
 
-  return (
-    <div>
-      { generateItems() }
-      <div className='tr'><input type='text' onKeyDown={handleNewItemEnter}></input></div>
-    </div>
-  )
+  return <SelectedList />
 }
 
 export default ListTitle;

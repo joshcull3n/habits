@@ -312,6 +312,20 @@ input[type="checkbox"]:checked:hover {
   border: 0.5px solid black;
 }
 
+.selected {
+  font-style: italic;
+}
+
+.listTitle {
+  text-align: center;
+  min-width: 10vw;
+  font-size: x-large;
+}
+
+.listContents {
+  min-width: 25vw;
+}
+
 @font-face{
   font-family:"Work Sans";
   font-style:normal;
