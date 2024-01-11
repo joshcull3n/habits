@@ -56,9 +56,9 @@ const HabitList = ({ dateLabels, mobile }) => {
     var tempStart = new Date(startDate);
     var tempEnd = new Date(endDate);
 
-    tempStart.setDate(tempStart.getDate() - 1);
+    tempStart.setDate(tempStart.getDate() + 1);
     setStartDate(tempStart);
-    tempEnd.setDate(tempEnd.getDate() - 1);
+    tempEnd.setDate(tempEnd.getDate() + 1);
     setEndDate(tempEnd);
   }
 
@@ -67,9 +67,9 @@ const HabitList = ({ dateLabels, mobile }) => {
     var tempStart = new Date(startDate);
     var tempEnd = new Date(endDate);
     
-    tempStart.setDate(tempStart.getDate() + 1);
+    tempStart.setDate(tempStart.getDate() - 1);
     setStartDate(tempStart);
-    tempEnd.setDate(tempEnd.getDate() + 1);
+    tempEnd.setDate(tempEnd.getDate() - 1);
     setEndDate(tempEnd);
   }
 
