@@ -24,11 +24,24 @@ const HabitList = ({ dateLabels, mobile }) => {
     return(
       <div className="spaceEvenly" style={{ padding:'2px 0px 0px', fontSize:'x-small', marginLeft: '7px', marginRight: '7px' }}>
         { dateLabels.map((label, index) => {
+          // if todays label, make large
+          var today = new Date();
+          let date = today.getDate();
+          
+          if (label == date) {
+            return (
+              <span className="monospaceText dateLabel" style={{ fontSize:'x-large', padding: '5px 7px 5px 7px'}} id={label} key={index}>
+                {label}
+              </span>
+            )
+          }
+          else {
             return (
               <span className="monospaceText dateLabel" id={label} key={index}>
                 {label}
               </span> 
           );
+          }
         })}
       </div>
     )
@@ -87,7 +100,7 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const DatePageButtonLeft = () => {
     return ( 
-      <td style={{paddingBottom:'7px'}}>
+      <td>
         <img alt='date page left' id="calendarLeft" className="datePaginator" 
           style={{width:'15px', float:'right'}} 
           onClick={() => { datePageLeftDay() }}/>
@@ -97,7 +110,7 @@ const HabitList = ({ dateLabels, mobile }) => {
 
   const DatePageButtonRight = () => {
     return (
-      <td style={{paddingBottom:'7px'}}>
+      <td>
         <img alt='date page right' id="calendarRight" className="datePaginator" 
           style={{width:'15px', float:'left'}} 
           onClick={() => { datePageRightDay() }}/>
@@ -120,7 +133,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table>
-            <thead><tr><DatePageButtonLeft/><td style={{padding: '0px 2px 7px 4px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft/><td style={{padding: '0px 2px 0px 3px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
@@ -138,7 +151,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table style={{borderCollapse: 'collapse', borderSpacing: 0}}>
-            <thead><tr><DatePageButtonLeft /><td style={{paddingBottom: '7px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>

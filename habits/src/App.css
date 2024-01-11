@@ -77,6 +77,14 @@ input[type="checkbox"]:not(:checked) {
   transition: opacity 0.1s ease-in-out;
 }
 
+input[type="checkbox"]:checked.today {
+  background-size: 28px;
+}
+
+input[type="checkbox"]:not(:checked).today {
+  background-size: 28px;
+}
+
 input[type="checkbox"]:checked {
   appearance:none;
   -webkit-appearance:none;
@@ -109,7 +117,7 @@ input[type="checkbox"]:checked:hover {
 
 .deleteButton {
   padding-left: 3px;
-  padding-top: 5px;
+  padding-top: 5.5px;
 }
 
 .deleteButton img:hover {
@@ -258,6 +266,11 @@ input[type="checkbox"]:checked:hover {
 .spaceEvenly {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.today {
+  padding-right: 5px;
 }
 
 #lightModeSwitch {
