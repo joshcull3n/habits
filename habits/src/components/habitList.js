@@ -21,28 +21,25 @@ const HabitList = ({ dateLabels, mobile }) => {
   }
 
   function renderDateLabels() {
+    var dateLabelsElem = dateLabels.map((label, index) => {
+        if (label.bigLabel) {
+          return (
+            <span className="monospaceText dateLabel" style={{ fontSize:'x-large', padding: '5px 7px 5px 7px'}} id={label} key={index}>
+                  {label.label}
+            </span>
+          )
+        }
+        else {
+          return (
+            <span className="monospaceText dateLabel" id={label} key={index}>
+              {label.label}
+            </span> );
+        }
+      });
+    
     return(
       <div className="spaceEvenly" style={{ padding:'2px 0px 0px', fontSize:'x-small', marginLeft: '7px', marginRight: '7px' }}>
-        { dateLabels.map((label, index) => {
-          // if todays label, make large
-          var today = new Date();
-          let date = today.getDate();
-          
-          if (label == date) {
-            return (
-              <span className="monospaceText dateLabel" style={{ fontSize:'x-large', padding: '5px 7px 5px 7px'}} id={label} key={index}>
-                {label}
-              </span>
-            )
-          }
-          else {
-            return (
-              <span className="monospaceText dateLabel" id={label} key={index}>
-                {label}
-              </span> 
-          );
-          }
-        })}
+        { dateLabelsElem }
       </div>
     )
   }

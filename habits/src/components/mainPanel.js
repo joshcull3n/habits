@@ -35,11 +35,18 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
     var tempDate = new Date(startDate);
     var labels = [];
 
+    var date = new Date();
+
     while (tempDate <= endDate) {
       var tempLabel = tempDate.getDate();
+      let labelObj = { bigLabel: false };
+      if (tempDate.toDateString() == date.toDateString()) {
+        labelObj.bigLabel = true;
+      }
       if (tempLabel < 10)
         tempLabel = '0' + tempLabel.toString();
-      labels.unshift(tempLabel.toString());
+      labelObj.label = tempLabel.toString();
+      labels.unshift(labelObj);
       tempDate.setDate(tempDate.getDate() + 1);
     }
 
