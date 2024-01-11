@@ -13,7 +13,7 @@ const HabitList = ({ dateLabels, mobile }) => {
     const currDate = new Date(startDate);
 
     while (currDate <= endDate) {
-      dates.push(currDate.toDateString());
+      dates.unshift(currDate.toDateString());
       currDate.setDate(currDate.getDate() + 1);
     }
 

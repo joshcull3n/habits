@@ -39,7 +39,7 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
       var tempLabel = tempDate.getDate();
       if (tempLabel < 10)
         tempLabel = '0' + tempLabel.toString();
-      labels.push(tempLabel.toString());
+      labels.unshift(tempLabel.toString());
       tempDate.setDate(tempDate.getDate() + 1);
     }
 
