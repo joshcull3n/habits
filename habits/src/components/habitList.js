@@ -52,11 +52,14 @@ const HabitList = ({ dateLabels, mobile }) => {
   function datePageLeftDay() {
     var tempStart = new Date(startDate);
     var tempEnd = new Date(endDate);
+    var today = new Date();
 
-    tempStart.setDate(tempStart.getDate() + 1);
-    setStartDate(tempStart);
-    tempEnd.setDate(tempEnd.getDate() + 1);
-    setEndDate(tempEnd);
+    if (tempEnd.toDateString() !== today.toDateString()) {
+      tempStart.setDate(tempStart.getDate() + 1);
+      setStartDate(tempStart);
+      tempEnd.setDate(tempEnd.getDate() + 1);
+      setEndDate(tempEnd);
+    }
   }
 
   // paginate dates 1 day into the future
@@ -109,7 +112,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return ( 
         <td>
           <img alt='date page left' id="calendarLeft" className="datePaginator" 
-            style={{width:'15px', float:'right'}} 
+            style={{width:'15px', float:'right', paddingTop: '1.5px'}} 
             onClick={() => { datePageLeftDay() }}/>
         </td>
       )
@@ -130,7 +133,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <td>
           <img alt='date page right' id="calendarRight" className="datePaginator" 
-            style={{width:'15px', float:'left', paddingLeft: '1px'}} 
+            style={{width:'15px', float:'left', paddingLeft: '1px', paddingTop: '1.5px'}} 
             onClick={() => { datePageRightDay() }}/>
         </td>
       )
