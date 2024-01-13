@@ -95,24 +95,46 @@ const HabitList = ({ dateLabels, mobile }) => {
     )
   }
 
-  const DatePageButtonLeft = () => {
-    return ( 
-      <td>
-        <img alt='date page left' id="calendarLeft" className="datePaginator" 
-          style={{width:'15px', float:'right'}} 
-          onClick={() => { datePageLeftDay() }}/>
-      </td>
-    )
+  const DatePageButtonLeft = (props) => {
+    if (props.mobile) {
+      return ( 
+        <td>
+          <img alt='date page left' id="calendarLeft" className="datePaginator" 
+            style={{width: '25px', float: 'right', marginRight: '-5px', paddingTop: '2px'}} 
+            onClick={() => { datePageLeftDay() }}/>
+        </td>
+      )
+    }
+    else {
+      return ( 
+        <td>
+          <img alt='date page left' id="calendarLeft" className="datePaginator" 
+            style={{width:'15px', float:'right'}} 
+            onClick={() => { datePageLeftDay() }}/>
+        </td>
+      )
+    }
   }
 
-  const DatePageButtonRight = () => {
-    return (
-      <td>
-        <img alt='date page right' id="calendarRight" className="datePaginator" 
-          style={{width:'15px', float:'left', paddingLeft: '1px'}} 
-          onClick={() => { datePageRightDay() }}/>
-      </td>
-    )
+  const DatePageButtonRight = (props) => {
+    if (props.mobile) {
+      return (
+        <td>
+          <img alt='date page right' id="calendarRight" className="datePaginator" 
+            style={{width:'25px', float:'left', marginLeft: '-1px', paddingTop: '2px'}} 
+            onClick={() => { datePageRightDay() }}/>
+        </td>
+      )
+    }
+    else {
+      return (
+        <td>
+          <img alt='date page right' id="calendarRight" className="datePaginator" 
+            style={{width:'15px', float:'left', paddingLeft: '1px'}} 
+            onClick={() => { datePageRightDay() }}/>
+        </td>
+      )
+    }
   }
 
   const EmptyHabitList = () => {
@@ -130,7 +152,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table>
-            <thead><tr><DatePageButtonLeft/><td style={{padding: '0px 2px 0px 3px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft mobile={true} /><td style={{padding: '0px 2px 0px 3px'}}>{ renderDateLabels() }</td><DatePageButtonRight mobile={true} /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
@@ -148,7 +170,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table style={{borderCollapse: 'collapse', borderSpacing: 0}}>
-            <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft mobile={false} /><td>{ renderDateLabels() }</td><DatePageButtonRight mobile={false} /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'250px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
