@@ -151,7 +151,7 @@ const HabitList = ({ dateLabels, mobile }) => {
             <thead><tr><DatePageButtonLeft /><td>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
-                  <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
+                  <td style={{maxWidth:'250px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
                   <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
                   <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
                 </tr>)}
