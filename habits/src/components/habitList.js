@@ -13,7 +13,7 @@ const HabitList = ({ dateLabels, mobile }) => {
     const currDate = new Date(startDate);
 
     while (currDate <= endDate) {
-      dates.push(currDate.toDateString());
+      dates.unshift(currDate.toDateString());
       currDate.setDate(currDate.getDate() + 1);
     }
 
@@ -21,15 +21,25 @@ const HabitList = ({ dateLabels, mobile }) => {
   }
 
   function renderDateLabels() {
+    var dateLabelsElem = dateLabels.map((label, index) => {
+      if (index == 0) {
+        return (
+          <span className="monospaceText dateLabel" style={{ fontSize:'x-large', padding: '5px 1.5px 5px 0px'}} id={label} key={index}>
+                {label}
+          </span>
+        )
+      }
+      else {
+        return (
+          <span className="monospaceText dateLabel" id={label} key={index}>
+            {label}
+          </span> );
+      }
+    });
+    
     return(
       <div className="spaceEvenly" style={{ padding:'2px 0px 0px', fontSize:'x-small', marginLeft: '7px', marginRight: '7px' }}>
-        { dateLabels.map((label, index) => {
-            return (
-              <span className="monospaceText dateLabel" id={label} key={index}>
-                {label}
-              </span> 
-          );
-        })}
+        { dateLabelsElem }
       </div>
     )
   }
@@ -42,11 +52,14 @@ const HabitList = ({ dateLabels, mobile }) => {
   function datePageLeftDay() {
     var tempStart = new Date(startDate);
     var tempEnd = new Date(endDate);
+    var today = new Date();
 
-    tempStart.setDate(tempStart.getDate() - 1);
-    setStartDate(tempStart);
-    tempEnd.setDate(tempEnd.getDate() - 1);
-    setEndDate(tempEnd);
+    if (tempEnd.toDateString() !== today.toDateString()) {
+      tempStart.setDate(tempStart.getDate() + 1);
+      setStartDate(tempStart);
+      tempEnd.setDate(tempEnd.getDate() + 1);
+      setEndDate(tempEnd);
+    }
   }
 
   // paginate dates 1 day into the future
@@ -54,9 +67,9 @@ const HabitList = ({ dateLabels, mobile }) => {
     var tempStart = new Date(startDate);
     var tempEnd = new Date(endDate);
     
-    tempStart.setDate(tempStart.getDate() + 1);
+    tempStart.setDate(tempStart.getDate() - 1);
     setStartDate(tempStart);
-    tempEnd.setDate(tempEnd.getDate() + 1);
+    tempEnd.setDate(tempEnd.getDate() - 1);
     setEndDate(tempEnd);
   }
 
@@ -85,24 +98,46 @@ const HabitList = ({ dateLabels, mobile }) => {
     )
   }
 
-  const DatePageButtonLeft = () => {
-    return ( 
-      <td style={{paddingBottom:'7px'}}>
-        <img alt='date page left' id="calendarLeft" className="datePaginator" 
-          style={{width:'15px', float:'right'}} 
-          onClick={() => { datePageLeftDay() }}/>
-      </td>
-    )
+  const DatePageButtonLeft = (props) => {
+    if (props.mobile) {
+      return ( 
+        <td>
+          <img alt='date page left' id="calendarLeft" className="datePaginator" 
+            style={{width: '25px', float: 'right', marginRight: '-5px', paddingTop: '2px'}} 
+            onClick={() => { datePageLeftDay() }}/>
+        </td>
+      )
+    }
+    else {
+      return ( 
+        <td>
+          <img alt='date page left' id="calendarLeft" className="datePaginator" 
+            style={{width:'15px', float:'right', paddingTop: '1.5px'}} 
+            onClick={() => { datePageLeftDay() }}/>
+        </td>
+      )
+    }
   }
 
-  const DatePageButtonRight = () => {
-    return (
-      <td style={{paddingBottom:'7px'}}>
-        <img alt='date page right' id="calendarRight" className="datePaginator" 
-          style={{width:'15px', float:'left'}} 
-          onClick={() => { datePageRightDay() }}/>
-      </td>
-    )
+  const DatePageButtonRight = (props) => {
+    if (props.mobile) {
+      return (
+        <td>
+          <img alt='date page right' id="calendarRight" className="datePaginator" 
+            style={{width:'25px', float:'left', marginLeft: '-1px', paddingTop: '2px'}} 
+            onClick={() => { datePageRightDay() }}/>
+        </td>
+      )
+    }
+    else {
+      return (
+        <td>
+          <img alt='date page right' id="calendarRight" className="datePaginator" 
+            style={{width:'15px', float:'left', paddingLeft: '1px', paddingTop: '1.5px'}} 
+            onClick={() => { datePageRightDay() }}/>
+        </td>
+      )
+    }
   }
 
   const EmptyHabitList = () => {
@@ -120,7 +155,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table>
-            <thead><tr><DatePageButtonLeft/><td style={{padding: '0px 2px 7px 4px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft mobile={true} /><td style={{padding: '0px 2px 0px 3px'}}>{ renderDateLabels() }</td><DatePageButtonRight mobile={true} /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
                   <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
@@ -138,10 +173,10 @@ const HabitList = ({ dateLabels, mobile }) => {
       return (
         <div>
           <table style={{borderCollapse: 'collapse', borderSpacing: 0}}>
-            <thead><tr><DatePageButtonLeft /><td style={{paddingBottom: '7px'}}>{ renderDateLabels() }</td><DatePageButtonRight /></tr></thead>
+            <thead><tr><DatePageButtonLeft mobile={false} /><td>{ renderDateLabels() }</td><DatePageButtonRight mobile={false} /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
-                  <td style={{maxWidth:'350px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
+                  <td style={{maxWidth:'250px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
                   <HabitDates habit={habit} dates={genDates(startDate, endDate)}/>
                   <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
                 </tr>)}

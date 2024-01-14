@@ -72,25 +72,44 @@ const HabitDates = ({ habit, dates }) => {
       }
     }
 
-    if (checked) {
-      return (
-        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
+    var elem = null;
+    var big = (props.index === 0);
+    
+    if (checked && !big) {
+      elem = (
+        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)} style={{verticalAlign: 'middle'}}>
           <input type="checkbox" checked={checked} onChange={handleCheck} style={{height:'20px', width:'20px', margin: '1px 3px'}}/>
         </td>
       )
     }
-    else {
-      return (
-        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
+    else if (!checked && !big) {
+      elem = (
+        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)} style={{verticalAlign: 'middle'}}>
           <input type="checkbox" checked={!!checked} onChange={handleCheck} style={{height:'20px', width:'20px', margin: '1px 3px'}}/>
         </td>
       )
     }
+    else if (checked && big) {
+      elem = (
+        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
+          <input class="today" type="checkbox" checked={checked} onChange={handleCheck} style={{height: '30px', width: '30px', margin: '0px 5px'}}/>
+        </td>
+      )
+    }
+    else if (!checked && big) {
+      elem = (
+        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
+          <input class="today" type="checkbox" checked={!!checked} onChange={handleCheck} style={{height: '30px', width: '30px', margin: '0px 5px'}}/>
+        </td>
+      )
+    }
+
+    return elem;
   }
 
   return (
     <span style={{minWidth:'168px'}} onMouseLeave={() => setLabelOpacity(null)}>
-      { dates.map((date, index) => <Checkbox key={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
+      { dates.map((date, index) => <Checkbox key={index} index={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
     </span>
   )
 }

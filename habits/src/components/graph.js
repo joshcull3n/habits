@@ -34,8 +34,8 @@ const Graph = () => {
   
     const currDate = new Date(startDate);
     while (currDate <= endDate) {
-      labels.push(currDate.getDate());
-      dates.push(new Date(currDate));
+      labels.unshift(currDate.getDate());
+      dates.unshift(new Date(currDate));
       currDate.setDate(currDate.getDate() + 1);
     }
   
