@@ -24,7 +24,7 @@ const HabitList = ({ dateLabels, mobile }) => {
     var dateLabelsElem = dateLabels.map((label, index) => {
       if (index == 0) {
         return (
-          <span className="monospaceText dateLabel" style={{ fontSize:'x-large', padding: '5px 2px 5px 0px'}} id={label} key={index}>
+          <span className="monospaceText dateLabel" style={{ fontSize:'x-large', padding: '5px 1.5px 5px 0px'}} id={label} key={index}>
                 {label}
           </span>
         )
