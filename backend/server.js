@@ -144,4 +144,17 @@ app.patch('/api/habits/', async (req, res) => {
 });
 
 // delete habit
+app.delete('/api/habits/', async (req, res) => {
+  try {
+    const habitId = req.query.id;
+    const result = await Habit.findByIdAndDelete(habitId);
 
+    if (result)
+      res.json(`Habit ${habitId} was deleted`);
+    else
+      res.status(404).json(`Habit with ID ${habitId} was not found`);
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
