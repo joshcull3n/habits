@@ -12,7 +12,8 @@ mongoose.connect(url);
 // CREATE SCHEMAS & MODELS
 const userSchema = new mongoose.Schema({
   username : { type: String, required: true, unique: true },
-  email : { type: String, required: true, unique: true }
+  email : { type: String, required: true, unique: true },
+  created_date : { type: Number, required: true }
 });
 
 const User = mongoose.model('User', userSchema);
@@ -25,7 +26,9 @@ const habitSchema = new mongoose.Schema({
   title : { type: String, required: true },
   doneDates: { type: [String], required: true },
   frequency : String,
-  status : String
+  status : String,
+  created_date : { type: Number, required: true },
+  updated_date : { type: Number, required: true }
 })
 
 const Habit = mongoose.model('Habit', habitSchema);
@@ -57,8 +60,9 @@ app.post('/api/users/', async (req, res) => {
   try {
     const username = req.body.username;
     const email = req.body.email;
+    const date = new Date().getTime();
 
-    const user = new User({ username: username, email: email });
+    const user = new User({ username: username, email: email, created_date: date });
     await user.save();
     res.status(201).json(user);
   }
@@ -101,13 +105,21 @@ app.post('/api/habits/', async (req, res) => {
   try {
     const username = req.body.username;
     const newHabitTitle = req.body.title;
+    const date = new Date().getTime();
 
     // check user exists
     const user = await User.findOne({ username: username });
     if (!user)
       return res.status(404).json({ message: 'User not found'});
 
-    const newHabit = new Habit({ habit_id: 'xyz', owner_username: username, title: newHabitTitle, doneDates: []});
+    const newHabit = new Habit({ 
+      habit_id: 'xyz', 
+      owner_username: username, 
+      title: newHabitTitle, 
+      doneDates: [], 
+      created_date: date, 
+      updated_date: date 
+    });
     await newHabit.save();
 
     res.status(201).json(newHabit);
@@ -122,6 +134,7 @@ app.patch('/api/habits/', async (req, res) => {
   try {
     const habitId = req.body.id;
     const newDates = req.body.dates;
+    const updated_date = new Date().getTime();
     
     // validation
     if (!Array.isArray(newDates))
@@ -133,9 +146,12 @@ app.patch('/api/habits/', async (req, res) => {
         return res.status(400).json('Invalid date in date array');
     };
     
-    const updatedHabit = await Habit.findByIdAndUpdate(habitId, { $set: { doneDates: newDates } }, { new: true });
+    const updatedHabit = await Habit.findByIdAndUpdate(habitId, { 
+      $set: { doneDates: newDates , updated_date: updated_date }
+    }, { new: true });
     if (!updatedHabit)
       return res.status(404).json({ message: 'Habit not found' });
+
     res.json(updatedHabit);
   } 
   catch (error) {
