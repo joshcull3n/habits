@@ -78,7 +78,7 @@ const App = () => {
 
   const Sidebar = () => {
     return (
-      <div className='stickyContainer'>
+      <div className="stickyContainer">
         <div className="sidebar">
           <div id="sidebarShadow">
             <a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>

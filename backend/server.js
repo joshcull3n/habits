@@ -13,7 +13,8 @@ mongoose.connect(url);
 const userSchema = new mongoose.Schema({
   username : { type: String, required: true, unique: true },
   email : { type: String, required: true, unique: true },
-  created_date : { type: Number, required: true }
+  created_date : { type: Number, required: true },
+  updated_date : { type: Number, required: true }
 });
 
 const User = mongoose.model('User', userSchema);
@@ -62,7 +63,7 @@ app.post('/api/users/', async (req, res) => {
     const email = req.body.email;
     const date = new Date().getTime();
 
-    const user = new User({ username: username, email: email, created_date: date });
+    const user = new User({ username: username, email: email, created_date: date, updated_date: date });
     await user.save();
     res.status(201).json(user);
   }
