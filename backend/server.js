@@ -29,7 +29,8 @@ const habitSchema = new mongoose.Schema({
   frequency : String,
   status : String,
   created_date : { type: Number, required: true },
-  updated_date : { type: Number, required: true }
+  updated_date : { type: Number, required: true },
+  deleted : { type: Boolean, default: false }
 })
 
 const Habit = mongoose.model('Habit', habitSchema);

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Context } from "../Context";
 
-const HabitDates = ({ habit, dates }) => {
+const HabitDates = ({ habit, dateRangeDates }) => {
   const { habits, setHabits } = useContext(Context);
 
   function setLabelOpacity(date, habit) {
@@ -109,7 +109,7 @@ const HabitDates = ({ habit, dates }) => {
 
   return (
     <span style={{minWidth:'168px'}} onMouseLeave={() => setLabelOpacity(null)}>
-      { dates.map((date, index) => <Checkbox key={index} index={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
+      { dateRangeDates.map((date, index) => <Checkbox key={index} index={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
     </span>
   )
 }
