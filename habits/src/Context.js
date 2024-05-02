@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { detectDevice } from './App';
+import { fetchRemoteHabitsForUser, getSyncedHabits } from './utils/habitUtils';
 
 const mobile = detectDevice();
 
@@ -19,7 +20,6 @@ export const ContextProvider = ({ children }) => {
   }
 
   const localStorage = window.localStorage;
-  const habitStorage = localStorage.getItem('habits_cullen');
   const lightModeStorage = localStorage.getItem('lightMode_cullen')
 
   // appearance
@@ -30,23 +30,24 @@ export const ContextProvider = ({ children }) => {
   const [graphStepSize, setGraphStepSize] = useState('0.2');
   const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
-  // if there are habits in localStorage, parse them
-  if (habitStorage) {
-    var habitStorageJson = JSON.parse(habitStorage);
-    initHabits = [];
-    habitStorageJson.forEach(habit => {
-      var tempDates = [];
-      habit['doneDates'].forEach( date => {
-        tempDates.push(new Date(date));
-      })
-      habit['doneDates'] = tempDates;
-      initHabits.push(habit)
-    })
-  }
-
   // habits
   const [habits, setHabits] = useState(initHabits);
   const [newHabitText, setNewHabitText] = useState('');
+
+  // get habits from DB and commit them to local storage
+  fetchRemoteHabitsForUser('dosh').then(data => {
+    initHabits = [];
+    data.forEach(habit => {
+      var tempDates = [];
+      habit['doneDates'].forEach( date => { tempDates.push(new Date(date)); });
+      habit['doneDates'] = tempDates;
+      initHabits.push(habit);
+    });
+
+    if (habits.toString() !== initHabits.toString()) {
+      setHabits(initHabits);
+    }
+  });
 
   // dates
   const [endDate, setEndDate] = useState(new Date());
@@ -58,19 +59,25 @@ export const ContextProvider = ({ children }) => {
     start.setDate(tempEnd.getDate() - 21);
   const [startDate, setStartDate] = useState(start);
 
-  // set habits to localStorage on every render
+  // set habits to localStorage on every render. update remote
   useEffect(() => {
-    var tempHabitList = [];
-    habits.forEach(habit => {
-      var tempHabit = Object.create(habit);
-      var tempDoneDates = [];
-      habit['doneDates'].forEach(date => {
-        tempDoneDates.push(convertToYYYYMMDD(date));
-      })
-      tempHabit = {...habit, 'doneDates': tempDoneDates};
-      tempHabitList.push(tempHabit);
-    });
-    localStorage.setItem('habits_cullen', JSON.stringify(tempHabitList))
+    fetchRemoteHabitsForUser('josh').then(remoteHabits => {
+      getSyncedHabits('josh', habits, remoteHabits).then(results => {
+        var tempHabitList = [];
+        results.forEach(habit => {
+          var tempDoneDates = [];
+          habit['doneDates'].forEach(date => {
+            tempDoneDates.push(date);
+          })
+          habit['doneDates'] = tempDoneDates;
+          tempHabitList.push(habit);
+        });
+  
+        let date = new Date().getTime();
+        let jsonHabitList = JSON.stringify(tempHabitList);
+        localStorage.setItem('habits_cullen', `{ "last_updated" : ${date}, ${jsonHabitList} }`);
+      });
+    })
   }, [habits, localStorage])
 
   return (

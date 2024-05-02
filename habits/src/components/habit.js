@@ -8,7 +8,7 @@
 
 const Habit = ({ habit }) => {
   return (
-    <div className="habitItem">{habit.body}</div>
+    <div className="habitItem">{habit.title}</div>
   )}
 
 export default Habit;

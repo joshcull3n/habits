@@ -115,7 +115,6 @@ app.post('/api/habits/', async (req, res) => {
       return res.status(404).json({ message: 'User not found'});
 
     const newHabit = new Habit({ 
-      habit_id: 'xyz', 
       owner_username: username, 
       title: newHabitTitle, 
       doneDates: [], 
@@ -158,6 +157,50 @@ app.patch('/api/habits/', async (req, res) => {
   } 
   catch (error) {
     res.status(500).json('Error updating habit');
+  }
+});
+
+app.put('/api/habits', async (req, res) => {
+  try {
+    const username = req.body.username;
+    const newHabits = req.body.habits;
+    
+    const user = await User.findOne({ username: username });
+    if (!user)
+      return res.status(404).json({ message : 'User not found' });
+    const existingHabits = await Habit.find({ owner_username: username });
+
+    // const existingHabitsSet = new Set(existingHabits.map(habit => [habit._id, habit]));
+    // const newHabitsSet = new Set(newHabits.map(habit => [habit._id, habit]))
+
+    const deleteArray = existingHabits.some(oldHabit => newHabits.some(newHabit => newHabit._id === oldHabit._id));
+    return res.status(200).json({deleteArray, existingHabits, newHabits});
+
+    const habitsToDelete = existingHabits.filter(oldHabit => !newHabits.some(newHabit => newHabit._id === oldHabit._id));
+    const habitsToUpdate = existingHabits.filter(oldHabit => newHabits.some(newHabit => newHabit._id === oldHabit._id));
+    // const habitsToCreate = newHabits.filter(habit => !existingHabitsSet.has(habit._id));
+
+    // delete habits not in the new set
+    await Habit.deleteMany({_id: {$in: habitsToDelete.map(habit => habit._id)}});
+    // update existing habits
+    for (let habit of habitsToUpdate) {
+      const updatedData = newHabitsSet.get(habit._id);
+      Object.assign(habit, updatedData);
+      await habit.save();
+    }
+    // insert new habits
+    const date = new Date().getTime();
+    const createdHabits = await Habit.insertMany(habitsToCreate.map(habit => ({
+      ...habit,
+      owner_username: username,
+      created_date: date,
+      updated_date: date
+    })));
+
+    res.status(200).json({ deleted: habitsToDelete.length, updated: habitsToUpdate.length, created: habitsToCreate.length});
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
