@@ -181,7 +181,6 @@ app.put('/api/habits', async (req, res) => {
 
       if (!dateArraysAreEqual()) {
         const updatedDate = new Date().getTime();
-        console.log(updatedDate);
         habit.doneDates = updatedData.doneDates;
         habit.updated_date = updatedDate;
         updatedHabits++;

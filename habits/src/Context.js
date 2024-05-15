@@ -30,7 +30,11 @@ export const ContextProvider = ({ children }) => {
   const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
   // habits
-  const [habits, setHabits] = useState([]);
+  var initHabit = {
+    title: 'XXX_DO_NOTHING_XXX',
+    doneDates: []
+  }
+  const [habits, setHabits] = useState([initHabit]);
   const [newHabitText, setNewHabitText] = useState('');
 
   const TEST_USERNAME = 'zosh';
@@ -62,11 +66,14 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     console.log('init pageload');
-    fetchAndSetHabits();
+    fetchAndSetHabits(true);
   }, []);
 
   useEffect(() => {
-    pushHabitsForUser(TEST_USERNAME, habits);
+    if (habits[0].title !== 'XXX_DO_NOTHING_XXX') {
+      console.log(habits);
+      pushHabitsForUser(TEST_USERNAME, habits);
+    }
     setHabits(habits);
 
     const intervalId = setInterval(() => { // runs every 3 seconds
