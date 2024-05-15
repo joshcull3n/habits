@@ -1,7 +1,7 @@
 export function generateHabit(id, body, dates) {
   const habitObject = {
     id: id,
-    body: body,
+    title: body,
     doneDates: dates
   };
 
@@ -18,36 +18,30 @@ export async function fetchRemoteHabitsForUser(username) {
     .catch(error => { throw error });
 }
 
-// compares the updated_date on the user and localStorage to determine which is the source of truth
-export async function getSyncedHabits(username, localHabits, remoteHabits) {
-  let syncedHabits = [];
+// overwrites the remote habits with whatever is the current state of local
+export async function pushHabitsForUser(username, habits) {
+  const cleanHabits = habits.map(habit => ({
+    _id: habit._id,
+    title: habit.title,
+    doneDates: habit.doneDates.map(date => `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`)
+  }));
 
-  // get remote habits
-  const localMap = new Map(localHabits.map(localHabit => [localHabit._id, localHabit]));
-  const remoteMap = new Map(remoteHabits.map(remoteHabit => [remoteHabit._id, remoteHabit]));
+  const bodyJson = {
+    "username" : username,
+    "habits" : cleanHabits
+  }
   
-  // compare remote to local
-  remoteMap.forEach(remoteHabit => {
-    const localMatch = localMap.get(remoteHabit._id);
-    
-    if (localMatch) {
-      // if updated_date is different, sync the newest
-      var latestHabit = localMatch;
-      if (remoteHabit.updated_date > localMatch.updated_date)
-        latestHabit = remoteHabit;
-      syncedHabits.push(latestHabit);
-    }
-    else { // if habit is missing from local, sync it
-      syncedHabits.push(remoteHabit);
-    }
-  });
-  
-  // compare local to remote
-  localMap.forEach(localHabit => {
-    const remoteMatch = remoteMap.get(localHabit._id);
-    if (!remoteMatch) // if habit is missing from remote, sync it
-      syncedHabits.push(localHabit);
-  })
+  const options = {
+    method: 'PUT',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify(bodyJson)
+  }
 
-  return syncedHabits;
+  return fetch(`/api/habits`, options)
+    .then(resp => {
+      if (!resp.ok)
+        throw new Error('error writing habits for user');
+      return resp.json();
+    })
+    .catch(error => { throw error });
 }

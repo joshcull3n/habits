@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { detectDevice } from './App';
-import { fetchRemoteHabitsForUser, getSyncedHabits } from './utils/habitUtils';
+import { fetchRemoteHabitsForUser, pushHabitsForUser } from './utils/habitUtils';
 
 const mobile = detectDevice();
 
 export const Context = React.createContext();
 export const ContextProvider = ({ children }) => {
 
-  var yesterday2 = new Date();
-  yesterday2.setDate(yesterday2.getDate()-2)
-  var initHabits = []
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate()-2)
 
   function convertToYYYYMMDD(date) {
     const tempYear = date.getFullYear();
@@ -31,23 +30,11 @@ export const ContextProvider = ({ children }) => {
   const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
   // habits
-  const [habits, setHabits] = useState(initHabits);
+  const [habits, setHabits] = useState([]);
   const [newHabitText, setNewHabitText] = useState('');
 
-  // get habits from DB and commit them to local storage
-  fetchRemoteHabitsForUser('dosh').then(data => {
-    initHabits = [];
-    data.forEach(habit => {
-      var tempDates = [];
-      habit['doneDates'].forEach( date => { tempDates.push(new Date(date)); });
-      habit['doneDates'] = tempDates;
-      initHabits.push(habit);
-    });
-
-    if (habits.toString() !== initHabits.toString()) {
-      setHabits(initHabits);
-    }
-  });
+  const TEST_USERNAME = 'zosh';
+  
 
   // dates
   const [endDate, setEndDate] = useState(new Date());
@@ -59,26 +46,34 @@ export const ContextProvider = ({ children }) => {
     start.setDate(tempEnd.getDate() - 21);
   const [startDate, setStartDate] = useState(start);
 
-  // set habits to localStorage on every render. update remote
+  function fetchAndSetHabits() {
+    fetchRemoteHabitsForUser(TEST_USERNAME).then(resp => {
+      console.log('fetching habits');
+      const cleanDateHabits = resp.map(habit => ({
+        ...habit,
+        doneDates: habit.doneDates.map(date => new Date(date))
+      }));
+      if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits)) {
+        console.log('setting habits');
+        setHabits(cleanDateHabits);
+      }
+    });
+  }
+
   useEffect(() => {
-    fetchRemoteHabitsForUser('josh').then(remoteHabits => {
-      getSyncedHabits('josh', habits, remoteHabits).then(results => {
-        var tempHabitList = [];
-        results.forEach(habit => {
-          var tempDoneDates = [];
-          habit['doneDates'].forEach(date => {
-            tempDoneDates.push(date);
-          })
-          habit['doneDates'] = tempDoneDates;
-          tempHabitList.push(habit);
-        });
-  
-        let date = new Date().getTime();
-        let jsonHabitList = JSON.stringify(tempHabitList);
-        localStorage.setItem('habits_cullen', `{ "last_updated" : ${date}, ${jsonHabitList} }`);
-      });
-    })
-  }, [habits, localStorage])
+    console.log('init pageload');
+    fetchAndSetHabits();
+  }, []);
+
+  useEffect(() => {
+    pushHabitsForUser(TEST_USERNAME, habits);
+    setHabits(habits);
+
+    const intervalId = setInterval(() => { // runs every 3 seconds
+      fetchAndSetHabits()
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, [habits])
 
   return (
     <Context.Provider value={{ 

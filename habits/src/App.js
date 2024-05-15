@@ -26,7 +26,6 @@ const App = () => {
   /* -- -- -- -- -- -- */
 
   const localStorage = window.localStorage;
-
   const { 
     habits, setHabits, newHabitText, setNewHabitText, 
     lightMode, setLightMode, setGraphGridColor 
@@ -71,7 +70,9 @@ const App = () => {
   function addHabit() {
     if (newHabitText.trim()) {
       const habit = generateHabit(habits.length + 1, newHabitText.trim(), []);
-      setHabits(habits.concat(habit));
+      const tempArray = [...habits];
+      tempArray.push(habit);
+      setHabits(tempArray);
     }
     setNewHabitText('');
   }

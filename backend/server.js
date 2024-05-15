@@ -29,8 +29,7 @@ const habitSchema = new mongoose.Schema({
   frequency : String,
   status : String,
   created_date : { type: Number, required: true },
-  updated_date : { type: Number, required: true },
-  deleted : { type: Boolean, default: false }
+  updated_date : { type: Number, required: true }
 })
 
 const Habit = mongoose.model('Habit', habitSchema);
@@ -40,21 +39,6 @@ Habit.init().then(() => {
 
 // ALLOW APP TO PROCESS JSON IN REQUEST BODY
 app.use(express.json());
-
-// TODO: DELETE EXAMPLE DATA
-// const user1 = new User({ user_id : "123", username : "josh", email : "hello@joshcullen.co" })
-// const habit1 = new Habit({ habit_id: "456", owner_username : user1.username, title: 'drink water', doneDates: ["2024/01/15", "2024/01/17"] })
-// user1.save()
-//   .then(
-//     () => console.log('user added'),
-//     (err) => console.log(err)
-//   );
-// habit1.save()
-//   .then(
-//     () => console.log('habit added'),
-//     (err) => console.log(err)
-//   );
-// TODO: DELETE EXAMPLE DATA
 
 // ROUTE ENDPOINTS
 // create new user
@@ -170,34 +154,52 @@ app.put('/api/habits', async (req, res) => {
       return res.status(404).json({ message : 'User not found' });
     const existingHabits = await Habit.find({ owner_username: username });
 
-    // const existingHabitsSet = new Set(existingHabits.map(habit => [habit._id, habit]));
-    // const newHabitsSet = new Set(newHabits.map(habit => [habit._id, habit]))
-
-    const deleteArray = existingHabits.some(oldHabit => newHabits.some(newHabit => newHabit._id === oldHabit._id));
-    return res.status(200).json({deleteArray, existingHabits, newHabits});
-
-    const habitsToDelete = existingHabits.filter(oldHabit => !newHabits.some(newHabit => newHabit._id === oldHabit._id));
-    const habitsToUpdate = existingHabits.filter(oldHabit => newHabits.some(newHabit => newHabit._id === oldHabit._id));
-    // const habitsToCreate = newHabits.filter(habit => !existingHabitsSet.has(habit._id));
-
     // delete habits not in the new set
+    const habitsToDelete = existingHabits.filter(oldHabit => !newHabits.some(newHabit => newHabit._id === oldHabit._id.toString()));
     await Habit.deleteMany({_id: {$in: habitsToDelete.map(habit => habit._id)}});
-    // update existing habits
+
+    // update habits that are in both sets
+    const habitsToUpdate = existingHabits.filter(oldHabit => newHabits.some(newHabit => newHabit._id === oldHabit._id.toString()));
+    var updatedHabits = 0;
     for (let habit of habitsToUpdate) {
-      const updatedData = newHabitsSet.get(habit._id);
-      Object.assign(habit, updatedData);
+      const updatedData = newHabits.find(newHabit => newHabit._id == habit._id.toString());
+
+      // if date arrays are different, update the object
+      function dateArraysAreEqual() {
+        var arr1 = habit.doneDates;
+        var arr2 = updatedData.doneDates;
+        if (arr1.length !== arr2.length) {
+          return false;
+        }
+        for (let i = 0; i < arr1.length; i++) {
+          if (arr1[i] !== arr2[i]) {
+              return false;
+          }
+        }
+        return true;
+      }
+
+      if (!dateArraysAreEqual()) {
+        const updatedDate = new Date().getTime();
+        console.log(updatedDate);
+        habit.doneDates = updatedData.doneDates;
+        habit.updated_date = updatedDate;
+        updatedHabits++;
+      }
+      
       await habit.save();
     }
-    // insert new habits
+
+    // create habits that are not in the existing set
+    const habitsToCreate = newHabits.filter(newHabit => !existingHabits.some(oldHabit => newHabit._id === oldHabit._id.toString()));
     const date = new Date().getTime();
-    const createdHabits = await Habit.insertMany(habitsToCreate.map(habit => ({
+    await Habit.insertMany(habitsToCreate.map(habit => ({
       ...habit,
       owner_username: username,
       created_date: date,
       updated_date: date
     })));
-
-    res.status(200).json({ deleted: habitsToDelete.length, updated: habitsToUpdate.length, created: habitsToCreate.length});
+    res.status(200).json({ deleted: habitsToDelete.length, updated: updatedHabits, created: habitsToCreate.length});
   }
   catch (error) {
     res.status(500).json({ message: error.message });
