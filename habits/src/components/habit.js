@@ -7,8 +7,11 @@
  */
 
 const Habit = ({ habit }) => {
-  return (
-    <div className="habitItem">{habit.title}</div>
-  )}
+  if (habit.title === 'XXX_INIT_XXX')
+    return
+  else
+    return (
+      <div className="habitItem">{habit.title}</div>
+    )}
 
 export default Habit;

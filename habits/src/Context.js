@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { detectDevice } from './App';
-import { fetchRemoteHabitsForUser, pushHabitsForUser } from './utils/habitUtils';
+import { fetchRemoteHabitsForUser, pushHabitsForUser, checkForHabitsChange } from './utils/habitUtils';
 
 const mobile = detectDevice();
 
@@ -31,7 +31,7 @@ export const ContextProvider = ({ children }) => {
 
   // habits
   var initHabit = {
-    title: 'XXX_DO_NOTHING_XXX',
+    title: 'XXX_INIT_XXX',
     doneDates: []
   }
   const [habits, setHabits] = useState([initHabit]);
@@ -57,10 +57,8 @@ export const ContextProvider = ({ children }) => {
         ...habit,
         doneDates: habit.doneDates.map(date => new Date(date))
       }));
-      if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits)) {
-        console.log('setting habits');
+      if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
         setHabits(cleanDateHabits);
-      }
     });
   }
 
@@ -70,11 +68,8 @@ export const ContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (habits[0].title !== 'XXX_DO_NOTHING_XXX') {
-      console.log(habits);
+    if (habits[0].title !== 'XXX_INIT_XXX')
       pushHabitsForUser(TEST_USERNAME, habits);
-    }
-    setHabits(habits);
 
     const intervalId = setInterval(() => { // runs every 3 seconds
       fetchAndSetHabits()
