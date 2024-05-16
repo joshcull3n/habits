@@ -28,7 +28,7 @@ const App = () => {
   const localStorage = window.localStorage;
   const { 
     habits, setHabits, newHabitText, setNewHabitText, 
-    lightMode, setLightMode, setGraphGridColor 
+    lightMode, setLightMode, setGraphGridColor, setUpdateRemote
   } = useContext(Context);
 
   // set body class
@@ -69,6 +69,7 @@ const App = () => {
 
   function addHabit() {
     if (newHabitText.trim()) {
+      setUpdateRemote(true);
       const habit = generateHabit(habits.length + 1, newHabitText.trim(), []);
       const tempArray = [...habits];
       tempArray.push(habit);

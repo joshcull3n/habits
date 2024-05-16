@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Context } from "../Context";
 
 const HabitDates = ({ habit, dateRangeDates }) => {
-  const { habits, setHabits } = useContext(Context);
+  const { habits, setHabits, setUpdateRemote } = useContext(Context);
 
   function setLabelOpacity(date, habit) {
     const dateLabelElements = document.querySelectorAll(".dateLabel");
@@ -46,9 +46,10 @@ const HabitDates = ({ habit, dateRangeDates }) => {
     });
 
     function handleCheck(e) {
+      setUpdateRemote(true);
       var tempDates = Array.from(props.doneDates);
       var habitIndex = habits.indexOf(props.habit);
-      
+
       if (!e.target.checked) {
         // remove date from habit.doneDates
         tempDates.forEach(date => {

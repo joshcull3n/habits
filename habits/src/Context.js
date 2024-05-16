@@ -64,18 +64,23 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     console.log('init pageload');
-    fetchAndSetHabits(true);
+    fetchAndSetHabits();
   }, []);
 
+  const [updateRemote, setUpdateRemote] = useState(false);
+
   useEffect(() => {
-    if (habits[0].title !== 'XXX_INIT_XXX')
-      pushHabitsForUser(TEST_USERNAME, habits);
+    if (habits[0].title !== 'XXX_INIT_XXX' && updateRemote) {
+      setUpdateRemote(false);
+      pushHabitsForUser(TEST_USERNAME, habits).then(() => fetchAndSetHabits());
+    }
 
     const intervalId = setInterval(() => { // runs every 3 seconds
       fetchAndSetHabits()
-    }, 3000);
+    }, 5000);
+
     return () => clearInterval(intervalId);
-  }, [habits])
+  }, [updateRemote])
 
   return (
     <Context.Provider value={{ 
@@ -88,7 +93,8 @@ export const ContextProvider = ({ children }) => {
       graphLineColor, setGraphLineColor,
       graphBgColor, setGraphBgColor,
       graphStepSize, setGraphStepSize,
-      graphGridColor, setGraphGridColor }}>
+      graphGridColor, setGraphGridColor,
+      updateRemote, setUpdateRemote }}>
       { children }
     </Context.Provider>
   );

@@ -5,7 +5,8 @@ import HabitDates from './habitDates.js'
 import { Context } from '../Context.js'
 
 const HabitList = ({ dateLabels, mobile }) => {
-  const { habits, setHabits, startDate, setStartDate, endDate, setEndDate } = useContext(Context);
+  const { habits, setHabits, startDate, setStartDate, 
+    endDate, setEndDate, setUpdateRemote } = useContext(Context);
 
   // generate list of date strings between two given dates
   function genDates(startDate, endDate) {
@@ -42,10 +43,6 @@ const HabitList = ({ dateLabels, mobile }) => {
         { dateLabelsElem }
       </div>
     )
-  }
-
-  function deleteHabit(id) {
-    setHabits(habits.filter(habit => habit.id !== id));
   }
 
   // paginate dates 1 day into the past
@@ -90,9 +87,15 @@ const HabitList = ({ dateLabels, mobile }) => {
     })
   }
 
+  function deleteHabit(habitToDel) {
+    setUpdateRemote(true);
+    setHabits(habits.filter(habit => habit._id !== habitToDel._id));
+  }
+
   const DeleteButton = (props) => {
     return (
-      <td className='deleteButton' onMouseEnter={() => setLabelOpacity(props.habit)} onMouseLeave={() => setLabelOpacity(null)} onClick={() => deleteHabit(props.id)}>
+      <td className='deleteButton' onMouseEnter={() => setLabelOpacity(props.habit)} 
+        onMouseLeave={() => setLabelOpacity(null)} onClick={() => deleteHabit(props.habit)}>
         <img alt='x' id="deleteButton" style={{verticalAlign: 'baseline'}}/>
       </td>
     )
