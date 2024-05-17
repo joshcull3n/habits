@@ -8,6 +8,40 @@ export function generateHabit(id, body, dates) {
   return habitObject;
 }
 
+export async function fetchUserInfo(username) {
+  return fetch(`/api/users?username=${username}`)
+    .then(resp => {
+      if (resp.ok)
+        return resp.json();
+      else if (resp.status === 404)
+        return null
+      else
+        throw new Error('error fetching user info');
+    })
+    .catch(error => { throw error });
+}
+
+export async function createUser(username) {
+  const bodyJson = {
+    "username" : username
+  }
+  const options = {
+    method: 'POST',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify(bodyJson)
+  }
+
+  return fetch(`/api/users`, options)
+    .then(resp => {
+      if (!resp.ok)
+        throw new Error('could not create user');
+      else
+        return resp.json();
+    })
+    .catch(error => { throw error })
+    .then(() => { fetchRemoteHabitsForUser(username); })
+}
+
 export async function fetchRemoteHabitsForUser(username) {
   return fetch(`/api/habits?username=${username}`)
     .then(resp => {

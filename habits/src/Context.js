@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { detectDevice } from './App';
-import { fetchRemoteHabitsForUser, pushHabitsForUser, checkForHabitsChange } from './utils/habitUtils';
+import { fetchRemoteHabitsForUser, pushHabitsForUser, fetchUserInfo, createUser } from './utils/habitUtils';
 
 const mobile = detectDevice();
 
@@ -19,7 +19,11 @@ export const ContextProvider = ({ children }) => {
   }
 
   const localStorage = window.localStorage;
-  const lightModeStorage = localStorage.getItem('lightMode_cullen')
+  const lightModeStorage = localStorage.getItem('habits_lightMode');
+
+  // user
+  const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem('habits_userid'));
+  const [usernameInput, setUsernameInput] = useState('');
 
   // appearance
   const [lightMode, setLightMode] = useState(Boolean(lightModeStorage));
@@ -30,15 +34,8 @@ export const ContextProvider = ({ children }) => {
   const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
   // habits
-  var initHabit = {
-    title: 'XXX_INIT_XXX',
-    doneDates: []
-  }
-  const [habits, setHabits] = useState([initHabit]);
+  const [habits, setHabits] = useState([]);
   const [newHabitText, setNewHabitText] = useState('');
-
-  const TEST_USERNAME = 'zosh';
-  
 
   // dates
   const [endDate, setEndDate] = useState(new Date());
@@ -50,37 +47,51 @@ export const ContextProvider = ({ children }) => {
     start.setDate(tempEnd.getDate() - 21);
   const [startDate, setStartDate] = useState(start);
 
-  function fetchAndSetHabits() {
-    fetchRemoteHabitsForUser(TEST_USERNAME).then(resp => {
-      console.log('fetching habits');
-      const cleanDateHabits = resp.map(habit => ({
-        ...habit,
-        doneDates: habit.doneDates.map(date => new Date(date))
-      }));
-      if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
-        setHabits(cleanDateHabits);
-    });
+  function fetchAndSetHabitsForCurrentUser() {
+    if (loggedInUser) {
+      fetchRemoteHabitsForUser(loggedInUser).then(resp => {
+        const cleanDateHabits = resp.map(habit => ({
+          ...habit,
+          doneDates: habit.doneDates.map(date => new Date(date))
+        }));
+        if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
+          setHabits(cleanDateHabits);
+      });
+    }
+  }
+
+  function fetchUserInfoAndCreateIfNotExist(username) {
+    if (username) {
+      fetchUserInfo(username).then(resp => {
+        if (!resp)
+          createUser(username).then(() => { setLoggedInUser(username); });
+        else
+          fetchAndSetHabitsForCurrentUser();
+      })
+    }
   }
 
   useEffect(() => {
-    console.log('init pageload');
-    fetchAndSetHabits();
-  }, []);
+    // check if user already exists
+    if (loggedInUser) {
+      fetchUserInfoAndCreateIfNotExist(loggedInUser);
+      localStorage.setItem('habits_userid', loggedInUser);
+    }
+  }, [loggedInUser]);
 
   const [updateRemote, setUpdateRemote] = useState(false);
 
   useEffect(() => {
-    if (habits[0].title !== 'XXX_INIT_XXX' && updateRemote) {
+    if (updateRemote) {
       setUpdateRemote(false);
-      pushHabitsForUser(TEST_USERNAME, habits).then(() => fetchAndSetHabits());
+      pushHabitsForUser(loggedInUser, habits).then(() => fetchAndSetHabitsForCurrentUser());
     }
 
-    const intervalId = setInterval(() => { // runs every 3 seconds
-      fetchAndSetHabits()
+    const intervalId = setInterval(() => { // runs every 5 seconds
+      fetchAndSetHabitsForCurrentUser()
     }, 5000);
-
     return () => clearInterval(intervalId);
-  }, [updateRemote])
+  }, [updateRemote, loggedInUser])
 
   return (
     <Context.Provider value={{ 
@@ -94,7 +105,9 @@ export const ContextProvider = ({ children }) => {
       graphBgColor, setGraphBgColor,
       graphStepSize, setGraphStepSize,
       graphGridColor, setGraphGridColor,
-      updateRemote, setUpdateRemote }}>
+      updateRemote, setUpdateRemote,
+      loggedInUser, setLoggedInUser,
+      usernameInput, setUsernameInput }}>
       { children }
     </Context.Provider>
   );

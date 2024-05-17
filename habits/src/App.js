@@ -3,6 +3,7 @@ import './App.css';
 import './styles/dark.css';
 import './styles/light.css';
 import MainPanel from './components/mainPanel.js';
+import UsernamePrompt from './components/userPrompt.js';
 import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
 
@@ -27,8 +28,9 @@ const App = () => {
 
   const localStorage = window.localStorage;
   const { 
-    habits, setHabits, newHabitText, setNewHabitText, 
-    lightMode, setLightMode, setGraphGridColor, setUpdateRemote
+    habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode, 
+    setGraphGridColor, setUpdateRemote, loggedInUser, setLoggedInUser, 
+    usernameInput, setUsernameInput
   } = useContext(Context);
 
   // set body class
@@ -58,13 +60,22 @@ const App = () => {
   const handleLightMode = (e) => {
     setGraphGridColor(null);
     if (lightMode) {
-      localStorage.setItem('lightMode_cullen', '');
+      localStorage.setItem('habits_lightMode', '');
       setLightMode(false);
     }
     else {
-      localStorage.setItem('lightMode_cullen', 'true');
+      localStorage.setItem('habits_lightMode', 'true');
       setLightMode(true);
     }
+  }
+
+  const handleUsernameInputChange = (e) => setUsernameInput(e.target.value)
+
+  const handleUsernameInputEnter = (e) => {
+      if (e.key === 'Enter' && e.target.value.trim()) {
+          setUsernameInput(e.target.value);
+          setLoggedInUser(usernameInput);
+      }
   }
 
   function addHabit() {
@@ -94,18 +105,36 @@ const App = () => {
     )
   }
 
-  return (
-    <div className="App">
-      <Sidebar />
-      <div className='mainPanelContainer'>
+  const TopBar = () => {
+    return (
+      <div className="centered">
+        <h2>habits</h2>
+      </div>
+    );
+  };
+  
+  if (loggedInUser) {
+    return (
+      <div className="App">
+        <Sidebar />
         <MainPanel 
           mobile={detectDevice()}
           handleHabitInputEnter={handleHabitInputEnter}
           handleHabitInputChange={handleHabitInputChange}
           handleHabitInputBtnClick={handleHabitInputBtnClick}/>
       </div>
-    </div>
-  );
+    );
+  } 
+  else {
+    return (
+      <div className="App">
+        <Sidebar />
+        <TopBar />
+        <UsernamePrompt handleUsernameInputChange={handleUsernameInputChange}
+          handleUsernameInputEnter={handleUsernameInputEnter}/>
+      </div>
+    )
+  }
 }
 
 export default App;
