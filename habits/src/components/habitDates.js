@@ -7,7 +7,7 @@ const HabitDates = ({ habit, dateRangeDates }) => {
   function setLabelOpacity(date, habit) {
     const dateLabelElements = document.querySelectorAll(".dateLabel");
     const habitLabelElements = document.querySelectorAll(".habitItem");
-    dateLabelElements.forEach( labelElement => {
+    dateLabelElements.forEach(labelElement => {
       let opacityValue = 1.0;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (date) {
@@ -21,12 +21,11 @@ const HabitDates = ({ habit, dateRangeDates }) => {
       labelElement.style.opacity = opacityValue;
       labelElement.style.transition = transitionValue;
     });
-    habitLabelElements.forEach (habitElement => {
+    habitLabelElements.forEach(habitElement => {
       let opacityValue = 1.0;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (habit) {
-        const habitBody = habit.body;
-        if (habitElement.textContent !== habit.body) {
+        if (habitElement.textContent !== habit.title) {
           opacityValue = 0.5;
           transitionValue = "";
         }
