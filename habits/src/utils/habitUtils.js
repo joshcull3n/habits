@@ -8,6 +8,21 @@ export function generateHabit(id, body, dates) {
   return habitObject;
 }
 
+export async function checkUserExists(username) {
+  if (username) {
+    return fetchUserInfo(username).then(resp => {
+      if (!resp) {
+        console.log('user does not exist');
+        return false
+      }
+      else {
+        console.log('user does exist');
+        return true;
+      }
+    })
+  }
+}
+
 export async function fetchUserInfo(username) {
   return fetch(`/api/users?username=${username}`)
     .then(resp => {
@@ -21,10 +36,12 @@ export async function fetchUserInfo(username) {
     .catch(error => { throw error });
 }
 
-export async function createUser(username) {
+export async function createUser(username, password) {
   const bodyJson = {
-    "username" : username
+    "username" : username,
+    "password" : password
   }
+
   const options = {
     method: 'POST',
     headers: { 'Content-Type' : 'application/json' },
@@ -40,6 +57,26 @@ export async function createUser(username) {
     })
     .catch(error => { throw error })
     .then(() => { fetchRemoteHabitsForUser(username); })
+}
+
+export async function verifyPassword(username, password) {
+  const bodyJson = {
+    "username" : username,
+    "password" : password
+  }
+
+  const options = {
+    method: 'POST',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify(bodyJson)
+  }
+
+  return fetch(`/api/login`, options).then(resp => {
+    if (resp.ok)
+      return true
+    else
+      return false
+  })
 }
 
 export async function fetchRemoteHabitsForUser(username) {

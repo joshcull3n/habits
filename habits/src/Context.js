@@ -24,6 +24,10 @@ export const ContextProvider = ({ children }) => {
   // user
   const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem('habits_userid'));
   const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [newUser, setNewUser] = useState(false);
+  const [askForPassword, setAskForPassword] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   // appearance
   const [lightMode, setLightMode] = useState(Boolean(lightModeStorage));
@@ -60,13 +64,19 @@ export const ContextProvider = ({ children }) => {
     }
   }
 
-  function fetchUserInfoAndCreateIfNotExist(username) {
+  function fetchUserInfoAndCreateIfNotExist(username, password) {
     if (username) {
       fetchUserInfo(username).then(resp => {
-        if (!resp)
+        if (!resp && !password)
           createUser(username).then(() => { setLoggedInUser(username); });
-        else
-          fetchAndSetHabitsForCurrentUser();
+        else if (!resp && password)
+          createUser(username, password).then(() => { setLoggedInUser(username); })
+        else {
+          if (resp.password_protected)
+            setAskForPassword(true)
+          else
+            fetchAndSetHabitsForCurrentUser();
+        }
       })
     }
   }
@@ -74,7 +84,7 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     // check if user already exists
     if (loggedInUser) {
-      fetchUserInfoAndCreateIfNotExist(loggedInUser);
+      fetchUserInfoAndCreateIfNotExist(loggedInUser, passwordInput);
       localStorage.setItem('habits_userid', loggedInUser);
     }
   }, [loggedInUser]);
@@ -107,7 +117,11 @@ export const ContextProvider = ({ children }) => {
       graphGridColor, setGraphGridColor,
       updateRemote, setUpdateRemote,
       loggedInUser, setLoggedInUser,
-      usernameInput, setUsernameInput }}>
+      usernameInput, setUsernameInput,
+      passwordInput, setPasswordInput,
+      newUser, setNewUser,
+      askForPassword, setAskForPassword,
+      loginFailed, setLoginFailed }}>
       { children }
     </Context.Provider>
   );

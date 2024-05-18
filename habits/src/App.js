@@ -29,8 +29,7 @@ const App = () => {
   const localStorage = window.localStorage;
   const { 
     habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode, 
-    setGraphGridColor, setUpdateRemote, loggedInUser, setLoggedInUser, 
-    usernameInput, setUsernameInput
+    setGraphGridColor, setUpdateRemote, loggedInUser
   } = useContext(Context);
 
   // set body class
@@ -67,15 +66,6 @@ const App = () => {
       localStorage.setItem('habits_lightMode', 'true');
       setLightMode(true);
     }
-  }
-
-  const handleUsernameInputChange = (e) => setUsernameInput(e.target.value)
-
-  const handleUsernameInputEnter = (e) => {
-      if (e.key === 'Enter' && e.target.value.trim()) {
-          setUsernameInput(e.target.value);
-          setLoggedInUser(usernameInput);
-      }
   }
 
   function addHabit() {
@@ -130,8 +120,7 @@ const App = () => {
       <div className="App">
         <Sidebar />
         <TopBar />
-        <UsernamePrompt handleUsernameInputChange={handleUsernameInputChange}
-          handleUsernameInputEnter={handleUsernameInputEnter}/>
+        <UsernamePrompt />
       </div>
     )
   }

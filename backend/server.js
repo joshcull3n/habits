@@ -1,5 +1,7 @@
 // START SERVER
 const express = require('express');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 const app = express();
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
@@ -14,8 +16,13 @@ const userSchema = new mongoose.Schema({
   username : { type: String, required: true, unique: true },
   //email : { type: String, required: false, unique: false },
   created_date : { type: Number, required: true },
-  updated_date : { type: Number, required: true }
+  updated_date : { type: Number, required: true },
+  password_hash : { type: String, required: false }
 });
+
+userSchema.methods.hashPassword = async function(password) {
+  return bcrypt.hash(password, saltRounds);
+};
 
 const User = mongoose.model('User', userSchema);
 User.init().then(() => {
@@ -45,10 +52,17 @@ app.use(express.json());
 app.post('/api/users/', async (req, res) => {
   try {
     const username = req.body.username;
+    const password = req.body.password;
     const date = new Date().getTime();
-    const user = new User({ username: username, created_date: date, updated_date: date });
+    const user = new User({ 
+      username: username, 
+      created_date: date, 
+      updated_date: date 
+    });
+    if (password)
+      user.password_hash = await user.hashPassword(password)
     await user.save();
-    res.status(201).json(user);
+    res.status(201).json(user.username);
   }
   catch (error) {
     res.status(500).json({ message: error.message });
@@ -62,10 +76,36 @@ app.get('/api/users/', async (req, res) => {
     const user = await User.findOne({ username: username });
     if (!user)
       return res.status(404).json({ message : 'User not found' })
-    res.json(user);
+    const userResp = {
+      username : user.username,
+      created_date: user.created_date,
+      updated_date: user.updated_date,
+      password_protected: Boolean(user.password_hash)
+    }
+    return res.json(userResp);
   }
   catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+// verify password
+app.post('/api/login', async (req, res) => {
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+    const user = await User.findOne({ username: username });
+    if (!user)
+      return res.status(404).json({ message : 'User not found' })
+
+    const verified = await verifyUser(username, password)
+    if (verified)
+      return res.status(200).json({ message: 'login successful'})
+    else
+      return res.status(401).json({message: 'incorrect password'})
+  }
+  catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 });
 
@@ -218,3 +258,21 @@ app.delete('/api/habits/', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+async function verifyUser(username, password) {
+  const user = await User.findOne({username});
+  console.log(user);
+  try {
+    if (user && await bcrypt.compare(password, user.password_hash)) {
+      console.log('login successful');
+      return true
+    }
+    else {
+      console.log('login failed');
+      return false
+    }
+  } catch (error) {
+    console.error('Error verifying user:', error);
+    return false;
+  }
+}
