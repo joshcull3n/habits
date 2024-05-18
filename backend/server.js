@@ -6,10 +6,12 @@ const app = express();
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
+
+const uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://127.0.0.1:27017/habits';
+
 // CONNECT TO MONGODB
 const { mongoose } = require('mongoose');
-const url = 'mongodb://127.0.0.1:27017/habits';
-mongoose.connect(url);
+mongoose.connect(uri);
 
 // CREATE SCHEMAS & MODELS
 const userSchema = new mongoose.Schema({
@@ -62,6 +64,7 @@ app.post('/api/users/', async (req, res) => {
     if (password)
       user.password_hash = await user.hashPassword(password)
     await user.save();
+    console.log('user created:', username);
     res.status(201).json(user.username);
   }
   catch (error) {
@@ -82,6 +85,7 @@ app.get('/api/users/', async (req, res) => {
       updated_date: user.updated_date,
       password_protected: Boolean(user.password_hash)
     }
+    console.log(username, 'is using habits');
     return res.json(userResp);
   }
   catch (error) {
@@ -99,10 +103,14 @@ app.post('/api/login', async (req, res) => {
       return res.status(404).json({ message : 'User not found' })
 
     const verified = await verifyUser(username, password)
-    if (verified)
+    if (verified) {
+      console.log('user login success:', username);
       return res.status(200).json({ message: 'login successful'})
-    else
+    }
+    else {
+      console.log('user login failed:', username);
       return res.status(401).json({message: 'incorrect password'})
+    }
   }
   catch (error) {
     return res.status(500).json({ message: error.message });
@@ -262,14 +270,10 @@ app.delete('/api/habits/', async (req, res) => {
 async function verifyUser(username, password) {
   const user = await User.findOne({username});
   try {
-    if (user && await bcrypt.compare(password, user.password_hash)) {
-      console.log('login successful');
+    if (user && await bcrypt.compare(password, user.password_hash))
       return true
-    }
-    else {
-      console.log('login failed');
+    else
       return false
-    }
   } catch (error) {
     console.error('Error verifying user:', error);
     return false;
