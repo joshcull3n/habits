@@ -261,7 +261,6 @@ app.delete('/api/habits/', async (req, res) => {
 
 async function verifyUser(username, password) {
   const user = await User.findOne({username});
-  console.log(user);
   try {
     if (user && await bcrypt.compare(password, user.password_hash)) {
       console.log('login successful');

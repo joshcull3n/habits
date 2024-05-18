@@ -54,12 +54,14 @@ export const ContextProvider = ({ children }) => {
   function fetchAndSetHabitsForCurrentUser() {
     if (loggedInUser) {
       fetchRemoteHabitsForUser(loggedInUser).then(resp => {
-        const cleanDateHabits = resp.map(habit => ({
-          ...habit,
-          doneDates: habit.doneDates.map(date => new Date(date))
-        }));
-        if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
-          setHabits(cleanDateHabits);
+        if (resp) {
+          const cleanDateHabits = resp.map(habit => ({
+            ...habit,
+            doneDates: habit.doneDates.map(date => new Date(date))
+          }));
+          if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
+            setHabits(cleanDateHabits);
+        }
       });
     }
   }
@@ -105,7 +107,7 @@ export const ContextProvider = ({ children }) => {
 
   return (
     <Context.Provider value={{ 
-      habits, setHabits, 
+      habits, setHabits,
       newHabitText, setNewHabitText, 
       endDate, setEndDate,
       startDate, setStartDate,

@@ -11,14 +11,10 @@ export function generateHabit(id, body, dates) {
 export async function checkUserExists(username) {
   if (username) {
     return fetchUserInfo(username).then(resp => {
-      if (!resp) {
-        console.log('user does not exist');
+      if (!resp)
         return false
-      }
-      else {
-        console.log('user does exist');
+      else
         return true;
-      }
     })
   }
 }
