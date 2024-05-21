@@ -6,17 +6,8 @@ const app = express();
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
-const cors = require('cors');
-const corsOptions = {
-  origin: ['https://joshcullen.co', 'https://habits.joshcullen.co'],
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
-
 
 const uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://127.0.0.1:27017/habits';
-console.log(uri);
-const API_BASE_URL = "habits.joshcullen.co/api";
 
 // CONNECT TO MONGODB
 const { mongoose } = require('mongoose');
@@ -60,7 +51,7 @@ app.use(express.json());
 
 // ROUTE ENDPOINTS
 // create new user
-app.post(`${API_BASE_URL}/users/`, async (req, res) => {
+app.post('/api/users/', async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -82,7 +73,7 @@ app.post(`${API_BASE_URL}/users/`, async (req, res) => {
 });
 
 // get user info
-app.get(`${API_BASE_URL}/users/`, async (req, res) => {
+app.get('/api/users/', async (req, res) => {
   try {
     const username = req.query.username;
     const user = await User.findOne({ username: username });
@@ -103,7 +94,7 @@ app.get(`${API_BASE_URL}/users/`, async (req, res) => {
 });
 
 // verify password
-app.post(`${API_BASE_URL}/login`, async (req, res) => {
+app.post('/api/login', async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -127,7 +118,7 @@ app.post(`${API_BASE_URL}/login`, async (req, res) => {
 });
 
 // get all habits for user
-app.get(`${API_BASE_URL}/habits/`, async (req, res) => {
+app.get('/api/habits/', async (req, res) => {
   try {
     const username = req.query.username;
     const user = await User.findOne({ username: username });
@@ -142,7 +133,7 @@ app.get(`${API_BASE_URL}/habits/`, async (req, res) => {
 });
 
 // create new habit for user
-app.post(`${API_BASE_URL}/habits/`, async (req, res) => {
+app.post('/api/habits/', async (req, res) => {
   try {
     const username = req.body.username;
     const newHabitTitle = req.body.title;
@@ -170,7 +161,7 @@ app.post(`${API_BASE_URL}/habits/`, async (req, res) => {
 });
 
 // update habit dates
-app.patch(`${API_BASE_URL}/habits/`, async (req, res) => {
+app.patch('/api/habits/', async (req, res) => {
   try {
     const habitId = req.body.id;
     const newDates = req.body.dates;
@@ -199,7 +190,7 @@ app.patch(`${API_BASE_URL}/habits/`, async (req, res) => {
   }
 });
 
-app.put(`${API_BASE_URL}/habits`, async (req, res) => {
+app.put('/api/habits', async (req, res) => {
   try {
     const username = req.body.username;
     const newHabits = req.body.habits;
@@ -261,7 +252,7 @@ app.put(`${API_BASE_URL}/habits`, async (req, res) => {
 });
 
 // delete habit
-app.delete(`${API_BASE_URL}/habits/`, async (req, res) => {
+app.delete('/api/habits/', async (req, res) => {
   try {
     const habitId = req.query.id;
     const result = await Habit.findByIdAndDelete(habitId);
