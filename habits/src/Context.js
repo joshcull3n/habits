@@ -51,14 +51,20 @@ export const ContextProvider = ({ children }) => {
     start.setDate(tempEnd.getDate() - 21);
   const [startDate, setStartDate] = useState(start);
 
+  function convertHabitDateStringsToDate(habits) {
+    if (habits) {
+      return habits.map(habit => ({
+        ...habit,
+        doneDates: habit.doneDates.map(date => new Date(date))
+      }));
+    }
+  }
+
   function fetchAndSetHabitsForCurrentUser() {
     if (loggedInUser) {
       fetchRemoteHabitsForUser(loggedInUser).then(resp => {
         if (resp) {
-          const cleanDateHabits = resp.map(habit => ({
-            ...habit,
-            doneDates: habit.doneDates.map(date => new Date(date))
-          }));
+          const cleanDateHabits = convertHabitDateStringsToDate(resp);
           if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
             setHabits(cleanDateHabits);
         }
@@ -90,13 +96,15 @@ export const ContextProvider = ({ children }) => {
       localStorage.setItem('habits_userid', loggedInUser);
     }
   }, [loggedInUser]);
-
   const [updateRemote, setUpdateRemote] = useState(false);
 
   useEffect(() => {
     if (updateRemote) {
       setUpdateRemote(false);
-      pushHabitsForUser(loggedInUser, habits).then(() => fetchAndSetHabitsForCurrentUser());
+      pushHabitsForUser(loggedInUser, habits).then((resp) => {
+        const cleanDateHabits = convertHabitDateStringsToDate(resp.habits);
+        setHabits(cleanDateHabits);
+      });
     }
 
     const intervalId = setInterval(() => { // runs every 5 seconds

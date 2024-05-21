@@ -259,7 +259,11 @@ app.put('/habits/habits', async (req, res) => {
       created_date: date,
       updated_date: date
     })));
-    res.status(200).json({ deleted: habitsToDelete.length, updated: updatedHabits, created: habitsToCreate.length});
+    const outHabits = await Habit.find({ owner_username: username });
+    res.status(200).json({
+      changes: { deleted: habitsToDelete.length, updated: updatedHabits, created: habitsToCreate.length},
+      habits : outHabits
+    });
   }
   catch (error) {
     res.status(500).json({ message: error.message });
