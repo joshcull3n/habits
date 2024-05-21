@@ -1,3 +1,6 @@
+//const API_URL_BASE = ''; // local server
+const API_URL_BASE = 'https://api.joshcullen.co';
+
 export function generateHabit(id, body, dates) {
   const habitObject = {
     id: id,
@@ -20,7 +23,7 @@ export async function checkUserExists(username) {
 }
 
 export async function fetchUserInfo(username) {
-  return fetch(`/api/users?username=${username}`)
+  return fetch(`${API_URL_BASE}/habits/users?username=${username}`)
     .then(resp => {
       if (resp.ok)
         return resp.json();
@@ -44,7 +47,7 @@ export async function createUser(username, password) {
     body: JSON.stringify(bodyJson)
   }
 
-  return fetch(`/api/users`, options)
+  return fetch(`${API_URL_BASE}/habits/users`, options)
     .then(resp => {
       if (!resp.ok)
         throw new Error('could not create user');
@@ -67,7 +70,7 @@ export async function verifyPassword(username, password) {
     body: JSON.stringify(bodyJson)
   }
 
-  return fetch(`/api/login`, options).then(resp => {
+  return fetch(`${API_URL_BASE}/habits/login`, options).then(resp => {
     if (resp.ok)
       return true
     else
@@ -76,7 +79,7 @@ export async function verifyPassword(username, password) {
 }
 
 export async function fetchRemoteHabitsForUser(username) {
-  return fetch(`/api/habits?username=${username}`)
+  return fetch(`${API_URL_BASE}/habits/habits?username=${username}`)
     .then(resp => {
       if (!resp.ok)
         throw new Error('error fetching habits for user');
@@ -104,7 +107,7 @@ export async function pushHabitsForUser(username, habits) {
     body: JSON.stringify(bodyJson)
   }
 
-  return fetch(`/api/habits`, options)
+  return fetch(`${API_URL_BASE}/habits/habits`, options)
     .then(resp => {
       if (!resp.ok)
         throw new Error('error writing habits for user');

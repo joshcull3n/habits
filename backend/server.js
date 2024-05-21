@@ -6,6 +6,12 @@ const app = express();
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
+const cors = require('cors');
+const corsOptions = {
+  origin: ['https://joshcullen.co', 'http://localhost:3000'],
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 const uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://127.0.0.1:27017/habits';
 
@@ -50,8 +56,17 @@ Habit.init().then(() => {
 app.use(express.json());
 
 // ROUTE ENDPOINTS
+// base 'u up?' check
+app.get(`/habits/`, async (req, res) => {
+  try {
+    res.status(200).json('I\'m up wyd');
+  } catch (error) {
+    res.status(500);
+  }
+})
+
 // create new user
-app.post('/api/users/', async (req, res) => {
+app.post('/habits/users/', async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -73,7 +88,7 @@ app.post('/api/users/', async (req, res) => {
 });
 
 // get user info
-app.get('/api/users/', async (req, res) => {
+app.get('/habits/users/', async (req, res) => {
   try {
     const username = req.query.username;
     const user = await User.findOne({ username: username });
@@ -94,7 +109,7 @@ app.get('/api/users/', async (req, res) => {
 });
 
 // verify password
-app.post('/api/login', async (req, res) => {
+app.post('/habits/login', async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -118,7 +133,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 // get all habits for user
-app.get('/api/habits/', async (req, res) => {
+app.get('/habits/habits/', async (req, res) => {
   try {
     const username = req.query.username;
     const user = await User.findOne({ username: username });
@@ -133,7 +148,7 @@ app.get('/api/habits/', async (req, res) => {
 });
 
 // create new habit for user
-app.post('/api/habits/', async (req, res) => {
+app.post('/habits/habits/', async (req, res) => {
   try {
     const username = req.body.username;
     const newHabitTitle = req.body.title;
@@ -161,7 +176,7 @@ app.post('/api/habits/', async (req, res) => {
 });
 
 // update habit dates
-app.patch('/api/habits/', async (req, res) => {
+app.patch('/habits/habits/', async (req, res) => {
   try {
     const habitId = req.body.id;
     const newDates = req.body.dates;
@@ -190,7 +205,7 @@ app.patch('/api/habits/', async (req, res) => {
   }
 });
 
-app.put('/api/habits', async (req, res) => {
+app.put('/habits/habits', async (req, res) => {
   try {
     const username = req.body.username;
     const newHabits = req.body.habits;
@@ -252,7 +267,7 @@ app.put('/api/habits', async (req, res) => {
 });
 
 // delete habit
-app.delete('/api/habits/', async (req, res) => {
+app.delete('/habits/habits/', async (req, res) => {
   try {
     const habitId = req.query.id;
     const result = await Habit.findByIdAndDelete(habitId);
