@@ -111,11 +111,17 @@ const UsernamePrompt = () => {
   }
 
   const handleUsernameInputEnter = (e) => {
-      if (e.key === 'Enter' && e.target.value.trim()) {
-          setUsernameInput(e.target.value);
-          setUsernameAttempt(e.target.value);
-          loginOrPromptCreateUser(usernameInput);
-      }
+    if (e.key === 'Escape') {
+      setUsernameInput('');
+      setPasswordInput('');
+      setNewUser(false);
+      setAskForPassword(false);
+    }
+    if (e.key === 'Enter' && e.target.value.trim()) {
+      setUsernameInput(e.target.value);
+      setUsernameAttempt(e.target.value);
+      loginOrPromptCreateUser(usernameInput);
+    }
   }
 
   const handlePasswordInputChange = (e) => {
@@ -124,24 +130,30 @@ const UsernamePrompt = () => {
   }
 
   const handlePasswordInputEnter = (e) => {
-      if (e.key === 'Enter') {
-        setPasswordInput(e.target.value);
-        if (askForPassword) {
-          verifyPassword(usernameInput, passwordInput).then(success => {
-            if (success) {
-              setLoggedInUser(usernameInput);
-              setLoginFailed(false);
-            }
-            else {
-              setPasswordInput('');
-              setLoginFailed(true);
-            }
-          });
-        }
-        else {
-          setLoggedInUser(usernameInput);
-        }
+    if (e.key === 'Escape') {
+      setUsernameInput('');
+      setPasswordInput('');
+      setNewUser(false);
+      setAskForPassword(false);
+    }
+    else if (e.key === 'Enter') {
+      setPasswordInput(e.target.value);
+      if (askForPassword) {
+        verifyPassword(usernameInput, passwordInput).then(success => {
+          if (success) {
+            setLoggedInUser(usernameInput);
+            setLoginFailed(false);
+          }
+          else {
+            setPasswordInput('');
+            setLoginFailed(true);
+          }
+        });
       }
+      else {
+        setLoggedInUser(usernameInput);
+      }
+    }
   }
 
   if (newUser) {
