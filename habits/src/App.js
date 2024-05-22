@@ -29,7 +29,7 @@ const App = () => {
   const localStorage = window.localStorage;
   const { 
     habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode, 
-    setGraphGridColor, setUpdateRemote, loggedInUser
+    setGraphGridColor, setUpdateRemote, loggedInUser, setLoggedInUser
   } = useContext(Context);
 
   // set body class
@@ -56,6 +56,11 @@ const App = () => {
       addHabit();
   }
 
+  const handleLogoutClick = () => {
+    localStorage.setItem('habits_userid','');
+    setLoggedInUser('');
+  }
+
   const handleLightMode = (e) => {
     setGraphGridColor(null);
     if (lightMode) {
@@ -79,16 +84,33 @@ const App = () => {
     setNewHabitText('');
   }
 
+  const LogoutButton = ({handleLogoutClick}) => {
+    if (loggedInUser) {
+      return (
+        <div className="sidebarOption">
+          <div className='logout' id='logoutBtn' onClick={handleLogoutClick}>logout</div>
+        </div>
+      )
+    }
+  }
+
+  const LightModeSwitch = ({handleLightMode}) => {
+    return (
+      <div className="sidebarOption">
+        <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
+        <label htmlFor="lightModeSwitch"></label>
+      </div>
+    )
+  }
+
   const Sidebar = () => {
     return (
       <div className="stickyContainer">
         <div className="sidebar">
           <div id="sidebarShadow">
             <a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
-            <div className="sidebarOption">
-              <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
-              <label htmlFor="lightModeSwitch"></label>
-            </div>
+            <LightModeSwitch handleLightMode={handleLightMode} />
+            <LogoutButton handleLogoutClick={handleLogoutClick} />
           </div>
         </div>
       </div>
@@ -111,7 +133,8 @@ const App = () => {
           mobile={detectDevice()}
           handleHabitInputEnter={handleHabitInputEnter}
           handleHabitInputChange={handleHabitInputChange}
-          handleHabitInputBtnClick={handleHabitInputBtnClick}/>
+          handleHabitInputBtnClick={handleHabitInputBtnClick}
+          handleLogoutClick={handleLogoutClick}/>
       </div>
     );
   } 

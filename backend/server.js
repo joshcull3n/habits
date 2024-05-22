@@ -7,11 +7,7 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 const cors = require('cors');
-const corsOptions = {
-  origin: ['https://joshcullen.co', 'http://localhost:3000'],
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 const uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://127.0.0.1:27017/habits';
 
