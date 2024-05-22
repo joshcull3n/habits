@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { detectDevice } from './App';
 import { fetchRemoteHabitsForUser, pushHabitsForUser, fetchUserInfo, createUser } from './utils/habitUtils';
 
@@ -39,6 +39,7 @@ export const ContextProvider = ({ children }) => {
 
   // habits
   const [habits, setHabits] = useState([]);
+  const habitsRef = useRef(habits);
   const [newHabitText, setNewHabitText] = useState('');
 
   // dates
@@ -65,7 +66,7 @@ export const ContextProvider = ({ children }) => {
       fetchRemoteHabitsForUser(loggedInUser).then(resp => {
         if (resp) {
           const cleanDateHabits = convertHabitDateStringsToDate(resp);
-          if (JSON.stringify(habits) !== JSON.stringify(cleanDateHabits))
+          if (JSON.stringify(habitsRef.current) !== JSON.stringify(cleanDateHabits))
             setHabits(cleanDateHabits);
         }
       });
@@ -112,6 +113,10 @@ export const ContextProvider = ({ children }) => {
     }, 5000);
     return () => clearInterval(intervalId);
   }, [updateRemote, loggedInUser])
+
+  useEffect(() => {
+    habitsRef.current = habits;
+  }, [habits]);
 
   return (
     <Context.Provider value={{ 
