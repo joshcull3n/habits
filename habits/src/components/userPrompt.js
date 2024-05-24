@@ -21,7 +21,7 @@ const InitialEnterUsername = ({usernameInput, inputRef, handleUsernameInputEnter
   )
 }
 
-const CreateUserPrompt = ({newUser, usernameAttempt, inputRef, usernameInput, handleUsernameInputEnter, handleUsernameInputChange, passwordInput, handlePasswordInputEnter, handlePasswordInputChange}) => {
+const CreateUserPrompt = ({usernameAttempt, inputRef, usernameInput, handleUsernameInputEnter, handleUsernameInputChange, passwordInput, handlePasswordInputEnter, handlePasswordInputChange}) => {
   return ( // if user does not exist yet
     <div id="habitListContainer" style={{padding:'15px 10px 0px'}}>
       <div style={{opacity:0.9, textAlign: 'center', fontFamily:'monospace'}}>
