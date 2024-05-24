@@ -95,10 +95,11 @@ export const ContextProvider = ({ children }) => {
     if (loggedInUser) {
       fetchUserInfoAndCreateIfNotExist(loggedInUser, passwordInput);
       localStorage.setItem('habits_userid', loggedInUser);
+      fetchAndSetHabitsForCurrentUser();
     }
   }, [loggedInUser]);
+  
   const [updateRemote, setUpdateRemote] = useState(false);
-
   useEffect(() => {
     if (updateRemote) {
       setUpdateRemote(false);

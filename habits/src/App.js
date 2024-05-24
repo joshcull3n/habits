@@ -29,7 +29,8 @@ const App = () => {
   const localStorage = window.localStorage;
   const { 
     habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode, 
-    setGraphGridColor, setUpdateRemote, loggedInUser, setLoggedInUser
+    setGraphGridColor, setUpdateRemote, loggedInUser, setLoggedInUser, setAskForPassword,
+    setUsernameInput, setPasswordInput, setNewUser
   } = useContext(Context);
 
   // set body class
@@ -59,6 +60,11 @@ const App = () => {
   const handleLogoutClick = () => {
     localStorage.setItem('habits_userid','');
     setLoggedInUser('');
+    setUsernameInput('');
+    setPasswordInput('');
+    setNewUser(false);
+    setHabits([]);
+    setAskForPassword(false);
   }
 
   const handleLightMode = (e) => {

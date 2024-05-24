@@ -5,12 +5,13 @@ import { checkUserExists, fetchUserInfo, verifyPassword } from '../utils/habitUt
 const InitialEnterUsername = ({usernameInput, inputRef, handleUsernameInputEnter, handleUsernameInputChange}) => {
   return (
     <div id="habitListContainer" style={{padding:'15px 10px 0px'}}>
-      <div style={{opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>
+      <div style={{opacity:0.9, textAlign: 'center', fontFamily:'monospace'}}>
         please enter a username to login or create an account.
       </div>
       <div style={{ padding:'1rem 0'}}>
         <div style={{display: 'inline-flex'}}>
-          <input ref={inputRef} id="usernameInput" style={{textAlign:'center', padding: '0 0px'}}  
+          <input ref={inputRef} id="usernameInput" placeholder="username" 
+          style={{textAlign:'center', padding: '0 0px'}}  
           value={usernameInput} autofocus
           onKeyDown={handleUsernameInputEnter} 
           onChange={handleUsernameInputChange}/>
@@ -23,10 +24,10 @@ const InitialEnterUsername = ({usernameInput, inputRef, handleUsernameInputEnter
 const CreateUserPrompt = ({newUser, usernameAttempt, inputRef, usernameInput, handleUsernameInputEnter, handleUsernameInputChange, passwordInput, handlePasswordInputEnter, handlePasswordInputChange}) => {
   return ( // if user does not exist yet
     <div id="habitListContainer" style={{padding:'15px 10px 0px'}}>
-      <div style={{opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>
+      <div style={{opacity:0.9, textAlign: 'center', fontFamily:'monospace'}}>
         user {usernameAttempt} does not exist. create?
       </div>
-      <div style={{ padding:'1rem 0', opacity: 0.7, fontFamily:'monospace'}}>
+      <div style={{ padding:'1rem 0', opacity: 0.9, fontFamily:'monospace'}}>
         <div style={{display: 'inline-flex'}}>
           <input id="usernameInput" style={{textAlign:'center', padding: '0 0px'}}  
           value={usernameInput} type="username" placeholder="username"
@@ -48,19 +49,19 @@ const CreateUserPrompt = ({newUser, usernameAttempt, inputRef, usernameInput, ha
 }
 
 const EnterPasswordPrompt = ({usernameAttempt, inputRef, usernameInput, handleUsernameInputEnter, handleUsernameInputChange, passwordInput, handlePasswordInputEnter, handlePasswordInputChange, loginFailed}) => {
-  const FailedMsg = ({message}) => <div style={{opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>{message}</div>;
+  const FailedMsg = ({message}) => <div style={{padding: '5px 0',fontSize: '0.55rem', opacity:0.9, textAlign: 'center', fontFamily:'monospace'}}>{message}</div>;
 
   var failMessage = '';
   if (loginFailed)
-    failMessage = 'wrong';
+    failMessage = 'wrong...';
 
   return ( // if user exists but requires password
     <div>
-    <div id="habitListContainer" style={{padding:'15px 10px 0px'}}>
-      <div style={{opacity:0.7, textAlign: 'center', fontFamily:'monospace'}}>
+    <div id="habitListContainer" style={{padding:'15px 10px 0'}}>
+      <div style={{opacity:0.9, textAlign: 'center', fontFamily:'monospace'}}>
         user {usernameAttempt} requires a password. enter it below.
       </div>
-      <div style={{ padding:'1rem 0px 0.5rem', opacity: 0.7, fontFamily:'monospace'}}>
+      <div style={{ padding:'1rem 0px 0rem', opacity: 0.9, fontFamily:'monospace'}}>
         <div style={{display: 'inline-flex'}}>
           <input id="usernameInput" style={{textAlign:'center', padding: '0 0px'}}  
           value={usernameInput} type="username" placeholder="username"
@@ -74,8 +75,8 @@ const EnterPasswordPrompt = ({usernameAttempt, inputRef, usernameInput, handleUs
           onChange={handlePasswordInputChange}/>
         </div>
       </div>
+      <FailedMsg message={failMessage}/>
     </div>
-    <FailedMsg message={failMessage}/>
     </div>
   )
 }
