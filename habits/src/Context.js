@@ -104,13 +104,15 @@ export const ContextProvider = ({ children }) => {
     if (updateRemote) {
       setUpdateRemote(false);
       pushHabitsForUser(loggedInUser, habits).then((resp) => {
-        const cleanDateHabits = convertHabitDateStringsToDate(resp.habits);
-        setHabits(cleanDateHabits);
-      });
+        if (resp) {
+          const cleanDateHabits = convertHabitDateStringsToDate(resp.habits);
+          setHabits(cleanDateHabits);
+        }
+      })
     }
 
-    const intervalId = setInterval(() => { // runs every 5 seconds
-      fetchAndSetHabitsForCurrentUser()
+    const intervalId = setInterval(() => {
+      fetchAndSetHabitsForCurrentUser() // updates local habits from remote every 5 seconds
     }, 5000);
     return () => clearInterval(intervalId);
   }, [updateRemote, loggedInUser])

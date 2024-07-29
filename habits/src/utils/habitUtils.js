@@ -11,6 +11,22 @@ export function generateHabit(id, body, dates) {
   return habitObject;
 }
 
+function debounce(func, wait) {
+  let timeout;
+  let resolvePromise;
+
+  return function(...args) {
+      clearTimeout(timeout);
+      if (resolvePromise) resolvePromise();
+      return new Promise((resolve) => {
+        resolvePromise = resolve;
+        timeout = setTimeout(() => {
+          func.apply(this, args).then(resolve);
+        }, wait);
+      });
+  };
+}
+
 export async function checkUserExists(username) {
   if (username) {
     return fetchUserInfo(username).then(resp => {
@@ -88,6 +104,16 @@ export async function fetchRemoteHabitsForUser(username) {
     .catch(error => { throw error });
 }
 
+const debouncedPutHabits = debounce(async (url, options) => {
+  return fetch(url, options)
+    .then(resp => {
+      if (!resp.ok)
+        throw new Error('error writing habits for user');
+      return resp.json();
+    })
+    .catch(error => { throw error });
+}, 2000);
+
 // overwrites the remote habits with whatever is the current state of local
 export async function pushHabitsForUser(username, habits) {
   const cleanHabits = habits.map(habit => ({
@@ -97,21 +123,15 @@ export async function pushHabitsForUser(username, habits) {
   }));
 
   const bodyJson = {
-    "username" : username,
-    "habits" : cleanHabits
+    username: username,
+    habits: cleanHabits
   }
-  
+
   const options = {
     method: 'PUT',
     headers: { 'Content-Type' : 'application/json' },
     body: JSON.stringify(bodyJson)
   }
 
-  return fetch(`${API_URL_BASE}/habits/habits`, options)
-    .then(resp => {
-      if (!resp.ok)
-        throw new Error('error writing habits for user');
-      return resp.json();
-    })
-    .catch(error => { throw error });
+  return debouncedPutHabits(`${API_URL_BASE}/habits/habits`, options);
 }
