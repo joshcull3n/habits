@@ -11,7 +11,7 @@ const HabitDates = ({ habit, dateRangeDates }) => {
       let opacityValue = 1.0;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (date) {
-        const day = new Date(date).getDate();
+        const day = new Date(date).getDate(); // no longer necessary. was used to have varying opacities for nearby days
         const labelDistance = Math.abs(Number(labelElement.id) - day);
         if (labelDistance !== 0) {
           opacityValue = 0.5;

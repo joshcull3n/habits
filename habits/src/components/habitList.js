@@ -76,8 +76,7 @@ const HabitList = ({ dateLabels, mobile }) => {
       let opacityValue = 1.0;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (habit) {
-        const habitBody = habit.body;
-        if (habitElement.textContent !== habit.body) {
+        if (habitElement.textContent !== habit.title) {
           opacityValue = 0.5;
           transitionValue = "";
         }
@@ -179,7 +178,9 @@ const HabitList = ({ dateLabels, mobile }) => {
             <thead><tr><DatePageButtonLeft mobile={false} /><td>{ renderDateLabels() }</td><DatePageButtonRight mobile={false} /></tr></thead>
             <tbody>
               {habits.map((habit, index) => <tr>
-                  <td style={{maxWidth:'250px',minWidth:'75px', paddingLeft: '2px'}}><Habit habit={habit}/></td>
+                  <td onMouseEnter={() => setLabelOpacity(habit)} onMouseLeave={() => setLabelOpacity(null)} style={{maxWidth:'250px',minWidth:'75px', paddingLeft: '2px'}}>
+                    <Habit habit={habit}/>
+                  </td>
                   <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)}/>
                   <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
                 </tr>)}
