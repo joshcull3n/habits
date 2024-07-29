@@ -1,0 +1,16 @@
+{
+  "name": "habits",
+  "description": "habits - created by josh cullen",
+  "scripts": {
+    "postdeploy": "cd backend && npm install && npm run build"
+  },
+  "env": {},
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "Free"
+    }
+  },
+  "addons": []
+}
+
