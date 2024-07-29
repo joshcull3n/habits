@@ -35,8 +35,6 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
     var tempDate = new Date(startDate);
     var labels = [];
 
-    var date = new Date();
-
     while (tempDate <= endDate) {
       var tempLabel = tempDate.getDate();
       if (tempLabel < 10)
@@ -49,7 +47,8 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
   }
 
   return (
-    <div className="mainPanel" style={{padding:'10px'}}>
+    <div className='mainPanelContainer'>
+      <div className="mainPanel" style={{padding:'10px'}}>
         <TopBar />
         <div id="habitListContainer">
           <HabitList mobile={mobile} habits={habits} dateLabels={generateDateLabels()} />
@@ -59,6 +58,7 @@ const MainPanel = ({ mobile, handleHabitInputChange, handleHabitInputEnter, hand
             handleHabitInputBtnClick={handleHabitInputBtnClick} />
         </div>
         <Graph />
+      </div>
     </div>
   );
 };

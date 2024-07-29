@@ -1,17 +1,17 @@
 import { useContext } from "react";
 import { Context } from "../Context";
 
-const HabitDates = ({ habit, dates }) => {
-  const { habits, setHabits } = useContext(Context);
+const HabitDates = ({ habit, dateRangeDates }) => {
+  const { habits, setHabits, setUpdateRemote } = useContext(Context);
 
   function setLabelOpacity(date, habit) {
     const dateLabelElements = document.querySelectorAll(".dateLabel");
     const habitLabelElements = document.querySelectorAll(".habitItem");
-    dateLabelElements.forEach( labelElement => {
+    dateLabelElements.forEach(labelElement => {
       let opacityValue = 1.0;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (date) {
-        const day = new Date(date).getDate();
+        const day = new Date(date).getDate(); // no longer necessary. was used to have varying opacities for nearby days
         const labelDistance = Math.abs(Number(labelElement.id) - day);
         if (labelDistance !== 0) {
           opacityValue = 0.5;
@@ -21,12 +21,11 @@ const HabitDates = ({ habit, dates }) => {
       labelElement.style.opacity = opacityValue;
       labelElement.style.transition = transitionValue;
     });
-    habitLabelElements.forEach (habitElement => {
+    habitLabelElements.forEach(habitElement => {
       let opacityValue = 1.0;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (habit) {
-        const habitBody = habit.body;
-        if (habitElement.textContent !== habit.body) {
+        if (habitElement.textContent !== habit.title) {
           opacityValue = 0.5;
           transitionValue = "";
         }
@@ -46,9 +45,10 @@ const HabitDates = ({ habit, dates }) => {
     });
 
     function handleCheck(e) {
+      setUpdateRemote(true);
       var tempDates = Array.from(props.doneDates);
       var habitIndex = habits.indexOf(props.habit);
-      
+
       if (!e.target.checked) {
         // remove date from habit.doneDates
         tempDates.forEach(date => {
@@ -109,7 +109,7 @@ const HabitDates = ({ habit, dates }) => {
 
   return (
     <span style={{minWidth:'168px'}} onMouseLeave={() => setLabelOpacity(null)}>
-      { dates.map((date, index) => <Checkbox key={index} index={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
+      { dateRangeDates.map((date, index) => <Checkbox key={index} index={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
     </span>
   )
 }

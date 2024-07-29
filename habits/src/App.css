@@ -109,6 +109,10 @@ input[type="checkbox"]:checked:hover {
   opacity: 0.6;
 }
 
+input {
+  font-size: 16px;
+}
+
 .centered {
   display: flex;
   justify-content: center;
@@ -177,6 +181,21 @@ input[type="checkbox"]:checked:hover {
 .lightMode #habitListContainer {
   background-color:#f79b9b;
   border-radius:3px;
+}
+
+.logout {
+  color: var(--main-font-color-low-alpha);
+  padding: 2px 7px;
+  border: solid 0.5px var(--main-font-color-high-alpha);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  max-width: fit-content;
+  background: var(--sidebar-shadow);
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: var(--main-font-color);
 }
 
 .graph {

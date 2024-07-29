@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { detectDevice } from './App';
+import { fetchRemoteHabitsForUser, pushHabitsForUser, fetchUserInfo, createUser } from './utils/habitUtils';
 
 const mobile = detectDevice();
 
 export const Context = React.createContext();
 export const ContextProvider = ({ children }) => {
 
-  var yesterday2 = new Date();
-  yesterday2.setDate(yesterday2.getDate()-2)
-  var initHabits = []
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate()-2)
 
   function convertToYYYYMMDD(date) {
     const tempYear = date.getFullYear();
@@ -19,8 +19,15 @@ export const ContextProvider = ({ children }) => {
   }
 
   const localStorage = window.localStorage;
-  const habitStorage = localStorage.getItem('habits_cullen');
-  const lightModeStorage = localStorage.getItem('lightMode_cullen')
+  const lightModeStorage = localStorage.getItem('habits_lightMode');
+
+  // user
+  const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem('habits_userid'));
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [newUser, setNewUser] = useState(false);
+  const [askForPassword, setAskForPassword] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   // appearance
   const [lightMode, setLightMode] = useState(Boolean(lightModeStorage));
@@ -30,22 +37,9 @@ export const ContextProvider = ({ children }) => {
   const [graphStepSize, setGraphStepSize] = useState('0.2');
   const [graphGridColor, setGraphGridColor] = useState('rgb(0,0,0)');
 
-  // if there are habits in localStorage, parse them
-  if (habitStorage) {
-    var habitStorageJson = JSON.parse(habitStorage);
-    initHabits = [];
-    habitStorageJson.forEach(habit => {
-      var tempDates = [];
-      habit['doneDates'].forEach( date => {
-        tempDates.push(new Date(date));
-      })
-      habit['doneDates'] = tempDates;
-      initHabits.push(habit)
-    })
-  }
-
   // habits
-  const [habits, setHabits] = useState(initHabits);
+  const [habits, setHabits] = useState([]);
+  const habitsRef = useRef(habits);
   const [newHabitText, setNewHabitText] = useState('');
 
   // dates
@@ -58,24 +52,78 @@ export const ContextProvider = ({ children }) => {
     start.setDate(tempEnd.getDate() - 21);
   const [startDate, setStartDate] = useState(start);
 
-  // set habits to localStorage on every render
-  useEffect(() => {
-    var tempHabitList = [];
-    habits.forEach(habit => {
-      var tempHabit = Object.create(habit);
-      var tempDoneDates = [];
-      habit['doneDates'].forEach(date => {
-        tempDoneDates.push(convertToYYYYMMDD(date));
+  function convertHabitDateStringsToDate(habits) {
+    if (habits) {
+      return habits.map(habit => ({
+        ...habit,
+        doneDates: habit.doneDates.map(date => new Date(date))
+      }));
+    }
+  }
+
+  function fetchAndSetHabitsForCurrentUser() {
+    if (loggedInUser) {
+      fetchRemoteHabitsForUser(loggedInUser).then(resp => {
+        if (resp) {
+          const cleanDateHabits = convertHabitDateStringsToDate(resp);
+          if (JSON.stringify(habitsRef.current) !== JSON.stringify(cleanDateHabits))
+            setHabits(cleanDateHabits);
+        }
+      });
+    }
+  }
+
+  function fetchUserInfoAndCreateIfNotExist(username, password) {
+    if (username) {
+      fetchUserInfo(username).then(resp => {
+        if (!resp && !password)
+          createUser(username).then(() => { setLoggedInUser(username); });
+        else if (!resp && password)
+          createUser(username, password).then(() => { setLoggedInUser(username); })
+        else {
+          if (resp.password_protected)
+            setAskForPassword(true)
+          else
+            fetchAndSetHabitsForCurrentUser();
+        }
       })
-      tempHabit = {...habit, 'doneDates': tempDoneDates};
-      tempHabitList.push(tempHabit);
-    });
-    localStorage.setItem('habits_cullen', JSON.stringify(tempHabitList))
-  }, [habits, localStorage])
+    }
+  }
+
+  useEffect(() => {
+    // check if user already exists
+    if (loggedInUser) {
+      fetchUserInfoAndCreateIfNotExist(loggedInUser, passwordInput);
+      localStorage.setItem('habits_userid', loggedInUser);
+      fetchAndSetHabitsForCurrentUser();
+    }
+  }, [loggedInUser]);
+  
+  const [updateRemote, setUpdateRemote] = useState(false);
+  useEffect(() => {
+    if (updateRemote) {
+      setUpdateRemote(false);
+      pushHabitsForUser(loggedInUser, habits).then((resp) => {
+        if (resp) {
+          const cleanDateHabits = convertHabitDateStringsToDate(resp.habits);
+          setHabits(cleanDateHabits);
+        }
+      })
+    }
+
+    const intervalId = setInterval(() => {
+      fetchAndSetHabitsForCurrentUser() // updates local habits from remote every 5 seconds
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, [updateRemote, loggedInUser])
+
+  useEffect(() => {
+    habitsRef.current = habits;
+  }, [habits]);
 
   return (
     <Context.Provider value={{ 
-      habits, setHabits, 
+      habits, setHabits,
       newHabitText, setNewHabitText, 
       endDate, setEndDate,
       startDate, setStartDate,
@@ -84,7 +132,14 @@ export const ContextProvider = ({ children }) => {
       graphLineColor, setGraphLineColor,
       graphBgColor, setGraphBgColor,
       graphStepSize, setGraphStepSize,
-      graphGridColor, setGraphGridColor }}>
+      graphGridColor, setGraphGridColor,
+      updateRemote, setUpdateRemote,
+      loggedInUser, setLoggedInUser,
+      usernameInput, setUsernameInput,
+      passwordInput, setPasswordInput,
+      newUser, setNewUser,
+      askForPassword, setAskForPassword,
+      loginFailed, setLoginFailed }}>
       { children }
     </Context.Provider>
   );

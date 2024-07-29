@@ -3,6 +3,7 @@ import './App.css';
 import './styles/dark.css';
 import './styles/light.css';
 import MainPanel from './components/mainPanel.js';
+import UsernamePrompt from './components/userPrompt.js';
 import { generateHabit } from './utils/habitUtils.js';
 import { Context } from './Context';
 
@@ -26,10 +27,10 @@ const App = () => {
   /* -- -- -- -- -- -- */
 
   const localStorage = window.localStorage;
-
   const { 
-    habits, setHabits, newHabitText, setNewHabitText, 
-    lightMode, setLightMode, setGraphGridColor 
+    habits, setHabits, newHabitText, setNewHabitText, lightMode, setLightMode, 
+    setGraphGridColor, setUpdateRemote, loggedInUser, setLoggedInUser, setAskForPassword,
+    setUsernameInput, setPasswordInput, setNewUser
   } = useContext(Context);
 
   // set body class
@@ -56,54 +57,102 @@ const App = () => {
       addHabit();
   }
 
+  const handleLogoutClick = () => {
+    localStorage.setItem('habits_userid','');
+    setLoggedInUser('');
+    setUsernameInput('');
+    setPasswordInput('');
+    setNewUser(false);
+    setHabits([]);
+    setAskForPassword(false);
+  }
+
   const handleLightMode = (e) => {
     setGraphGridColor(null);
     if (lightMode) {
-      localStorage.setItem('lightMode_cullen', '');
+      localStorage.setItem('habits_lightMode', '');
       setLightMode(false);
     }
     else {
-      localStorage.setItem('lightMode_cullen', 'true');
+      localStorage.setItem('habits_lightMode', 'true');
       setLightMode(true);
     }
   }
 
   function addHabit() {
     if (newHabitText.trim()) {
+      setUpdateRemote(true);
       const habit = generateHabit(habits.length + 1, newHabitText.trim(), []);
-      setHabits(habits.concat(habit));
+      const tempArray = [...habits];
+      tempArray.push(habit);
+      setHabits(tempArray);
     }
     setNewHabitText('');
   }
 
+  const LogoutButton = ({handleLogoutClick}) => {
+    if (loggedInUser) {
+      return (
+        <div className="sidebarOption">
+          <div className='logout' id='logoutBtn' onClick={handleLogoutClick}>logout</div>
+        </div>
+      )
+    }
+  }
+
+  const LightModeSwitch = ({handleLightMode}) => {
+    return (
+      <div className="sidebarOption">
+        <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
+        <label htmlFor="lightModeSwitch"></label>
+      </div>
+    )
+  }
+
   const Sidebar = () => {
     return (
-      <div className='stickyContainer'>
+      <div className="stickyContainer">
         <div className="sidebar">
           <div id="sidebarShadow">
             <a href="/" style={{display:'flex', justifyContent:'center'}}><img id="homeImg" decoding="async" alt="home"/></a>
-            <div className="sidebarOption">
-              <input type="checkbox" onChange={handleLightMode} id="lightModeSwitch"/>
-              <label htmlFor="lightModeSwitch"></label>
-            </div>
+            <LightModeSwitch handleLightMode={handleLightMode} />
+            <LogoutButton handleLogoutClick={handleLogoutClick} />
           </div>
         </div>
       </div>
     )
   }
 
-  return (
-    <div className="App">
-      <Sidebar />
-      <div className='mainPanelContainer'>
+  const TopBar = () => {
+    return (
+      <div className="centered">
+        <h2>habits</h2>
+      </div>
+    );
+  };
+  
+  if (loggedInUser) {
+    return (
+      <div className="App">
+        <Sidebar />
         <MainPanel 
           mobile={detectDevice()}
           handleHabitInputEnter={handleHabitInputEnter}
           handleHabitInputChange={handleHabitInputChange}
-          handleHabitInputBtnClick={handleHabitInputBtnClick}/>
+          handleHabitInputBtnClick={handleHabitInputBtnClick}
+          handleLogoutClick={handleLogoutClick}/>
       </div>
-    </div>
-  );
+    );
+  } 
+  else {
+    return (
+      <div className="App">
+        <Sidebar />
+        <TopBar />
+        <UsernamePrompt />
+      </div>
+    )
+  }
 }
 
 export default App;
