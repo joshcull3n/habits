@@ -18,9 +18,12 @@ jobs:
           node-version: '22'
       - name: install-deps
         run: npm install
+        working-directory: habits/habits
       - name: build
         run: npm run build
+        working-directory: habits/habits
       - name: deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run deploy
+        working-directory: habits/habits
