@@ -3,7 +3,7 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argment('--frontendonly', action='store_true', help='does not run any of the backend. frontend will run locally and ping the remote server.')
+parser.add_argument('--frontendonly', action='store_true', help='does not run any of the backend. frontend will run locally and ping the remote server.')
 args = parser.parse_args()
 
 tmux_name='habits_local'
