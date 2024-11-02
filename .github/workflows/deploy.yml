@@ -1,0 +1,26 @@
+# automatically deploy to github pages on all master merges
+name: deploy
+
+on:
+  push:
+    branches:
+      - main  # only run on merges to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+      - name: install-deps
+        run: npm install
+      - name: build
+        run: npm run build
+      - name: deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run deploy
