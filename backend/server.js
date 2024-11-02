@@ -9,7 +9,9 @@ app.listen(port, () => console.log(`Server is running on port ${port}`));
 const cors = require('cors');
 app.use(cors());
 
-const uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://127.0.0.1:27017/habits';
+const uri = (!process.argv.includes('--localdb') && process.env.MONGODB_URI) ? process.env.MONGODB_URI : 'mongodb://127.0.0.1:27017/habits';
+
+console.log('connecting to : ', uri)
 
 // CONNECT TO MONGODB
 const { mongoose } = require('mongoose');

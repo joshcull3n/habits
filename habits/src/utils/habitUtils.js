@@ -1,5 +1,4 @@
-//const API_URL_BASE = ''; // local server
-const API_URL_BASE = 'https://api.joshcullen.co';
+const API_URL_BASE = process.env.REACT_APP_API_URL_BASE || ''; // https://api.joshcullen.co
 
 export function generateHabit(id, body, dates) {
   const habitObject = {
