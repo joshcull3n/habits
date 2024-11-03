@@ -73,33 +73,18 @@ const HabitDates = ({ habit, dateRangeDates }) => {
     }
 
     var elem = null;
-    var big = (props.index === 0);
     
-    if (checked && !big) {
+    if (checked) {
       elem = (
         <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)} style={{verticalAlign: 'middle'}}>
           <input type="checkbox" checked={checked} onChange={handleCheck} style={{height:'20px', width:'20px', margin: '1px 3px'}}/>
         </td>
       )
     }
-    else if (!checked && !big) {
+    else {
       elem = (
         <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)} style={{verticalAlign: 'middle'}}>
           <input type="checkbox" checked={!!checked} onChange={handleCheck} style={{height:'20px', width:'20px', margin: '1px 3px'}}/>
-        </td>
-      )
-    }
-    else if (checked && big) {
-      elem = (
-        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
-          <input class="today" type="checkbox" checked={checked} onChange={handleCheck} style={{height: '30px', width: '30px', margin: '0px 5px'}}/>
-        </td>
-      )
-    }
-    else if (!checked && big) {
-      elem = (
-        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)}>
-          <input class="today" type="checkbox" checked={!!checked} onChange={handleCheck} style={{height: '30px', width: '30px', margin: '0px 5px'}}/>
         </td>
       )
     }

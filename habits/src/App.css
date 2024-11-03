@@ -119,11 +119,6 @@ input {
   align-items: center;
 }
 
-.deleteButton {
-  padding-left: 3px;
-  padding-top: 5.5px;
-}
-
 .deleteButton img:hover {
   opacity: 1;
   cursor: pointer;
@@ -176,6 +171,45 @@ input {
   max-width: min-content;
   min-width: min-content;
   margin: 0 auto;
+}
+
+.habitGrid {
+  display: grid;
+  grid-template-columns: auto repeat(31, 1fr) auto;
+  gap: 11px;
+  align-items: center;
+}
+
+.dateLabelsRow,
+.habitRow {
+  display: contents; /* Ensures each child becomes a direct grid item */
+}
+
+.dateLabel {
+  text-align: center;
+  font-size: small;
+  
+}
+
+.habitLabel {
+  grid-column: 1; /* Positions the habit label in the first column */
+  padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 150px; /* Keeps text within a defined width */
+}
+
+.habitDates {
+  grid-column: 2 / -2; /* Spans across date columns */
+  display: grid;
+  grid-template-columns: repeat(31, 1fr);
+}
+
+.deleteButton {
+  grid-column: -1; /* Positions the delete button in the last column */
+  text-align: center;
+  cursor: pointer;
 }
 
 .lightMode #habitListContainer {
