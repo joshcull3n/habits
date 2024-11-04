@@ -12,6 +12,7 @@
   --home-img-width: 35px;
   --sidebar-padding-left: 10px;
   --graph-step-size: 0.5;
+  --grid-width-template-columns: 14em repeat(3, 1fr) auto;
 }
 
 * {
@@ -23,6 +24,7 @@ body {
   --home-img-width: 65px;
   --sidebar-padding-left: 25px;
   --graph-step-size: 0.2;
+  --grid-width-template-columns: 20em repeat(21, 1fr) auto;
   background-color: var(--bg-color);
   font-size: 0.85em;
   line-height: 1.5;
@@ -174,7 +176,7 @@ input {
 
 .habitGrid {
   display: grid;
-  grid-template-columns: 20em repeat(21, 1fr) auto;
+  grid-template-columns: var(--grid-width-template-columns);
   gap: 5px;
   align-items: center;
 }

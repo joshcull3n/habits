@@ -144,20 +144,43 @@ const HabitList = ({ dateLabels, mobile }) => {
   const FullHabitList = () => {
     if (mobile) {
       return (
-        <div>
-          <table>
-            <thead><tr><DatePageButtonLeft mobile={true} /><td style={{padding: '0px 2px 0px 3px'}}>{ renderDateLabels() }</td><DatePageButtonRight mobile={true} /></tr></thead>
-            <tbody>
-              {habits.map((habit, index) => <tr>
-                  <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
-                  <td style={{minWidth:'100px', paddingLeft:'1.3px'}}>
-                    <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)}/>
-                  </td>
-                  <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
-                </tr>)}
-            </tbody>
-          </table>
+        <div className="habitGrid">
+          <div className="dateLabelsRow">
+            <DatePageButtonLeft mobile={false} />
+            {dateLabels.map((label, index) => (
+              <span className="dateLabel" id={label} key={index}>
+                {label}
+              </span>
+            ))}
+            <DatePageButtonRight mobile={false} />
+          </div>
+          {habits.map((habit, index) => (
+            <div className="habitRow" key={index}>
+              <div className="habitLabel"
+                onMouseEnter={() => setLabelOpacity(habit)}
+                onMouseLeave={() => setLabelOpacity(null)}
+              >
+                <Habit habit={habit} />
+              </div>
+              <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)} />
+              <DeleteButton className="deleteButton" id={habit.id} habit={habit} />
+            </div>
+          ))}
         </div>
+        // <div>
+        //   <table>
+        //     <thead><tr><DatePageButtonLeft mobile={true} /><td style={{padding: '0px 2px 0px 3px'}}>{ renderDateLabels() }</td><DatePageButtonRight mobile={true} /></tr></thead>
+        //     <tbody>
+        //       {habits.map((habit, index) => <tr>
+        //           <td style={{maxWidth:'155px', minWidth:'120px', paddingLeft:'2px'}}><Habit habit={habit}/></td>
+        //           <td style={{minWidth:'100px', paddingLeft:'1.3px'}}>
+        //             <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)}/>
+        //           </td>
+        //           <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
+        //         </tr>)}
+        //     </tbody>
+        //   </table>
+        // </div>
       )
     }
     else {
@@ -172,7 +195,6 @@ const HabitList = ({ dateLabels, mobile }) => {
             ))}
             <DatePageButtonRight mobile={false} />
           </div>
-  
           {habits.map((habit, index) => (
             <div className="habitRow" key={index}>
               <div className="habitLabel"
