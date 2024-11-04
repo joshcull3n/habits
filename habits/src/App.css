@@ -63,8 +63,6 @@ input[type="checkbox"]:not(:checked) {
   width: 20px;
   height: 20px;
   cursor:pointer;
-  position: relative;
-  top: 1px;
   background: var(--input-bg-not-checked);
   background-size: 18px;
   background-position: center;
@@ -89,8 +87,6 @@ input[type="checkbox"]:checked {
   width: 20px;
   height: 20px;
   cursor:pointer;
-  position: relative;
-  top: 0px;
   background: var(--input-bg-checked);
   background-size: 18px;
   background-position: center;
@@ -119,16 +115,29 @@ input {
 
 .deleteButton img:hover {
   opacity: 1;
-  cursor: pointer;
+}
+
+.checkboxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #deleteButton {
   content: var(--delete-button);
 }
 
+.deleteButton {
+  padding-top: 2.5px;
+  grid-column: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 .deleteButton img {
   opacity: 0.4;
-  display:inline-flex;
   width: 11px;
   padding-bottom: 3px; /* should be 2.5px for FF */
   -webkit-transition: opacity 0.1s ease-in-out;
@@ -173,7 +182,7 @@ input {
 
 .habitGrid {
   display: grid;
-  grid-template-columns: auto repeat(31, 1fr) auto;
+  grid-template-columns: auto repeat(21, 1fr) auto;
   gap: 5px;
   align-items: center;
 }
@@ -201,13 +210,15 @@ input {
 }
 
 .habitDates {
-  grid-column: 2 / -2; /* Spans across date columns */
+  grid-column: 2 / -2;
   display: contents;
 }
 
 .deleteButton {
-  grid-column: -1; /* Positions the delete button in the last column */
-  text-align: center;
+  grid-column: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 

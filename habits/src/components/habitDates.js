@@ -73,7 +73,7 @@ const HabitDates = ({ habit, dateRangeDates }) => {
     }
 
     return (
-      <div onMouseEnter={() => setLabelOpacity(props.date, props.habit)} onMouseLeave={() => setLabelOpacity(null)}>
+      <div className="checkboxContainer" onMouseEnter={() => setLabelOpacity(props.date, props.habit)} onMouseLeave={() => setLabelOpacity(null)}>
         <input type="checkbox" checked={checked} onChange={handleCheck} />
       </div>
     )
