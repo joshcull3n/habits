@@ -8,11 +8,11 @@ const HabitDates = ({ habit, dateRangeDates }) => {
     const dateLabelElements = document.querySelectorAll(".dateLabel");
     const habitLabelElements = document.querySelectorAll(".habitItem");
     dateLabelElements.forEach(labelElement => {
-      let opacityValue = 1.0;
+      let opacityValue = 1;
       let transitionValue = "opacity 0.2s ease-in-out"
       if (date) {
-        const day = new Date(date).getDate(); // no longer necessary. was used to have varying opacities for nearby days
-        const labelDistance = Math.abs(Number(labelElement.id) - day);
+        const day = new Date(date).getDate();
+        const labelDistance = Math.abs(Number(labelElement.id) - day)
         if (labelDistance !== 0) {
           opacityValue = 0.5;
           transitionValue = "";
@@ -72,30 +72,17 @@ const HabitDates = ({ habit, dateRangeDates }) => {
       }
     }
 
-    var elem = null;
-    
-    if (checked) {
-      elem = (
-        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)} style={{verticalAlign: 'middle'}}>
-          <input type="checkbox" checked={checked} onChange={handleCheck} style={{height:'20px', width:'20px', margin: '1px 3px'}}/>
-        </td>
-      )
-    }
-    else {
-      elem = (
-        <td onMouseEnter={() => setLabelOpacity(props.date, props.habit)} style={{verticalAlign: 'middle'}}>
-          <input type="checkbox" checked={!!checked} onChange={handleCheck} style={{height:'20px', width:'20px', margin: '1px 3px'}}/>
-        </td>
-      )
-    }
-
-    return elem;
+    return (
+      <div onMouseEnter={() => setLabelOpacity(props.date, props.habit)} onMouseLeave={() => setLabelOpacity(null)}>
+        <input type="checkbox" checked={checked} onChange={handleCheck} />
+      </div>
+    )
   }
 
   return (
-    <span style={{minWidth:'168px'}} onMouseLeave={() => setLabelOpacity(null)}>
+    <>
       { dateRangeDates.map((date, index) => <Checkbox key={index} index={index} habit={habit} date={date} doneDates={habit.doneDates} />) }
-    </span>
+    </>
   )
 }
 

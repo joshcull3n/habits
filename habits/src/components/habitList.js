@@ -1,4 +1,3 @@
-
 import { useContext } from 'react'
 import Habit from './habit.js'
 import HabitDates from './habitDates.js'
@@ -143,37 +142,6 @@ const HabitList = ({ dateLabels, mobile }) => {
   }
 
   const FullHabitList = () => {
-    let divTrue = true
-    if (divTrue) {
-      return (
-        <div className="habitGrid">
-            <div className="dateLabelsRow">
-              <DatePageButtonLeft mobile={false} />
-              {dateLabels.map((label, index) => (
-                <span className="dateLabel" key={index}>
-                  {label}
-                </span>
-              ))}
-              <DatePageButtonRight mobile={false} />
-          </div>
-
-          {habits.map((habit, index) => (
-            <div className="habitRow" key={index}>
-              <div className="habitLabel"
-                onMouseEnter={() => setLabelOpacity(habit)}
-                onMouseLeave={() => setLabelOpacity(null)}
-              >
-                <Habit habit={habit} />
-              </div>
-              <div className="habitDates">
-                <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)} />
-              </div>
-              <DeleteButton className="deleteButton" id={habit.id} habit={habit} />
-            </div>
-          ))}
-          </div>
-      )
-    }
     if (mobile) {
       return (
         <div>
@@ -194,19 +162,29 @@ const HabitList = ({ dateLabels, mobile }) => {
     }
     else {
       return (
-        <div>
-          <table style={{borderCollapse: 'collapse', borderSpacing: 0}}>
-            <thead><tr><DatePageButtonLeft mobile={false} /><div>{ renderDateLabels() }</div><DatePageButtonRight mobile={false} /></tr></thead>
-            <tbody>
-              {habits.map((habit, index) => <tr>
-                  <td onMouseEnter={() => setLabelOpacity(habit)} onMouseLeave={() => setLabelOpacity(null)} style={{maxWidth:'250px',minWidth:'75px', paddingLeft: '2px'}}>
-                    <Habit habit={habit}/>
-                  </td>
-                  <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)}/>
-                  <DeleteButton className='deleteButton' id={habit.id} habit={habit}/>
-                </tr>)}
-            </tbody>
-          </table>
+        <div className="habitGrid">
+          <div className="dateLabelsRow">
+            <DatePageButtonLeft mobile={false} />
+            {dateLabels.map((label, index) => (
+              <span className="dateLabel" id={label} key={index}>
+                {label}
+              </span>
+            ))}
+            <DatePageButtonRight mobile={false} />
+          </div>
+  
+          {habits.map((habit, index) => (
+            <div className="habitRow" key={index}>
+              <div className="habitLabel"
+                onMouseEnter={() => setLabelOpacity(habit)}
+                onMouseLeave={() => setLabelOpacity(null)}
+              >
+                <Habit habit={habit} />
+              </div>
+              <HabitDates habit={habit} dateRangeDates={genDates(startDate, endDate)} />
+              <DeleteButton className="deleteButton" id={habit.id} habit={habit} />
+            </div>
+          ))}
         </div>
       )
     }
