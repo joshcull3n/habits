@@ -10,6 +10,7 @@
   --calendar-font: monospace;
   --textbox-bg: rgba(151, 151, 151, 0.05);
   --textbox-placeholder-color: rgba(0, 0, 0, 0.7);
+  --ellipsis-button: url("../images/ellipsis_light.png");
   --delete-button: url("../images/delete_black.png");
   --delete-button-inverse: url("../images/delete_pink.png");
   --calendar-left: url("../images/doubleLeft_black.png");

@@ -200,11 +200,12 @@ input[type="checkbox"]:checked:hover {
   padding-right: 1px;
 }
 
-#deleteButton {
-  content: var(--delete-button);
+#moreOptionsButton {
+  content: var(--ellipsis-button);
+  width: 1em;
 }
 
-.deleteButton {
+.moreOptionsButton {
   grid-column: -1;
   display: flex;
   justify-content: center;
@@ -212,12 +213,21 @@ input[type="checkbox"]:checked:hover {
   cursor: pointer;
 }
 
-.deleteButton img {
+.moreOptionsButton img {
   opacity: 0.4;
   width: 11px;
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;
+}
+
+.moreOptionsModal {
+  position: absolute;
+  padding: 0.5em;
+  margin: 2.5px 0;
+  z-index: 1000;
+  font-size: x-small;
+  text-align: center;
 }
 
 #calendarLeft {
@@ -615,16 +625,6 @@ input[type="checkbox"]:checked:hover {
 .lightMode .todoListContainer {
   background-color:#f79b9b;
   border-radius: 2px;
-}
-
-.moreOptionsModal {
-  position: absolute;
-  border-radius: 2px;
-  padding: 0.5em;
-  margin: 2.5px 0;
-  background: var(--main-bg-color);
-  z-index: 1000;
-  font-size: x-small;
 }
 
 #inputContainer {

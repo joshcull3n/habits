@@ -110,9 +110,9 @@ const BaseButtonElement = ({text, type, onclick}) => {
       className: "checkboxContainer", 
       content: <input type="checkbox" checked="true"/>
     },
-    del: { 
-      className: "todoButton deleteButton", 
-      imgId: "deleteButton", 
+    moreOptions: { 
+      className: "todoButton moreOptionsButton", 
+      imgId: "moreOptionsButton", 
       alt: "x"
     },
     pin: { 
@@ -163,7 +163,7 @@ const BaseButtonElement = ({text, type, onclick}) => {
   return ( <div className="todoBtn">{text}</div>)
 }
 
-const TodoRow = ({todo, showPinBtn, showArchiveBtn, done, showDueDate=true, showDoneDate=false, isPinned=false, onRequestDelete}) => {
+const TodoRow = ({todo, showPinBtn, showArchiveBtn, done, showDueDate=true, showDoneDate=false, isPinned=false, showMoreOptions}) => {
   const rowRef = useRef(null);
   const { mobile } = useContext(Context);
   const { todos, setTodos, 
@@ -184,7 +184,7 @@ const TodoRow = ({todo, showPinBtn, showArchiveBtn, done, showDueDate=true, show
   const UnpinBtn = () => <BaseButtonElement text="unpin" type="unpin" onclick={() => changeStatus(todo, 'snoozed', 'incomplete')}/>
   const ArchiveBtn = () => <BaseButtonElement text="arc" type="arc" onclick={() => changeStatus(todo, 'archived')}/> 
   const UnarchiveBtn = () => <BaseButtonElement text="unarc" type="unarc" onclick={() => changeStatus(todo, 'incomplete')}/> 
-  const DeleteBtn = () => <BaseButtonElement text="del" type="del" onclick={() => onRequestDelete(todo._id, rowRef.current)}/>
+  const MoreOptionsBtn = () => <BaseButtonElement text="moreOptions" type="moreOptions" onclick={() => showMoreOptions(todo._id, rowRef.current)}/>
   const CategoryBtn = () => <BaseButtonElement text={todo.category} type="category" onclick={() => handleCategoryBtnClick(todo.category)}/>
   const Title = () => {
     const titleFieldRef = useRef(null);
@@ -328,7 +328,7 @@ const TodoRow = ({todo, showPinBtn, showArchiveBtn, done, showDueDate=true, show
       { (mobile !== true && todo.category && <span><CategoryBtn /></span>) || <div></div> }
       { showPinBtn === true && ( isPinned && <UnpinBtn /> || <PinBtn /> ) || <div></div>}
       { (mobile !== true && showArchiveBtn === true && <ArchiveBtn />) || (showArchiveBtn === false && <UnarchiveBtn />) }
-      { (mobile !== true && <DeleteBtn />) }
+      { (mobile !== true && <MoreOptionsBtn />) }
     </div>
   )
 }
@@ -632,14 +632,34 @@ function filterAndSort(todos, filteredTodos, filterString, status, ordering, ign
 const TodoList = () => {
   const [confirmBox, setConfirmBox] = useState({ todoId: null, top: 0, left: 0 })
 
-  function onRequestDelete(todoId, domNode) {
+  const { todos, setTodos, ordering, 
+    showFilterInput, setShowFilterInput,
+    filteredTodos, setFilteredTodos,
+    filterString, setFilterString,
+    setNewCategory, laterExpanded, categorySelected
+  } = useContext(TodoContext);
+
+  const moreOptionsRef = useRef(null)
+
+  const openTodos = filterAndSort(todos, filteredTodos, filterString, 'incomplete', ordering);
+  const pinnedTodos = filterAndSort(todos, filteredTodos, filterString, 'snoozed', ordering);
+  const openCount = openTodos.length;
+
+  function openModeOptions(todoId, domNode) {
     if (!domNode) return;
     const rect = domNode.getBoundingClientRect();
-    setConfirmBox({
+    console.log(rect)
+    const box = {
       todoId,
       top: rect.top + window.scrollY,
       left: rect.right + 10 + window.scrollX,
-    });
+    }
+    if (confirmBox.todoId === box.todoId)
+      closeMoreOptions();
+    else
+      setConfirmBox(box);
+    document.addEventListener('click', hideMoreOptionsWhenClickingElsewhere)
+    document.addEventListener('keydown', hideMoreOptionsWhenClickingElsewhere)
   }
 
   function confirmDelete(todoId) {
@@ -650,20 +670,11 @@ const TodoList = () => {
     setConfirmBox({ todoId: null, top: 0, left: 0 });
   }
 
-  function cancelDelete() {
+  function closeMoreOptions() {
     setConfirmBox({ todoId: null, top: 0, left: 0 });
+    document.removeEventListener('click', hideMoreOptionsWhenClickingElsewhere)
+    document.removeEventListener('keydown', hideMoreOptionsWhenClickingElsewhere)
   }
-
-  const { todos, setTodos, ordering, 
-    showFilterInput, setShowFilterInput,
-    filteredTodos, setFilteredTodos,
-    filterString, setFilterString,
-    setNewCategory, laterExpanded, categorySelected
-  } = useContext(TodoContext);
-
-  const openTodos = filterAndSort(todos, filteredTodos, filterString, 'incomplete', ordering);
-  const pinnedTodos = filterAndSort(todos, filteredTodos, filterString, 'snoozed', ordering);
-  const openCount = openTodos.length;
 
   function switchShowFilterInput() {
     setShowFilterInput(!showFilterInput);
@@ -677,6 +688,13 @@ const TodoList = () => {
 
   const FilterButton = () => {
     return ( <BaseButtonElement text="filter" type="filter" onclick={() => switchShowFilterInput()}/> )
+  }
+
+  function hideMoreOptionsWhenClickingElsewhere(e) {
+    if (e.target.id == "moreOptionsButton" || e.target.classList.contains("moreOptionsButton"))
+      return
+    if (moreOptionsRef.current && !moreOptionsRef.current.contains(e.target))
+      closeMoreOptions()
   }
 
   return (
@@ -696,7 +714,7 @@ const TodoList = () => {
             <div className=''> 
               <div style={{fontSize:'x-small'}}><PanelTitle title='do soon' count={pinnedTodos.length}/></div>
                 { true && pinnedTodos.length > 0 ? pinnedTodos.map((todo, index) => (
-                  <TodoRow todo={todo} showPinBtn={true} showArchiveBtn={true} key={index} isPinned={true} onRequestDelete={onRequestDelete} />
+                  <TodoRow todo={todo} showPinBtn={true} showArchiveBtn={true} key={index} isPinned={true} showMoreOptions={openModeOptions} />
                 )) : <></> }
               </div>
           </div>
@@ -704,16 +722,22 @@ const TodoList = () => {
         <div className='todoGrid'>
             { openTodos.length > 0 && pinnedTodos.length > 0 && <div style={{fontSize:'x-small'}}><PanelTitle title='do later' count={openTodos.length} expanded={laterExpanded}/></div> }
             { laterExpanded || pinnedTodos.length <= 0 ? openTodos.map((todo, index) => (
-                <TodoRow todo={todo} showPinBtn={true} showArchiveBtn={true} key={index} onRequestDelete={onRequestDelete} />
+                <TodoRow todo={todo} showPinBtn={true} showArchiveBtn={true} key={index} showMoreOptions={openModeOptions} />
               )) : <></> }
         </div>
       </div>
       {confirmBox.todoId && (
-      <div className='moreOptionsModal fadeIn' style={{ top: confirmBox.top, left: confirmBox.left }} >
-        <div style={{ display: 'flex', gap: '0.2rem' }}>
-          delete?
-          <div onClick={() => confirmDelete(confirmBox.todoId)}>y</div>
-          <div onClick={cancelDelete}>n</div>
+      <div ref={moreOptionsRef} className='moreOptionsModal todoListContainer fadeIn' style={{ top: confirmBox.top, left: confirmBox.left }} >
+        <div style={{ gap: '0.2rem' }}>
+          <div onClick={() => confirmDelete(confirmBox.todoId)} id="deleteButton">delete?</div>
+          <div onClick={() => {}} id="changeListButton">change list</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
+          <div onClick={() => {}} id="repeatButton">repeat task</div>
         </div>
       </div>
     )}
